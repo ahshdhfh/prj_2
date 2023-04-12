@@ -6,8 +6,8 @@
 <meta charset="UTF-8">
 <title>인기매물 더보기</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.143/prj_2/project/main.css">
-<link rel="stylesheet" type="text/css" href="http://211.63.89.143/prj_2/project/buy.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/buy.css">
 <style type="text/css">
 
 .area_more_popular_sales{
@@ -26,22 +26,8 @@ position: relative;
 
 <div class="wrap">
 
-  <div class="header">
-      <!-- <div class="logo"> -->
-       <a href="http://211.63.89.143/prj_2/project/main_logout.jsp"><img class="logo" src="http://211.63.89.143/prj_2/project/images/logo.png"></a>
-       <!-- </div> -->
-       
-       <div class="search_area">
-       <input type="search" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-       <div class="join_member"> 
-          <a href="http://211.63.89.142/prj_2/project/membership_term.jsp"  class="a_join_member"">회원가입</a>
-       </div>
-
-       <div class="login">
-         <a href="http://211.63.89.143/prj_2/project/login.jsp" class="a_login" >로그인</a>
-       </div>
+   <div class="header">       
+       <c:import url="http://localhost/prj_2/lmh/header.jsp" />
   </div><!-- header-->
   
   
@@ -331,16 +317,8 @@ position: relative;
    
   
   
-      <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 4조 | 사업자번호 123-45-67890<br>
-        직업정보제공사업 신고번호 2023-서울강남-0000<br>
-        주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
-        전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
-       </div>
-
+    <div class="footer">
+      <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
    </div><!-- footer-->
    
   </div><!--wrap  -->

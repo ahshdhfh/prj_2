@@ -7,7 +7,7 @@
 
   <div class="header">
        <!-- <div class="logo"> -->
-       <a href="http://localhost/prj_2/project/main_logout.jsp"><img class="logo" src="http://localhost/prj_2/project/images/logo.png"></a>
+       <a href="http://localhost/prj_2/lmh/main_logout.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
       <!--  </div> -->
        
        

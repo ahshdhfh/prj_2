@@ -13,10 +13,12 @@
 <meta charset="UTF-8">
 <title>강남콩마켓</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.143/prj_2/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gamja+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gamja+Flower&display=swap" rel="stylesheet"> 
+
+
 <style type="text/css">
 
 .container1{
@@ -475,16 +477,8 @@ text-decoration: none;
     <div class="container3">  </div>
     
     
-     <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 4조 | 사업자번호 123-45-67890<br>
-        직업정보제공사업 신고번호 2023-서울강남-0000<br>
-        주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
-        전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
-       </div>
-
+   <div class="footer">
+      <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
    </div><!-- footer-->
    
    
