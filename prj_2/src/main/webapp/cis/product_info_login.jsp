@@ -439,7 +439,7 @@ padding:15px 20px;
             	<select class="select_login" onchange="window.location.href=this.value">
              		<option value="나의 마켓">나의 마켓</option>
             	 	<option value="http://localhost/html_prj/project/mypage.jsp">나의 마켓</option>
-             		<option value="http://localhost/html_prj/project2nd/sell_page.jsp">상품 등록</option>
+             		<option value="http://localhost/prj_2/cis/sell_page.jsp">상품 등록</option>
              		<option value="http://localhost/html_prj/project/EditInfoPassword.jsp">개인정보수정</option>
          		</select>
      		  </div>
