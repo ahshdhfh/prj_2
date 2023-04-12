@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+
+
+.wrap{width: 1200px; height: 1400px; margin: 0px auto;}
+
+.header{
+height: 80px; 
+position: relative; }
+
+.logo{
+width:210px;
+height:65px; 
+position: absolute; 
+top : 13px;
+background: #ffffff url(http://211.63.89.143/html_prj/member/images/logo_gangnamkong.PNG)no-repeat;}
+ 
+.search_area{  
+width: 500px;
+height : 50px;
+margin: 0px auto;}  
+
+.search{
+width: 500px;
+height : 50px;
+position: absolute;
+top : 13px;
+margin: 0px auto;
+font-size: 17px;
+border-radius: 10px;
+}
+
+.join_member{
+width: 70px;
+height : 20px;
+position: absolute;
+top : 27px;
+right: 220px;
+}
+
+.login{
+width: 70px;
+height : 20px;
+position: absolute;
+top : 27px;
+right: 100px;
+}
+
+
+.a_join_member{
+color: #9B59B6;
+}
+
+.a_login{
+color: #000;
+}
+
+
+.footer{
+height: 300px; 
+position: relative; 
+
+}
+
+
+.footer_text{
+position: absolute;
+top: 30px;
+left: 30px;
+color: #868B94;
+font-size: 17px;
+}
+
+
+.inquiry1{
+position: absolute; 
+top: 150px;
+left: 30px;
+}
+
+.inquiry2{
+position: absolute; 
+top: 150px;
+left: 150px;
+}
+
+.inquiry3{
+position: absolute; 
+top: 150px;
+left: 280px;
+}
+
+.inquiry4{
+position: absolute; 
+top: 150px;
+left: 400px;
+}
+
+
+.inquiry5{
+position: absolute; 
+top: 190px;
+left: 30px;
+}
+
+.inquiry6{
+position: absolute; 
+top: 190px;;
+left: 150px;
+}
+
+.inquiry7{
+position: absolute; 
+top: 190px;
+left: 350px;
+}
+
+.inquiry8{
+position: absolute; 
+top: 190px;
+left: 480px;
+}
+
+
+.a_footer{
+
+color: #868B94;
+font-size: 19px;
+font-weight: bold;
+}
+
+
+a{
+text-decoration: none;
+}
