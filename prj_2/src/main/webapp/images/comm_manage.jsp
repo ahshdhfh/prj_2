@@ -59,7 +59,7 @@ tr{ height: 30px; }
 <div id="wrap" > <!-- wrap( w: 800 x h:950 ) -->
 		<div id="header" ><!-- header(w: 200 x h : 1400 ) --> 
 		<div>
-		<a href="http://2localhost/prj_2/lms/dashboard.html"><img src="http://localhost/prj_2/images/logo.PNG" width="150"></a>
+		<a href="http://localhost/prj_2/lms/dashboard.html"><img src="http://localhost/prj_2/mages/logo.PNG" width="150"></a>
 		</div>
 		<br>
 		 <h4 class="col_tit"><i class="fa fa-bars" aria-hidden="true"></i>Menu</h4>
@@ -77,14 +77,14 @@ tr{ height: 30px; }
 			<div id="con_header" >
 			<div class="dash">
 			<br>
-			<h1>회원관리</h1>
+			<h1>댓글관리</h1>
 			<hr>
 			</div>
 			</div>
 			<div id="con_main">
 			
 			<div id="search_commdb" >
-			<label  >회원조회</label>
+			<label  >아이디조회</label>
 			<i class="fa fa-search fa-lg" aria-hidden="true" ></i>
 			<input type="text" class="text_search">
 			<input type="button" value="확인" class="btn_search" style="float: right">
@@ -93,7 +93,7 @@ tr{ height: 30px; }
 				<div id=table_div>
 				<table class="table_comm" cellspacing="0">
 				<tr class="table_header">
-				<td width="80">회원번호</td><td width="80">아이디</td><td width="80">닉네임</td><td width="400">주소</td><td width="120">가입일</td>
+				<td width="80">댓글번호</td><td width="80">상품번호</td><td width="80">아이디</td><td width="400">댓글</td><td width="120">작성일자</td>
 				</tr>
 				<tr>
 				<td></td><td></td><td></td><td></td><td></td>

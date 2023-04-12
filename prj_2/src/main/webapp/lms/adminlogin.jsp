@@ -138,7 +138,7 @@ box-shadow: 5px 5px 5px 5px gray
 
   <div class="header">
        <div class="logo">
-       <a href=""><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
+       <a href=""><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.PNG"></a>
        </div>
   </div><!-- header-->
   
@@ -154,7 +154,7 @@ box-shadow: 5px 5px 5px 5px gray
      </div>
          
       <div class="div_btn_login">
-        <input type="button"  value="로그인" class="btn_login" onclick="location.href='http://localhost/prj_2/lms/dashboard.jsp'" >
+        <input type="button"  value="로그인" class="btn_login" onclick="location.href='http://localhost/prj_2/lms/dashboard.html'" >
      </div>
      
      <div class="div_notice">
