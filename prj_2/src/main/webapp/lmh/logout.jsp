@@ -4,6 +4,7 @@
         <!-- 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
     
 <!DOCTYPE html>
 <html>
@@ -122,35 +123,8 @@ font-weight: bold;
 </style>
 
 <script type="text/javascript">
-/*  function login() {
-	
-	var obj = document.frm;
-	var id = obj.id.value;
-	var password = obj.password.value;
-	
-	if (id === "id" && password === "password") {
-		 window.location.href = "http://localhost/prj_2/project/main_login.jsp";
-	  } else {
-	    alert("아이디 또는 비밀번호를 확인하세요");
-	  }
-}//login()  */
-
-
-function login(){
-	var obj=document.postFrm;
-	var id = obj.id.value;
-	var password = obj.password.value;
-	
-	//유효성검증
-	if(id === "" || password === ""){
-		alert("아이디, 비밀번호를 입력해 주세요");
-		return;
-	}//end if
-	
-	//유효성 검증이 완료되면 값을 받아야 할 페이지로 값들을 전송한다
-	obj.submit();
-}//login
-
+alert('로그아웃 되었습니다.');
+location.href="http://localhost/prj_2/lmh/main.jsp";
 
 </script>
 
@@ -163,52 +137,18 @@ function login(){
        <div class="logo"> 
        <a href="http://localhost/prj_2/lmh/main.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
        </div> 
-  
   </div><!-- header-->
   
   
-  <form action="http://localhost/prj_2/lmh/header.jsp" method="post"  name="postFrm" >
-  <div class="area_login">
-     <div class="loginTitle">로그인</div>
-     
-     <div class="input_login">
-     <input type="text" class="text_input_login"  placeholder="아이디를 입력해주세요" name="id"> 
-     </div>
-     
-     <div class="input_password">
-     <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요" name="password"> 
-     </div>
-     
-     <div class="find_id">
-     <a href="http://localhost/prj_2/ldk/id_inquiry.jsp" class="a_find" >아이디찾기</a>
-     </div>
-     
-      <div class="find_password">
-      <a href="http://localhost/prj_2/ldk/pass_inquiry.jsp" class="a_find" >비밀번호찾기</a>
-     </div>
-     
-     
-     <div class="div_btn_login">
-        <input type="button"  value="로그인" class="btn_login"  onclick="login()">
-     </div>
-     
-     
-      <div class="div_btn_join_member">
-        <input type="button"  value="회원가입" class="btn_join_member"  onclick="location.href='http://localhost/prj_2/ldk/membership_term.jsp' ">
-     </div>
-     
-     
-  
-  
-  </div><!-- 로그인 -->
-  </form>
-  
-  
-  
-  
-  
 
-   
+  <div class="area_login">     
+<%
+      session.invalidate();
+%>
+  </div><!-- 로그아웃 -->
+
+  
+  
   </div><!--wrap  -->
 
 </body>
