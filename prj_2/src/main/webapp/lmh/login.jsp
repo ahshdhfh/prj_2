@@ -4,6 +4,7 @@
         <!-- 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
     
 <!DOCTYPE html>
 <html>
@@ -136,7 +137,8 @@ font-weight: bold;
 }//login()  */
 
 
-function login(){
+
+/* function login(){
 	var obj=document.postFrm;
 	var id = obj.id.value;
 	var password = obj.password.value;
@@ -150,6 +152,37 @@ function login(){
 	//유효성 검증이 완료되면 값을 받아야 할 페이지로 값들을 전송한다
 	obj.submit();
 }//login
+ */
+ 
+
+ $(function(){
+	$("#btn").click(function(){
+		
+		if($("#id").val() == ""){
+			alert("아이디는 필수 입력!!");
+			return;
+		}//end if
+		
+		if($("#pass").val() == ""){
+			alert("비밀번호는 필수 입력!!");
+			return;
+		}//end if
+		
+		if($("#name").val() == ""){
+			alert("이름은 필수 입력!!");
+			return;
+		}//end if
+		
+		if($("#id").val().length > 19){
+			alert("아이디는 20자 까지만 입력 가능");
+			 return;
+		}//end if
+		
+		$("#frm").submit();
+		
+	}); //click
+});//ready 
+
 
 
 </script>
@@ -167,16 +200,16 @@ function login(){
   </div><!-- header-->
   
   
-  <form action="http://localhost/prj_2/lmh/header.jsp" method="post"  name="postFrm" >
+  <form action="http://localhost/prj_2/lmh/main.jsp" method="post"  id="frm" >
   <div class="area_login">
      <div class="loginTitle">로그인</div>
      
      <div class="input_login">
-     <input type="text" class="text_input_login"  placeholder="아이디를 입력해주세요" name="id"> 
+     <input type="text" class="text_input_login"  placeholder="아이디를 입력해주세요" id="id"> 
      </div>
      
      <div class="input_password">
-     <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요" name="password"> 
+     <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요" id="pass"> 
      </div>
      
      <div class="find_id">
@@ -189,7 +222,7 @@ function login(){
      
      
      <div class="div_btn_login">
-        <input type="button"  value="로그인" class="btn_login"  onclick="login()">
+        <input type="button"  value="로그인" class="btn_login"  id="btn">
      </div>
      
      

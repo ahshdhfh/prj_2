@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+      info="입력값을 받아 DB에 추가 하는 일 "
+    %>
     
         <!-- 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    
+<%
+request.setCharacterEncoding("UTF-8");
+%>    
     
 <!DOCTYPE html>
 <html>
@@ -122,12 +128,42 @@ font-weight: bold;
 </style>
 
 <script type="text/javascript">
-
+if("<%= request.getMethod() %>" == "GET") {
+	alert("정상적인 방식으로 요청하지 않으셨습니다");
+	location.href="http://localhost/prj_2/lmh/login.jsp";
+}//end if
 </script>
 
 </head>
 <body>
+<%-- <%
+if("POST".equals(request.getMethod())) {
+%>
+<jsp:useBean id="iVO" class="day0413.InjectionVO" scope="page" />
+<jsp:setProperty property="*" name="iVO"/>
 
+<%
+InjectionDAO iDAO = new InjectionDAO();
+
+try{
+	
+iDAO.insertInjection(iVO); //DB table에 추가 작업
+%>
+<span style="font-weight: blod; font-size: 20px">
+<c:out value="${param.id }" />
+</span>( <c:out value="${param.name }" />) 님 입력해 주셔서 감사합니다 <br>
+입력해 주신 자료는 안전하게 보관하며, 사용이 끝나는 즉시 저장하지 않고 폐기하겠습니다
+<%
+}catch(SQLException se){
+	se.printStackTrace();
+	%>
+	<c:out value="${ param.id }" />는 이미 사용중이므로 다른 아이디를 입력해 주세요
+	<a href="#void" onclick="history.back()">뒤로</a>
+	<%
+}//end catch
+}// end if
+%>
+</div> --%>
 
 
 </body>

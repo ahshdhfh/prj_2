@@ -202,9 +202,6 @@ left: 525px;
 }
 
 
-
-
-
 .container3{
 height: 140px; 
 position: relative; 
@@ -228,8 +225,8 @@ text-decoration: none;
 <div class="wrap">
 
   <div class="header">
-       <c:import url="http://localhost/prj_2/lmh/header.jsp" />
-  </div><!-- header-->
+      <c:import url="http://localhost/prj_2/lmh/header.jsp" /> 
+  </div>
    
    
    <div class="container1">
@@ -262,10 +259,13 @@ text-decoration: none;
         </div> 
   
         
+        
+        
+        
   
    <div class="card-photo1">
      <a href="http://211.63.89.152/prj_2/project2nd/product_info_logout.jsp">
-     <img alt="매물" src="http://211.63.89.143/prj_2/project/images/bike.PNG" class="photo">
+     <img alt="매물" src=${ MainProdVO.prodImg } class="photo">
      </a>
    </div>
    
@@ -446,7 +446,7 @@ text-decoration: none;
    
    
    <div class="more_popular_items"> 
-          <a href="http://211.63.89.143/prj_2/project/more_popular_sales.jsp"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
+          <a href="http://localhost/prj_2/lmh/more_popular_sales.jsp"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
    </div>
 
 

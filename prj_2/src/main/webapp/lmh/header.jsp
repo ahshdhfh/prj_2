@@ -4,23 +4,19 @@
 %>
 
 <%
-request.setCharacterEncoding("UTF-8"); 
+String id=""; 
+id = (String)session.getAttribute("id"); 
 %>
 
-<!--1. web parameter를 받기 위한 useBean액션태그를 선언 -->
-<jsp:useBean id="LoginVO" class="prj_2.LoginVO" />
-<!--2. web parameter를 모든 setter method에 할당 -->
-<jsp:setProperty property="*" name="LoginVO" />
+ <% if ( !"".equals(id) ){ %> 
 
-<% if (session.getAttribute("id") == null) { %>
-
-  <div class="header">
-       <!-- <div class="logo"> -->
+<div class="header">
+        <form action="/search" method="get"> <!-- 검색창 -->
        <a href="http://localhost/prj_2/lmh/main.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
-      <!--  </div> -->
+
        
        
-       <form action="/search" method="get">
+
        <div class="search_area">
        <input type="search" class="search" placeholder="물품을 검색해 보세요"> <!--list 검색가능   -->
        </div><!-- search-->
@@ -33,14 +29,22 @@ request.setCharacterEncoding("UTF-8");
        <div class="login">
          <a href="http://localhost/prj_2/lmh/login.jsp" class="a_login" >로그인</a>
        </div>
-  </div><!-- header-->
+
+ </div> 
   
-  
-  <% } else { %>
+  <% } else {%>
   <div class="header">
+     <form action="/search" method="get"> <!-- 검색창 -->
+       <a href="http://localhost/prj_2/lmh/main.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
+
+       <div class="search_area">
+       <input type="search" class="search" placeholder="물품을 검색해 보세요"> <!--list 검색가능   -->
+       </div><!-- search-->
+       </form>
+  
  <div class="div_select_login"> 
          <select class="select_login" onchange="window.location.href=this.value">
-             <option value="이름"  hidden><jsp:getProperty property="id" name="LoginVO"/> 님</option>
+             <option value="이름"  hidden><%=id %>님</option>
              <option value="http://211.63.89.134/prj_2/김보경/mypage.jsp" >나의 마켓</option>
              <option value="http://211.63.89.152/prj_2/조익상/sell_page.jsp">상품 등록</option>
              <option value="http://211.63.89.134/prj_2/김보경/EditInfoPassword.jsp">개인정보수정</option>
@@ -54,5 +58,5 @@ request.setCharacterEncoding("UTF-8");
        
        </div>
  <% } %>
-   
+    
  
