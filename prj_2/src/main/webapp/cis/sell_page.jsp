@@ -28,20 +28,20 @@ margin-top:20px
 }
 
 /* 제목 */
-.input-title{
+#input-title{
 width:500px;
 height:30px;
 border-radius: 5px;
 margin-left:20px;
 }
 
-.select_category{
+#select_category{
 width:150px;
 height:40px;
 margin-left:20px;
 
 }
-.input-price{
+#input-price{
 width:170px;
 height:40px;
 border-radius: 5px;
@@ -52,20 +52,20 @@ margin-left:20px;
 
 margin-left:20px;
 }
-.input-explain{
+#input-explain{
 width:520px;
 height:220px;
 border-radius: 5px;
 resize:none;
 }
 
-.input-location{
+#input-location{
 width:440px;
 height:50px;
 border-radius: 5px;
 }
 
-.cancel-button{
+#cancel-button{
 width:180px;
 height:65px;
 
@@ -77,7 +77,7 @@ font-size: 22px;
 font-weight: bold;
 margin-right:10px
 }
-.complete-button{
+#complete-button{
 width: 180px;
 height : 65px;
 
@@ -100,6 +100,89 @@ border: 1px solid #EAEBEE;
 
 
 </style>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 끝 -->
+<script type="text/javascript">
+$(function(){
+	$("#complete-button").click(function(){
+		
+		/* 상품 이미지 */
+/* 		if($("#input-title").val()==""){
+			chkNull(); */
+		//}//end if */
+		 
+		/* 상품 제목 */
+		if($("#input-title").val()==""){
+			chkNull();
+		}//end if
+		
+		/* 카테고리 */
+		if($("#select_category").val()==""){
+			chkNull();
+		}//end if
+		
+		/* 가격 */
+		if($("#input-price").val()==""){
+			chkNull();
+		}//end if
+		
+		/* 자세한 설명 */
+		if($("#input-explain").val()==""){
+			chkNull();
+		}//end if
+		
+		/* 거래희망장소 */
+		if($("#input-location").val()==""){
+			chkNull();
+		}//end if
+		
+	
+	});//click
+});//ready
+
+function chkNull(){
+	
+ 	/* 상품 사진 */
+	//if($("#input-title").val()==""){
+		//alert("사진은 최소 1개 이상 첨부해야 합니다!");
+		//$("#input-title").focus();
+		//return; 
+	//}//end if
+	/* 상품제목 */
+	if($("#input-title").val()==""){
+		alert("제목을 입력해주세요!");
+		$("#input-title").focus();
+		return;
+	}//end if
+	/* 카테고리 */
+	if($("#select_category").val()==""){
+		alert("상품의 카테고리를 설정해주세요!");
+		$("#select_category").focus();
+		return;
+	}//end if
+	/* 가격 */
+	if($("#input-price").val()==""){
+		alert("상품의 가격을 설정해주세요!");
+		$("#input-price").focus();
+		return;
+	}//end if
+	/* 자세한 설명 */
+	if($("#input-explain").val()==""){
+		alert("상품에 대한 설명을 적어주세요!");
+		$("#input-explain").focus();
+		return;
+	}//end if
+	/* 거래희망장소 */
+	if($("#input-location").val()==""){
+		alert("거래 위치를 설정해주세요!");
+		$("#input-location").focus();
+		return;
+	}//end if
+	
+	$("#frm").submit();
+}//chkNull
+</script>
 </head>
 
 
@@ -138,6 +221,7 @@ border: 1px solid #EAEBEE;
 <div style="font-size:30pt;"><strong>기본 정보</strong></div>
 <hr>
 <br/>
+<form id="frm" action="http://localhost/prj_2/cis/product_info_login.jsp" method="post">
 <div>상품이미지(0/6)
 <div class="input-img">클릭해주세요</div>
 </div>
@@ -154,13 +238,14 @@ border: 1px solid #EAEBEE;
 <hr>
 <br>
 <div>제목*   
-<input type="text"class="input-title"placeholder="내용을 입력해주세요">
+<input type="text"id="input-title"placeholder="내용을 입력해주세요">
+<!-- <input type="text"id="input-title"> -->
 </div>
 <br>
 <hr>
 <br/>
 <div>카테고리*   
-          <select class="select_category">
+          <select id="select_category">
              <option value="자전거">자전거</option>
              <option value="의류">의류</option>
              <option value="용품">용품</option>
@@ -171,7 +256,7 @@ border: 1px solid #EAEBEE;
 <hr>
 <br/>
 <div>가격*  
-<input type="text"class="input-price"placeholder="숫자만 입력해주세요">원
+<input type="text"id="input-price"placeholder="숫자만 입력해주세요">원
 <input type="checkbox"id="share-check">나눔하기
 <!-- 나눔하기 체크 시 가격을 0원으로 띄우는 기능 -->
 </div>
@@ -180,7 +265,7 @@ border: 1px solid #EAEBEE;
 <br/>
 <div style="font-size:20pt">자세한 설명* </div>
 <br/>
-<textarea class="input-explain"></textarea>
+<textarea id="input-explain"></textarea>
 <br/>
 <br/>
 <br/>
@@ -189,7 +274,7 @@ border: 1px solid #EAEBEE;
 
 <br/>
 <div>거래희망장소*  
-<input type="text"class="input-location"placeholder="위치추가 >">
+<input type="text" id="input-location"placeholder="위치추가 >">
 </div>
 <br/>
 <br/>
@@ -201,10 +286,11 @@ border: 1px solid #EAEBEE;
 <br/>
 <!-- 취소/작성완료 버튼 -->
 <div class="button-check">
-<input type="button"class="cancel-button"value="취소"onclick="location.href='http://localhost/prj_2/lmh/main_login.jsp'">
-<input type="button"class="complete-button"value="작성완료"onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'">
+<input type="button"id="cancel-button"value="취소"onclick="location.href='http://localhost/prj_2/lmh/main_login.jsp'">
+<input type="button"id="complete-button"value="작성완료">
+<!-- onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'" -->
 </div>
-
+</form>
 <br/>
 <br/>
 <br/>
@@ -219,38 +305,7 @@ border: 1px solid #EAEBEE;
         주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
         전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
        </div>
-       
-     <!--  <div class="inquiry1">
-        <a href="#void"  class="a_footer"">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer"">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer"">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer"">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer"">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer"">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer"">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer"">비전과계획</a>
-       </div> -->
+
    </div><!-- footer-->
    
    
