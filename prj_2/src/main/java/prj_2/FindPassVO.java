@@ -1,42 +1,45 @@
 package prj_2;
 
 public class FindPassVO {
-	private String id, name, eMail;
+	private String userId, userName, email;
 	
 	public FindPassVO() {
-
 	}
 
-	public FindPassVO(String id, String name, String eMail) {
-		this.id = id;
-		this.name = name;
-		this.eMail = eMail;
+	@Override
+	public String toString() {
+		return "FindPassVO [userId=" + userId + ", userName=" + userName + ", email=" + email + "]";
 	}
 
-	public String getId() {
-		return id;
+	public FindPassVO(String userId, String userName, String email) {
+		this.userId = userId;
+		this.userName = userName;
+		this.email = email;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public String getName() {
-		return name;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public String getEmail() {
+		return email;
 	}
-	
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	
 	

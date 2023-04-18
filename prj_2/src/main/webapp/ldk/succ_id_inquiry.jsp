@@ -52,13 +52,13 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 
 <div class="wrap"> <!-- wrap ( w : 900 x h : 1200) -->
 <div id="header">
-	<a href="http://211.63.89.142/prj_2/project/id_inquiry.jsp"">
+	<a href="http://localhost/prj_2/ldk/id_inquiry.jsp"">
 	<input type="button" id="colorBtn" value="아이디찾기" >
 	</a>
-	<a href="http://211.63.89.142/prj_2/project/pass_inquiry.jsp"">
+	<a href="http://localhost/prj_2/ldk/pass_inquiry.jsp"">
 	<input type="button" id="whiteBtn" value="비밀번호찾기" >
 	</a>
-	<a href="http://211.63.89.143/html_prj/project/main_logout.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
+	<a href="http://localhost/prj_2/lmh/main_logout.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
 </div>
 
 <form name="frm">
@@ -68,7 +68,7 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 	</div>
 	<div id="div2" >
 		회원님의 아이디는<br><br>
-		<input type="text" id="inputBox1" value="qwer1234" readonly="readonly"><br><br>
+		<input type="text" id="inputBox1" value="<%=request.getParameter("userId") %>" readonly="readonly"><br><br>
 		입니다.
 	</div>
 	<div id="div3">

@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 public class DbConnection {
 	private static DbConnection dbcon;
 	
-	@SuppressWarnings("unused")
 	public static DbConnection getInstance() {
 		if(dbcon==null) {
 			dbcon = new DbConnection();

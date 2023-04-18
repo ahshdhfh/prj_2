@@ -1,19 +1,11 @@
 package prj_2;
 
 public class FindIdVO {
-	private String userName, eMail;
+	private String userName, email;
 
 	public FindIdVO() {
 
 	}
-	
-	
-	public FindIdVO(String userName, String eMail) {
-		this.userName = userName;
-		this.eMail = eMail;
-	}
-
-
 
 	public String getUserName() {
 		return userName;
@@ -23,13 +15,20 @@ public class FindIdVO {
 		this.userName = userName;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+	public FindIdVO(String userName, String email) {
+		super();
+		this.userName = userName;
+		this.email = email;
+	}
+	
 	
 	
 }

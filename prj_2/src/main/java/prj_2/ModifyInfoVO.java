@@ -1,28 +1,28 @@
 package prj_2;
 
 public class ModifyInfoVO {
-	private String eMail, addr, detailAddr, phoneNum;
+	private String email, addr, detailAddr, tel;
 	private int actAreaNum, zipcode;
 	
 	public ModifyInfoVO() {
 
 	}
 
-	public ModifyInfoVO(String eMail, String addr, String detailAddr, String phoneNum, int actAreaNum, int zipcode) {
-		this.eMail = eMail;
+	public ModifyInfoVO(String email, String addr, String detailAddr, String tel, int actAreaNum, int zipcode) {
+		this.email = email;
 		this.addr = addr;
 		this.detailAddr = detailAddr;
-		this.phoneNum = phoneNum;
+		this.tel = tel;
 		this.actAreaNum = actAreaNum;
 		this.zipcode = zipcode;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getAddr() {
@@ -41,12 +41,12 @@ public class ModifyInfoVO {
 		this.detailAddr = detailAddr;
 	}
 
-	public String getPhoneNum() {
-		return phoneNum;
+	public String getTel() {
+		return tel;
 	}
 
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setTel(String phoneNum) {
+		this.tel = phoneNum;
 	}
 
 	public int getActAreaNum() {
@@ -64,6 +64,7 @@ public class ModifyInfoVO {
 	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
+
 
 	
 	

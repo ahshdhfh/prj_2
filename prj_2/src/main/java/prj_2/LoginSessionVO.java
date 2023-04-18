@@ -1,7 +1,7 @@
 package prj_2;
 
 public class LoginSessionVO {
-	private String nickName, personalIntro, userImg, userId;
+	private String nickName, personalIntro, userImg, userId, ip;
 	private int actAreaNum;
 	
 	public LoginSessionVO() {
@@ -9,13 +9,34 @@ public class LoginSessionVO {
 	}
 	
 	
-	public LoginSessionVO(String nickName, String personalIntro, String userImg, String userId, int actAreaNum) {
+
+
+	public LoginSessionVO(String nickName, String personalIntro, String userImg, String userId, String ip,
+			int actAreaNum) {
+		super();
 		this.nickName = nickName;
 		this.personalIntro = personalIntro;
 		this.userImg = userImg;
 		this.userId = userId;
+		this.ip = ip;
 		this.actAreaNum = actAreaNum;
 	}
+
+
+
+
+	public String getIp() {
+		return ip;
+	}
+
+
+
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+
 
 
 	public String getNickName() {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,8 @@
 #container{  height: 700px;position: relative; }
 
 #footer{  height: 300px;}
+.inputBox_email1{width:130px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
+.inputBox_email2{width:125px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;cursor: pointer;}
 
 #joinMembership{width:300px; height: 56px; text-align: center; font-size: 37px; font-weight: bold; 
 				position: absolute; left: 450px; top: 9px; border: 2px solid #333; border-radius: 10px;color:#5E5E5E}
@@ -32,12 +35,13 @@
 #font3{font-size:22px;font-family: "맑은고딕"; font-weight:bold; color: #333333;  }
 #textarea{width:500px;height: 150px;}
 #inputBox1{width:415px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
-#inputBox2{width:200px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
+#inputBox2{width:150px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
 #inputBox3{width:185px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
 #nextBtn{width:500px;height: 50px;background-color: #333333; color: #FFF;font-size: 18px;font-weight:bold;
 		border-radius: 10px;position: absolute; left:360px; top:370px;cursor: pointer;}
 
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
 function nullCheck() {
 	var obj = document.frm;
@@ -56,8 +60,26 @@ function nullCheck() {
 		obj.email2.focus();
 		return;
 	}
-	location.href="http://localhost/prj_2/ldk/succ_id_inquiry.jsp";
-}
+	$("#frm").submit();
+	
+	
+}//nullCheck
+
+$(function(){
+	  $('#email_select').change(function(){
+	   if($('#email_select').val() == "1"){//직접입력
+	    $("#last_email").val(""); //값 초기화
+	    $("#last_email").attr("readonly",false);
+	   } else if($('#email_select').val() == ""){//선택없음
+	    $("#last_email").val(""); //값 초기화
+	    $("#last_email").attr("readonly",true); //textBox 비활성화
+	   } else {
+	    $("#last_email").val($('#email_select').val()); //도메인선택
+	    $("#last_email").attr("readonly",true); //비활성화
+	   }
+	  });
+	 });
+
 </script>
 </head>
 <body>
@@ -65,31 +87,34 @@ function nullCheck() {
 <div class="wrap"> <!-- wrap ( w : 900 x h : 1200) -->
 <div id="header">
 	<input type="button" id="colorBtn" value="아이디찾기" >
-	<a href="http://211.63.89.142/html_prj/project/pass_inquiry.jsp"">
+	<a href="http://localhost/prj_2/ldk/pass_inquiry.jsp"">
 	<input type="button" id="whiteBtn" value="비밀번호찾기" >
 	</a>
 	
-	<a href="http://localhost/prj_2/lmh/main_logout.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
+	<a href="http://localhost/prj_2/lmh/main.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
 </div>
 
-<form name="frm">
+<form id="frm" name="frm" action="inquiry_process.jsp" method="post">
 <div id="container">
 	<div id="div1">
 		<font id="font3">아이디 찾기</font>
 	</div>
 	<div id="div2">
 		<label id="font1">이름 &nbsp&nbsp&nbsp</label>
-		<input type="text" id="inputBox1" name="name" placeholder="이름">
+		<input type="text" id="inputBox1" name="userName" placeholder="이름">
 	</div>
 	<div id="div3">
 		<label id="font1">이메일&nbsp</label>
-		<input type="text" id="inputBox2" placeholder="이메일" name="email"> @ 
-	<select id="inputBox3" name ="email2">
-		<option value="선택없음">선택없음</option>
-		<option value="google">google.com</option>
-		<option value="naver">naver.com</option>
-		<option value="nate">nate.com</option>
-		<option value="daum">daum.net</option>
+		<input type="text" class="inputBox_email1" placeholder="이메일" name="email" id="email"><strong>@</strong>
+		<input type="text" id="last_email" size="10" class="inputBox_email2" name="email2" >
+		<select class="inputBox_email2" id="email_select" name="email_select">
+		<option value="" selected>선택없음</option>
+		<option value="gmail.com">gmail.com</option>
+		<option value="naver.com">naver.com</option>
+		<option value="nate.com">nate.com</option>
+		<option value="daum.net">daum.net</option>
+		<option value="hotmail.com">hotmail.com</option>
+		<option value="1">직접 입력</option>
 	</select>
 	</div>
 	
@@ -98,46 +123,7 @@ function nullCheck() {
 </form>
 
  <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 4조 | 사업자번호 123-45-67890<br>
-        직업정보제공사업 신고번호 2023-서울강남-0000<br>
-        주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
-        전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
-       </div>
-       
-      <!-- <div class="inquiry1">
-        <a href="#void"  class="a_footer"">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer"">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer"">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer"">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer"">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer"">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer"">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer"">비전과계획</a>
-       </div> -->
+<c:import url="../lmh/footer.jsp"/>
    </div><!-- footer-->
 </div><!-- wrap -->
 </body>

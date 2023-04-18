@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,46 +98,7 @@ function check() {
 </form>
 
 <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 4조 | 사업자번호 123-45-67890<br>
-        직업정보제공사업 신고번호 2023-서울강남-0000<br>
-        주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
-        전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
-       </div>
-       
-      <!-- <div class="inquiry1">
-        <a href="#void"  class="a_footer"">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer"">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer"">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer"">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer"">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer"">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer"">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer"">비전과계획</a>
-       </div> -->
+<c:import url="../lmh/footer.jsp"/>
    </div><!-- footer-->
 </div>
 </body>

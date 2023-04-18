@@ -1,21 +1,33 @@
 package prj_2;
 
 public class UserVO {
-	private String userId, userPassword, userName, birthDate, eMail, nickName, gender, addr, detailAddr, personalIntro, userImg, createDate, tel, deleteDate, loginDate;
+	private String userId, userPassword, userName, birthDate, email, email2, nickName, gender, addr, detailAddr, personalIntro, userImg, createDate, tel1, tel2, deleteDate, loginDate;
 	private int zipcode, actAreaNum;
 	
 	public UserVO() {
 
 	}
+	
+	@Override
+	public String toString() {
+		return "UserVO [userId=" + userId + ", userPassword=" + userPassword + ", userName=" + userName + ", birthDate="
+				+ birthDate + ", email=" + email + ", email2=" + email2 + ", nickName=" + nickName + ", gender="
+				+ gender + ", addr=" + addr + ", detailAddr=" + detailAddr + ", personalIntro=" + personalIntro
+				+ ", userImg=" + userImg + ", createDate=" + createDate + ", tel1=" + tel1 + ", tel2=" + tel2
+				+ ", deleteDate=" + deleteDate + ", loginDate=" + loginDate + ", zipcode=" + zipcode + ", actAreaNum="
+				+ actAreaNum + "]";
+	}
 
-	public UserVO(String userId, String userPassword, String userName, String birthDate, String eMail, String nickName,
-			String gender, String addr, String detailAddr, String personalIntro, String userImg, String createDate,
-			String tel, String deleteDate, String loginDate, int zipcode, int actAreaNum) {
+	public UserVO(String userId, String userPassword, String userName, String birthDate, String email, String email2,
+			String nickName, String gender, String addr, String detailAddr, String personalIntro, String userImg,
+			String createDate, String tel1, String tel2, String deleteDate, String loginDate, int zipcode,
+			int actAreaNum) {
 		this.userId = userId;
 		this.userPassword = userPassword;
 		this.userName = userName;
 		this.birthDate = birthDate;
-		this.eMail = eMail;
+		this.email = email;
+		this.email2 = email2;
 		this.nickName = nickName;
 		this.gender = gender;
 		this.addr = addr;
@@ -23,7 +35,8 @@ public class UserVO {
 		this.personalIntro = personalIntro;
 		this.userImg = userImg;
 		this.createDate = createDate;
-		this.tel = tel;
+		this.tel1 = tel1;
+		this.tel2 = tel2;
 		this.deleteDate = deleteDate;
 		this.loginDate = loginDate;
 		this.zipcode = zipcode;
@@ -62,12 +75,20 @@ public class UserVO {
 		this.birthDate = birthDate;
 	}
 
-	public String geteMail() {
-		return eMail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
 	}
 
 	public String getNickName() {
@@ -126,12 +147,20 @@ public class UserVO {
 		this.createDate = createDate;
 	}
 
-	public String getTel() {
-		return tel;
+	public String getTel1() {
+		return tel1;
 	}
 
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+
+	public String getTel2() {
+		return tel2;
+	}
+
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
 	}
 
 	public String getDeleteDate() {
@@ -165,6 +194,7 @@ public class UserVO {
 	public void setActAreaNum(int actAreaNum) {
 		this.actAreaNum = actAreaNum;
 	}
+	
 	
 	
 	
