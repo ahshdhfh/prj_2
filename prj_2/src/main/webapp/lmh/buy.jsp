@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="prj_2.MainProdDAO"%>
+<%@page import="prj_2.MainProdVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -21,9 +24,91 @@ width: 1200px;
 position: relative; 
 }
 </style>
-</head>
-<body>
 
+
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
+
+
+<script type="text/javascript">
+$(function () {
+	alert("dfd");
+});
+
+
+/*  $(function(){	
+	 
+	$.ajax({
+		url : "buy_data_json.jsp",
+		dataType : "JSON",
+		error : function( xhr ){
+			alert( "서버에서 문제가 발생하였습니다" ); //사용자에게 보여줌
+			console.log( "에러코드 : " +xhr.status); //개발자가봄
+		},
+		success : function( jsonArr ){
+			var tbody ="";
+			
+			$.each( jsonArr, function(idx, jsonObj) {	
+				tbody+="<td class="prdCol"><div><img class='prod_img' src='"+jsonObj.PROD_IMG+
+				"'/></div><div><strong><h3>"+jsonObj.PROD_NAME+
+				"</h3></strong><br>"+jsonObj.PRICE+
+				   "원<br>"+jsonObj.PLACE_TRANSACTION+
+				   "<br>조회"+jsonObj.VIEW_CNT+
+				   "<br></div></td>";
+				   
+			}); //each   
+			
+			$("#popular_sale_table").append(tbody);
+		}//succes	
+	
+	});//ajax
+	
+});//ready
+ */
+
+
+$(function(){
+	  $("#select_town").change(function(){
+	  
+	    var  prodArea= $("#select_town option:selected").val();
+	    var queryString = { prodArea: prodArea };
+
+	    $.ajax({
+	      url : "buy_data_json.jsp",
+	      type : "POST",
+	      dataType : "JSON",
+	      error : function( xhr ){
+	        alert( "서버에서 문제가 발생하였습니다" ); //사용자에게 보여줌
+	        console.log( "에러코드 : " +xhr.status); //개발자가봄
+	      },
+	      success : function( jsonObj ){
+	        var tbody ="";
+	        var cnt = 0;
+
+	        $.each( jsonObj, function(idx, jsonObj) {
+	          cnt++;
+	  
+	          tbody += "<tr><td class='prdCol'><div><img class='prod_img' src='"+jsonObj.PROD_IMG+
+	          "'/></div><div><strong><h3>"+jsonObj.PROD_NAME +
+	          "</h3></strong> <br><fmt:formatNumber pattern='#,###,###' value='" +jsonObj.PRICE+
+	          "' />원<br><c:out value='"+ jsonObj.PLACE_TRANSACTION +
+	          "' /><br>조회 <c:out value='"+jsonObj.VIEW_CNT +"'/><br></div></td></tr>";  
+	        });
+
+	        $("#myTable tbody").html(tbody); // tbody 업데이트
+	      }
+	    });
+	  });
+	}); 
+
+</script>
+</head>
+
+
+
+
+<body>
 <div class="wrap">
 
   <div class="header">
@@ -31,312 +116,71 @@ position: relative;
   </div><!-- header-->
   
   
+  <form id="categoryFrm"  action="http://localhost/prj_2/lmh/buy.jsp" method="get">
+  <%
   
+  %>
   <div class="area_buy_bike">
     
     <div class="div_select_town"> 
-          <select class="select_town">
+          <select class="select_town" id="select_town"  >
              <option value="동네선택">동네를 선택하세요</option>
-             <option value="동네선택">개포동</option>
-             <option value="동네선택">논현동</option>
-             <option value="동네선택">대치동</option>
-             <option value="동네선택">도곡동</option>
-             <option value="동네선택">삼성동</option>
-             <option value="동네선택">세곡동</option>
-             <option value="동네선택">수서동</option>
-             <option value="동네선택">신사동</option>
-             <option value="동네선택">압구정동</option>
-             <option value="동네선택">역삼동</option>
-             <option value="동네선택">율현동</option>
-             <option value="동네선택">일원동</option>
-             <option value="동네선택">자곡동</option>
-             <option value="동네선택">청담동</option>
+             <option value=9>개포동</option>
+             <option value=4>논현동</option>
+             <option value=7>대치동</option>
+             <option value=8>도곡동</option>
+             <option value=5>삼성동</option>
+             <option value=14>세곡동</option>
+             <option value=11>수서동</option>
+             <option value=2>신사동</option>
+             <option value=1>압구정동</option>
+             <option value=6>역삼동</option>
+             <option value=13>율현동</option>
+             <option value=10>일원동</option>
+             <option value=12>자곡동</option>
+             <option value=3>청담동</option>
              
          </select>
     </div>
     
        <div class="div_select_category"> 
           <select class="select_category" onchange="window.location.href=this.value">
-             <option value="자전거">자전거</option>
-             <option value="의류">의류</option>
-             <option value="용품">용품</option>
-             <option value="부품">부품</option>
+             <option value="카테고리">카테고리</option>
+             <option value=1>자전거</option>
+             <option value=2>의류</option>
+             <option value=3>용품</option>
+             <option value=4>부품</option>
          </select>
     </div>
-     
+</form>  
   
   
+
+
+<table class="popular_sale_table" id="popular_sale_table">
+  <tr>
+    <%-- <c:forEach var="MainProdVO" items="${prodPopular}" varStatus="i">
+        <td class="prdCol">
+          <div>
+            <img class="prod_img" src="${MainProdVO.prodImg}" />
+          </div>
+          <div>
+            <strong><h3><c:out value="${MainProdVO.prodName}" /></h3></strong> <br>
+            <fmt:formatNumber pattern="#,###,###" value="${MainProdVO.price}" />원<br>
+            <c:out value="${MainProdVO.areaName}" /> <br>
+            조회 <c:out value="${MainProdVO.viewCnt}" /> <br>
+          </div>
+        </td>
+        <c:if test="${i.count % 4 eq 0}">
+          </tr><tr>
+        </c:if>
+ 
+    </c:forEach> --%>
+  </tr>
+</table> 
+  </div>
   
-     <div class="card-photo1">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc1">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price ">
-           200,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-       </div>
-      
-   </div><!-- card-photo1 -->
-   
-   
-   <div class="card-photo2">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc2">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price ">
-           30,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 140</span>
-       </div>
-    </div><!-- card-photo2 -->
-       
-    <div class="card-photo3">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/mages/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc3">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price ">
-           500,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 130</span>
-       </div>
-       
-  
-   </div><!-- card-photo3 -->
-   
-     <div class="card-photo4">
-      <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc4">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           200,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 120</span>
-       </div> 
-       
-   </div><!-- card-photo4 -->
-   
-   
-    <div class="card-photo5">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc5">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           50,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 110</span>
-       </div> 
-       
-   </div><!-- card-photo5 -->
-   
-   
-    <div class="card-photo6">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc6">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           100,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 100</span>
-       </div> 
-       
-   </div><!-- card-photo6 -->
-   
-   
-     <div class="card-photo7">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc7">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           20,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 90</span>
-       </div> 
-       
-   </div><!-- card-photo7 -->
-   
-   
-   <div class="card-photo8">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-   <div class="card-desc8">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           70,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 80</span>
-       </div> 
-       
-   </div><!-- card-photo8 -->
-   
-   
-    <div class="card-photo9">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-     <div class="card-desc9">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           70,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 80</span>
-       </div> 
-       
-   </div><!-- card-photo9 -->
-   
-   
-   
-    <div class="card-photo10">
-       <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-     <div class="card-desc10">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           70,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 80</span>
-       </div> 
-       
-   </div><!-- card-photo10 -->
-   
-   
-   <div class="card-photo11">
-     <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-    <div class="card-desc11">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           70,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 80</span>
-       </div> 
-       
-   </div><!-- card-photo11 -->
-   
-   
-   
-   <div class="card-photo12">
-      <a href="http://localhost/prj_2/조익상/product_info_logout.jsp">
-     <img alt="매물" src="http://localhost/prj_2/images/bike.PNG" class="photo">
-     </a>
-   </div>
-   
-       <div class="card-desc12">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price">
-           70,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 80</span>
-       </div> 
-   </div><!-- card-photo12 -->
-  
-  
-  
-  </div><!-- 구매하기 자전거 페이지 -->
-  
-  
-  
-  
-  
+
   
    <div class="footer">
       <c:import url="http://localhost/prj_2/lmh/footer.jsp" />

@@ -1,7 +1,11 @@
+<%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
+<%@page import="prj_2.LoginSessionVO"%>
+<%@page import="prj_2.LoginVO"%>
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
+<%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-      info="입력값을 받아 DB에 추가 하는 일 "
-    %>
+%>
     
         <!-- 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -127,43 +131,65 @@ font-weight: bold;
 }
 </style>
 
+
+
+
+<jsp:useBean id="lVO" class="prj_2.LoginVO" scope="page" />
+<jsp:setProperty property="*" name="lVO" /> 
+
+<jsp:useBean id="lsVO" class="prj_2.LoginSessionVO" scope="page" />
+<jsp:setProperty property="*" name="lsVO" /> 
+
+
+
 <script type="text/javascript">
 if("<%= request.getMethod() %>" == "GET") {
 	alert("정상적인 방식으로 요청하지 않으셨습니다");
 	location.href="http://localhost/prj_2/lmh/login.jsp";
 }//end if
-</script>
 
+
+<%
+//웹 파라메터의 아이디와 비밀번호가 존재하는 경우(백엔드에서 유효성검증을 한다) 
+if( lVO.getUserId() == null || "".equals(lVO.getUserId()) ||
+  lVO.getUserPassword() == null || "".equals(lVO.getUserPassword())){
+	response.sendRedirect("http://localhost/prj_2/lmh/login.jsp");
+	
+	return;
+}//end if
+%>
+
+<%
+//비밀번호를 MD5 algorithm을 사용하여 일방향 해시로 암호화 수행한다
+//아이디와 비밀번호는 LoginVO를 만들어서 사용할 것
+lVO.setUserPassword(DataEncrypt.messageDigest("MD5", lVO.getUserPassword()));
+/* lVO.setIpAddr(request.getRemoteAddr()); */
+
+//DAO를 사용하여 로그인 작업 수행
+UserDAO userDAO = new UserDAO();
+String name=userDAO.selectLogin(lVO).getNickName();
+
+
+if("".equals(name) ) {//empty면 로그인실패	
+	
+}else{
+	//로그인 결과로 받은 이름은 암호화된 이름 => 복호화
+	DataDecrypt dd = new DataDecrypt("RpNdKby55r8t8zp4YPa2Qw== 바꿔야됨"); //암호화할때 쓴 키를 복호화 한다 <로그인폼프로세스 에서>
+	name=dd.decryption(name);
+	//이름을 어떤 페이지에서든 사용하기 위해 session 설정
+	session.setAttribute("sesName", name);
+	
+	session.setMaxInactiveInterval(60*60);
+}//end else		
+	%>
+
+
+
+
+</script>
 </head>
 <body>
-<%-- <%
-if("POST".equals(request.getMethod())) {
-%>
-<jsp:useBean id="iVO" class="day0413.InjectionVO" scope="page" />
-<jsp:setProperty property="*" name="iVO"/>
 
-<%
-InjectionDAO iDAO = new InjectionDAO();
-
-try{
-	
-iDAO.insertInjection(iVO); //DB table에 추가 작업
-%>
-<span style="font-weight: blod; font-size: 20px">
-<c:out value="${param.id }" />
-</span>( <c:out value="${param.name }" />) 님 입력해 주셔서 감사합니다 <br>
-입력해 주신 자료는 안전하게 보관하며, 사용이 끝나는 즉시 저장하지 않고 폐기하겠습니다
-<%
-}catch(SQLException se){
-	se.printStackTrace();
-	%>
-	<c:out value="${ param.id }" />는 이미 사용중이므로 다른 아이디를 입력해 주세요
-	<a href="#void" onclick="history.back()">뒤로</a>
-	<%
-}//end catch
-}// end if
-%>
-</div> --%>
 
 
 </body>

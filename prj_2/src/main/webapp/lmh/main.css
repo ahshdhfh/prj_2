@@ -2,24 +2,26 @@
 
 .wrap{width: 1200px; height: 1400px; margin: 0px auto;}
 
-.header{
+.header{                     
 height: 80px; 
-position: relative; }
+position: relative; 
+} /* 헤더 */
 
- .logo{
+ .logo{                     
 width:210px;
 height:65px; 
 position: absolute;  
 top : 13px;
 background: #ffffff url(http://211.63.89.143/prj_2/project/images/logo.PNG)no-repeat;
-} 
+}  /* 로고  */
  
-.search_area{  
+.search_area{             
 width: 500px;
 height : 50px;
-margin: 0px auto;}  
+margin: 0px auto;
+}   /* 검색창영역  */
 
-.search{
+.search{                  
 width: 500px;
 height : 50px;
 position: absolute;
@@ -27,7 +29,9 @@ top : 13px;
 margin: 0px auto;
 font-size: 17px;
 border-radius: 10px;
-}
+} /* 검색창 */
+
+
 
 /************** 로그인전 *********************/
 .join_member{
@@ -55,7 +59,6 @@ color: #9B59B6;
 .a_login{
 color: #000;
 }
-/************** 로그인전 *********************/
 
 
 
@@ -85,10 +88,109 @@ position: absolute;
 top : 27px;
 right: 50px;
 }
-/***************** 로그인후 ******************/
 
 
 
+
+/***************** 구매하기 메뉴******************/
+
+.text_buy{    /*구매하기 text  */
+font-size: 23px;
+font-weight: bold;
+position: absolute;
+top : 50px;
+left: 250px; 
+}
+
+.a_buy{ /* 구매하기 링크 */
+color: #000;
+font-family: 'Dongle', sans-serif;
+font-family: 'Gamja Flower', cursive;
+}
+
+.bike{  /* 자전거 */
+position: absolute;
+font-size: 18px;
+top : 53px;
+left: 430px; 
+}
+
+.clothes{  /* 의류 */
+position: absolute;
+font-size: 18px;
+top : 53px;
+left: 555px; 
+}
+
+.goodes{  /* 용품 */
+position: absolute;
+font-size: 18px;
+top : 53px;
+left: 680px; 
+}
+
+.component{  /* 부품 */
+position: absolute;
+font-size: 18px;
+top : 53px;
+left: 800px; 
+}
+
+
+a {
+  text-decoration: none;
+}
+
+
+
+
+
+
+
+/***************** 인기매물 ******************/
+
+.text_popular_sale{   /* 인기매물text */
+position: absolute;
+font-size: 35px;
+font-weight: bold;
+top : 50px;
+left: 525px;
+}
+
+
+
+.popular_sale_table{  /* 인기매물 8개 테이블*/
+position: absolute; 
+top : 150px; 
+left: 240px;
+}  
+
+ .prdCol{  /* 테이블에 td */ 
+ width: 200px; 
+ height: 180px; 
+ }
+ 
+.prod_img{    /*인기매물사진사이즈  */
+width: 135px;
+height: 135px;
+object-fit: cover;
+border-radius: 10px; } 
+
+
+.more_popular_items{  /*인기매물 더보기 text  */
+position: absolute;
+font-size: 18px;
+top : 850px;
+left: 525px; 
+}
+
+
+
+
+/********************푸터******************/
+.hr_footer{
+border: 1px solid #EAEBEE;
+}
 
 .footer{
 height: 300px; 
@@ -103,67 +205,4 @@ top: 30px;
 left: 30px;
 color: #868B94;
 font-size: 17px;
-}
-
-
-.inquiry1{
-position: absolute; 
-top: 150px;
-left: 30px;
-}
-
-.inquiry2{
-position: absolute; 
-top: 150px;
-left: 150px;
-}
-
-.inquiry3{
-position: absolute; 
-top: 150px;
-left: 280px;
-}
-
-.inquiry4{
-position: absolute; 
-top: 150px;
-left: 400px;
-}
-
-
-.inquiry5{
-position: absolute; 
-top: 190px;
-left: 30px;
-}
-
-.inquiry6{
-position: absolute; 
-top: 190px;;
-left: 150px;
-}
-
-.inquiry7{
-position: absolute; 
-top: 190px;
-left: 350px;
-}
-
-.inquiry8{
-position: absolute; 
-top: 190px;
-left: 480px;
-}
-
-
-.a_footer{
-
-color: #868B94;
-font-size: 19px;
-font-weight: bold;
-}
-
-
-a{
-text-decoration: none;
 }
