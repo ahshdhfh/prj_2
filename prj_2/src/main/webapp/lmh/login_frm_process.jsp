@@ -5,6 +5,7 @@
 <%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
+    session="true"
 %>
     
         <!-- 추가 -->
@@ -137,11 +138,16 @@ font-weight: bold;
 <jsp:useBean id="lVO" class="prj_2.LoginVO" scope="page" />
 <jsp:setProperty property="*" name="lVO" /> 
 
-<jsp:useBean id="lsVO" class="prj_2.LoginSessionVO" scope="page" />
-<jsp:setProperty property="*" name="lsVO" /> 
 
 
 
+<%  System.out.println(lVO.getUserId());
+System.out.println(lVO.getUserPassword());
+%>
+
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
 <script type="text/javascript">
 if("<%= request.getMethod() %>" == "GET") {
 	alert("정상적인 방식으로 요청하지 않으셨습니다");
@@ -169,28 +175,34 @@ lVO.setUserPassword(DataEncrypt.messageDigest("MD5", lVO.getUserPassword()));
 UserDAO userDAO = new UserDAO();
 String name=userDAO.selectLogin(lVO).getNickName();
 
-
-if("".equals(name) ) {//empty면 로그인실패	
+if( name==null ) {//empty면 로그인실패	
+	%>
+	alert("아이디나 비밀번호를 다시 확인해주세요");
+}
+	
+	<%
 	
 }else{
-	//로그인 결과로 받은 이름은 암호화된 이름 => 복호화
-	DataDecrypt dd = new DataDecrypt("RpNdKby55r8t8zp4YPa2Qw== 바꿔야됨"); //암호화할때 쓴 키를 복호화 한다 <로그인폼프로세스 에서>
-	name=dd.decryption(name);
-	//이름을 어떤 페이지에서든 사용하기 위해 session 설정
-	session.setAttribute("sesName", name);
 	
-	session.setMaxInactiveInterval(60*60);
+	//이름을 어떤 페이지에서든 사용하기 위해 session 설정
+	
+	LoginSessionVO lsVO = userDAO.selectLogin(lVO);
+	session.setAttribute("loginData", lsVO);
+	
+	session.setMaxInactiveInterval(60*60*1);
+	%>
+	location.href="main.jsp";
+	<%
+
 }//end else		
 	%>
-
-
-
 
 </script>
 </head>
 <body>
-
-
+<form id="frm" name="frm"  action="main.jsp" method="post">
+<input type="hidden" value="<%=session.getAttribute("nickName") %>" name="nickName"/>
+</form>
 
 </body>
 </html>

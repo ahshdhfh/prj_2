@@ -169,17 +169,17 @@ public class MainProdDAO {
             //4. 쿼리문 생성객체 얻기
             StringBuilder selectSearchProd = new StringBuilder();
             selectSearchProd
-            .append("select PROD_NAME, VIEW_CNT, PRICE, PLACE_TRANSACTION,PROD_IMG            ")
-            .append("from PRODUCT p, PRODUCT_STATUS ps, PRODUCT_IMG pi                                ")
-            .append("where p.PROD_NUM=ps.PROD_NUM and                                                           ")
-            .append("pi.PROD_NUM=p.PROD_NUM and                                                                     ")
-            .append("PRODUCT_STATUS='판매중' and                                                                        ")
-            .append("prod_img_num in (                                                                                            ")
-            .append("select min(PROD_IMG_NUM) as PROD_IMG_NUM                                                 ")
-            .append("from PRODUCT_IMG                                                                                         ")
-            .append("WHERE PROD_NAME LIKE '%'||?||'%' OR CATEGORY_NUM=? OR ACTI_AREA_NUM=?                  ")
-            .append("group by PROD_NUM)                                                                                       ")
-            .append("order by VIEW_CNT desc                                                                                    ");
+            .append("select PROD_NAME, VIEW_CNT, PRICE, PLACE_TRANSACTION,PROD_IMG                                ")
+            .append("from PRODUCT p, PRODUCT_STATUS ps, PRODUCT_IMG pi                                                     ")
+            .append("where p.PROD_NUM=ps.PROD_NUM and                                                                                ")
+            .append("pi.PROD_NUM=p.PROD_NUM and                                                                                          ")
+            .append("PRODUCT_STATUS='판매중' and                                                                                             ")
+            .append("prod_img_num in (                                                                                                                 ")
+            .append("select min(PROD_IMG_NUM) as PROD_IMG_NUM                                                                       ")
+            .append("from PRODUCT_IMG                                                                                                               ")
+            .append("WHERE PROD_NAME LIKE '%'||?||'%' OR CATEGORY_NUM=? OR ACTI_AREA_NUM=?                   ")
+            .append("group by PROD_NUM)                                                                                                             ")
+            .append("order by VIEW_CNT desc                                                                                                          ");
             
             pstmt = con.prepareStatement(selectSearchProd.toString());
             

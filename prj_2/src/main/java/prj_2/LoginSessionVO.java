@@ -87,6 +87,15 @@ public class LoginSessionVO {
 	public void setActAreaNum(int actAreaNum) {
 		this.actAreaNum = actAreaNum;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "LoginSessionVO [nickName=" + nickName + ", personalIntro=" + personalIntro + ", userImg=" + userImg
+				+ ", userId=" + userId + ", ip=" + ip + ", actAreaNum=" + actAreaNum + "]";
+	}
 	
 	
 	

@@ -39,8 +39,12 @@ background-color: #F7F7F7;}
 height: 140px; 
 position: relative; 
 }
-
 </style>
+
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
+
 </head>
 
 
@@ -50,7 +54,7 @@ position: relative;
 <div class="wrap">
 
   <div class="header">
-      <c:import url="http://localhost/prj_2/lmh/header.jsp" /> 
+      <%@ include file="header.jsp" %>
   </div>
    
    
@@ -93,7 +97,10 @@ position: relative;
 <%
 MainProdDAO MainProdDAO = new MainProdDAO();
 List<MainProdVO> MainProdlist = MainProdDAO.MainData("prodPopular");
-
+ 
+/* System.out.println("send 후 세션값 : "+(String)session.getAttribute("nickName")); */
+/* nickName = (String)request.getAttribute("nickName");*/
+System.out.println(nickName); 
 pageContext.setAttribute("prodPopular", MainProdlist);
 %>
 

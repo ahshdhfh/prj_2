@@ -122,29 +122,27 @@ font-weight: bold;
 }
 </style>
 
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
+
+
 <script type="text/javascript">
 
-function chkNull(){
-    var obj = document.frm;
-    var id = obj.id.value;
-    var pass = obj.pass.value;
-
-    if(obj.id.value === ""){
-        alert("아이디를 입력해 주세요");
-        obj.id.focus();
-        return;
-    }
-    if(obj.pass.value === ""){
-        alert("비밀번호를 입력해 주세요");
-        obj.pass.focus();
-        return;
-    }
-    
-    if(id.trim() === "" || pass.trim() === ""){
-        alert("아이디와 비밀번호를 모두 입력해 주세요");
-        return;
-    }
-    $("#postFrm").submit();
+    function chkNull(){
+    	if($("#id").val() == ""){
+    		alert("아이디는 필수 입력!!");
+    		$("#id").focus();
+    		return;
+    	}//end if
+    	if($("#pass").val() == ""){
+    		alert("비밀번호는 필수 입력!!");
+    		$("#pass").focus();
+    		return;
+    	}//end if
+    	
+    	$("#postFrm").submit();
+   
 }//chkNull
 
 </script>
@@ -171,11 +169,11 @@ function chkNull(){
  <form id="postFrm"  action="http://localhost/prj_2/lmh/login_frm_process.jsp" method="post" >
      
      <div class="input_login">
-     <input type="text"  id="id" name="id" class="text_input_login"  placeholder="아이디를 입력해주세요"  autofocus="autofocus"> 
+     <input type="text"  id="id" name="userId" class="text_input_login"  placeholder="아이디를 입력해주세요"  autofocus="autofocus"> 
      </div>
      
      <div class="input_password">
-    <input type="password"  id="pass" name="pass" class="text_input_password" placeholder="비밀번호를 입력해주세요"> 
+    <input type="password"  id="pass" name="userPassword" class="text_input_password" placeholder="비밀번호를 입력해주세요"> 
      </div>
      
      <div class="find_id">
@@ -196,10 +194,10 @@ function chkNull(){
         <input type="button"  value="회원가입" class="btn_join_member"  onclick="location.href='http://localhost/prj_2/ldk/membership_term.jsp' ">
      </div>
      
-</form>     
+</form> <!--postFrm  -->    
   
   
-  </div><!-- 로그인 -->
+  </div><!-- area_login -->
 
   
   
