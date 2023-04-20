@@ -38,7 +38,6 @@ public class UserDAO {
 			.append("CREATE_DATE,TEL,ACTI_AREA_NUM,BIRTHDATE) ")//sysdate,3개
 			.append("values(?,?,?,?,?,?,?,?,?,sysdate,?,?,?)");
 			pstmt=con.prepareStatement(insertMember .toString());
-			System.out.println("쿼리문 생성객체 얻기");
 			//5. 바인드변수 값 설정
 			pstmt.setString(1, userVO.getUserId());//1.아이디
 			pstmt.setString(2, userVO.getUserPassword());//2.비번
@@ -53,12 +52,9 @@ public class UserDAO {
 			pstmt.setInt(11, userVO.getActAreaNum());//11.활동지역번호
 			pstmt.setString(12, userVO.getBirthDate());//12.생일
 			//6. 쿼리문 수행 후 결과 얻기
-			
 			pstmt.execute();
 			
-		} catch(Exception e){
-			e.printStackTrace();
-		}finally {
+		} finally {
 			//7. 연결 끊기
 			dbCon.dbClose(null, pstmt, con);
 		}//end finally
@@ -178,7 +174,6 @@ public class UserDAO {
 			pstmt.setString(1, eMail);//1.아이디
 			
 			//6. 쿼리문 수행 후 결과 얻기
-			
 			rs=pstmt.executeQuery();
 			if(!rs.next()) {//값이 없으면(중복이아니면) 타게함
 				result=true;//true만들기
@@ -187,7 +182,6 @@ public class UserDAO {
 			//7. 연결 끊기
 			dbCon.dbClose(rs, pstmt, con);
 		}//end finally
-		
 		return result;
 	}//eMailDup
 	
@@ -224,17 +218,13 @@ public class UserDAO {
 			pstmt.setString(2, loginVO.getUserPassword());//1.아이디
 			
 			//6. 쿼리문 수행 후 결과 얻기
-			
 			rs=pstmt.executeQuery();
-			
-			if(rs==null) {//아디비번이 틀리면?
-				lsVO=null;
-			}else {
+			if(rs.next()) {
 				lsVO = new LoginSessionVO
 						(rs.getString("nickname"),rs.getString("personal_intro"),
 						rs.getString("user_img"),rs.getString("user_id"),
 						rs.getString("ip"),rs.getInt("act_area_num"));//일치하지않으면 결과는 true, 일치하면(중복이면) false
-			}//end else
+			}//end if
 			
 		} finally {
 			//7. 연결 끊기
@@ -267,16 +257,16 @@ public class UserDAO {
 			//4. 쿼리문 생성객체 얻기
 			StringBuilder selectFindId = new StringBuilder();
 			selectFindId 
-			.append("	select user_id	")//3개
+			.append("	select user_id	")
 			.append("	from users	")
-			.append("	where user_name=? and email=?");//3개
+			.append("	where user_name=? and email=?");
+			
 			//5. 바인드변수 값 설정
 			pstmt=con.prepareStatement(selectFindId.toString());
 			pstmt.setString(1, findIdVO.getUserName());//1. 이름
 			pstmt.setString(2, findIdVO.getEmail());//2.이메일
 			
 			//6. 쿼리문 수행 후 결과 얻기
-			
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {				
@@ -469,10 +459,11 @@ public class UserDAO {
 			//6. 쿼리문 수행 후 결과 얻기
 			
 			rs=pstmt.executeQuery();
-			
+			if(rs.next()) {
 			miVO = new ModifyInfoVO(rs.getString("email"), rs.getString("addr"),
 					rs.getString("detailaddr"), rs.getString("tel"),
 					rs.getInt("acti_area_num"), rs.getInt("zipcode"));
+			}
 			
 		} finally {
 			//7. 연결 끊기
@@ -613,9 +604,10 @@ public class UserDAO {
 			//6. 쿼리문 수행 후 결과 얻기
 			
 			rs=pstmt.executeQuery();
-			
-			mpVO = new ModifyProfileVO(rs.getString("nickname"), rs.getString("user_img"), rs.getString("personal_intro"));
-			
+			if(rs.next()) {
+			mpVO = new ModifyProfileVO
+					(rs.getString("nickname"), rs.getString("user_img"), rs.getString("personal_intro"));
+			}
 		} finally {
 			//7. 연결 끊기
 			dbCon.dbClose(rs, pstmt, con);

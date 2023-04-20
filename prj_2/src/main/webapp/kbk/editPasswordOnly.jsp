@@ -1,3 +1,4 @@
+<%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -103,12 +104,21 @@ function checkNull() {
       
 
  <% request.setCharacterEncoding("UTF-8"); //post 방식의 한글 처리 : request.setCharacterEncoding("변경할 charset");
-String id=request.getParameter("id"); %>
+
+String userId = (String)session.getAttribute("userId");
+
+if(userId==null){
+	userId=request.getParameter("userId"); 
+}
+
+UserDAO userDAO = new UserDAO();
+
+%>
 
 
        <div class="div_select_login"> 
          <select class="select_login" onchange="window.location.href=this.value">
-             <option value="이름"  hidden><%=id %> 님</option>
+             <option value="이름"  hidden><%=userId %> 님</option>
              <option value="http://localhost/prj_2/kbk/mypage.jsp" >나의 마켓</option>
              <option value="http://localhost/prj_2/cis/sell_page.jsp">상품 등록</option>
              <option value="http://localhost/prj_2/kbk/editInfoPassword.jsp">개인정보수정</option>
@@ -124,10 +134,10 @@ String id=request.getParameter("id"); %>
    
 <div id="container">
 <div id="div0"><h2>비밀번호 수정</h2></div>
-<form name="frm" action="password.jsp" method="post">
+<form name="frm" action="editPassword_process.jsp" method="post">
 <div id="divId"> 
 	<font id="font1">아이디</font><br>
-	<input type="text" id="inputBox_id" placeholder="아이디" readonly>
+	<input type="text" id="inputBox_id" name="userId" placeholder="아이디" value ="<%=userId %>"readonly>
 </div>
 <div id="divPass"> 
 	<font id="font1">비밀번호</font><br>

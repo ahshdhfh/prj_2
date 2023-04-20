@@ -64,7 +64,6 @@ function validateId(nickName){
 	<%
 	request.setCharacterEncoding("UTF-8");
 	String nickName=request.getParameter("nickName");
-	System.out.println("파라메터에서 가져온값 : "+nickName);
 	if("POST".equals(request.getMethod())){
 		
 		UserDAO userDAO = new UserDAO();

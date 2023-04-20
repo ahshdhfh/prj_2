@@ -8,7 +8,6 @@ public class ModifyPassVO {
 	}
 
 	public ModifyPassVO(String userId, String newPass) {
-		super();
 		this.userId = userId;
 		this.newPass = newPass;
 	}

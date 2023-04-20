@@ -376,7 +376,7 @@ $(function(){
 <div id="div8"> 
 	<font id="font1">성별</font><br>
 	<select id="inputBox" name="gender">
-		<option value="선택없음">선택없음</option>
+		<option value="none">선택없음</option>
 		<option value="남자" selected="selected">남자</option>
 		<option value="여자">여자</option>
 	</select>
