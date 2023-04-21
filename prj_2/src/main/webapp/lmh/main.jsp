@@ -39,6 +39,11 @@ background-color: #F7F7F7;}
 height: 140px; 
 position: relative; 
 }
+
+
+/* table td {
+padding-bottom: 40px;
+} */
 </style>
 
 <!-- jQuery CDN 시작 -->
@@ -57,7 +62,9 @@ position: relative;
       <%@ include file="header.jsp" %>
   </div>
    
-   
+ <%--   <c:import url="dsfsf">
+   <param:<% %>>
+   </c:import> --%>
    
    
    
@@ -69,19 +76,19 @@ position: relative;
         </div>
         
         <div class="bike">
-        <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"">자전거</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=1"  class="a_buy"">자전거</a>
          </div> 
          
         <div class="clothes">
-        <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"">의류</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=2"  class="a_buy"">의류</a>
         </div>
         
         <div class="goodes">
-        <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"">용품</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=3"  class="a_buy"">용품</a>
         </div>
         
         <div class="component">
-        <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"" >부품</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=4"  class="a_buy"" >부품</a>
         </div>
    </div><!-- container-->
         
@@ -129,7 +136,7 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 
 
    <div class="more_popular_items"> 
-          <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
+          <a href="http://localhost/prj_2/lmh/buy.jsp?category=0&searchInput=''"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
    </div>
 
 </form>

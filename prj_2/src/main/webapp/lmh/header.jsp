@@ -34,11 +34,11 @@ System.out.println(nickName); */
 	        searchInput.focus();
 	        return false;
 	    } else {
-	        var mainProdSearchDAO = new MainProdSearchDAO();
-	        mainProdSearchDAO.selectProd(searchInput.value, function(result) {
 	            location.href = 'http://localhost/prj_2/lmh/buy.jsp?search=' + encodeURIComponent(searchInput.value);
-	        });
 	        return false;
+	    	
+	    }
+
 	    }
 	}
  
@@ -56,14 +56,15 @@ pageContext.setAttribute("prodSearch", MainProdlist);
 
 
       <!-- 검색창폼 -->
-<form action="/search" method="get" onSubmit="return validateSearchInput()">
-
+<form action="http://localhost/prj_2/lmh/buy.jsp" method="get" onSubmit="return validateSearchInput()">
+	<!-- <input type="hidden" name="category" value="0"> -->
     <!-- 로고 -->
    <a href="http://localhost/prj_2/lmh/main.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
 
 
    <div class="search_area"><!--  검색창   -->
-   <input type="search"  class="search" placeholder="물품을 검색해 보세요" > <!--list 검색가능   -->
+   <input type="search"  class="search" name="searchInput" placeholder="물품을 검색해 보세요" > <!--list 검색가능   -->
+   <input type="hidden"  name="category" value="0"> <!--list 검색가능   -->
    </div>
 
        
@@ -94,7 +95,6 @@ pageContext.setAttribute("prodSearch", MainProdlist);
        <div class="search_area">
        <input type="search" class="search" placeholder="물품을 검색해 보세요"> <!--list 검색가능  -->
        </div><!-- search-->
-       </form>
   
 
   

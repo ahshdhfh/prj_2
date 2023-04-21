@@ -1,3 +1,4 @@
+<%@page import="java.io.Console"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="java.sql.SQLException"%>
@@ -13,8 +14,18 @@
     <%
     MainProdDAO mpDAO = new MainProdDAO();
     
+    
+    String searchName=null;
+    String dongName = null;
+    String categoryName=null;
+    
+    searchName=request.getParameter("searchName");
+    dongName=request.getParameter("dongName");
+    categoryName=request.getParameter("categoryName");
+    
+    
     try{
-        List<MainProdVO>list = mpDAO.CategoryData("어린이",1,11);
+        List<MainProdVO>list = mpDAO.CategoryData(searchName, categoryName, dongName);
         
         //1. JSONArray 생성
        JSONArray jsonArr = new JSONArray();

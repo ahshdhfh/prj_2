@@ -168,13 +168,15 @@ left: 240px;
  .prdCol{  /* 테이블에 td */ 
  width: 200px; 
  height: 180px; 
+ padding-bottom: 40px;
  }
  
 .prod_img{    /*인기매물사진사이즈  */
 width: 135px;
 height: 135px;
 object-fit: cover;
-border-radius: 10px; } 
+border-radius: 10px;
+} 
 
 
 .more_popular_items{  /*인기매물 더보기 text  */
@@ -193,7 +195,7 @@ border: 1px solid #EAEBEE;
 }
 
 .footer{
-height: 300px; 
+min-height: 300px; 
 position: relative; 
 
 }
