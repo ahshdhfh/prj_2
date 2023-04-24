@@ -1,39 +1,44 @@
 package prj_2;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class ProductDetailVO {
-	private String imgList[], prodName, showCategory, location, textOfPrd, sellUesrId, selfIntroduce, sellUserImg[];
-	private int price, prodNum, countInter,countCom,countView;
+
+	private String  prodImg[],prodName, placeTraction, textOfPrd, sellUserId, selfIntroduce, sellUserImg;
+	private int price, prodNum, categoryNumber, interestCnt, commCnt, viewCnt, areaNum;
+	private Date inputDate;
 	
 	public ProductDetailVO() {
 	
 	}
 
-	public ProductDetailVO(String[] imgList, String prodName, String showCategory, String location, String textOfPrd,
-			String sellUesrId, String selfIntroduce, String[] sellUserImg, int price, int prodNum, int countInter,
-			int countCom, int countView) {
-		this.imgList = imgList;
+	public ProductDetailVO(String[] prodImg, String prodName, String placeTraction, String textOfPrd, String sellUserId,
+			String selfIntroduce, String sellUserImg, int price, int prodNum, int categoryNumber, int interestCnt,
+			int commCnt, int viewCnt, int areaNum, Date inputDate) {
+		this.prodImg = prodImg;
 		this.prodName = prodName;
-		this.showCategory = showCategory;
-		this.location = location;
+		this.placeTraction = placeTraction;
 		this.textOfPrd = textOfPrd;
-		this.sellUesrId = sellUesrId;
+		this.sellUserId = sellUserId;
 		this.selfIntroduce = selfIntroduce;
 		this.sellUserImg = sellUserImg;
 		this.price = price;
 		this.prodNum = prodNum;
-		this.countInter = countInter;
-		this.countCom = countCom;
-		this.countView = countView;
+		this.categoryNumber = categoryNumber;
+		this.interestCnt = interestCnt;
+		this.commCnt = commCnt;
+		this.viewCnt = viewCnt;
+		this.areaNum = areaNum;
+		this.inputDate = inputDate;
 	}
 
-	public String[] getImgList() {
-		return imgList;
+	public String[] getProdImg() {
+		return prodImg;
 	}
 
-	public void setImgList(String[] imgList) {
-		this.imgList = imgList;
+	public void setProdImg(String[] prodImg) {
+		this.prodImg = prodImg;
 	}
 
 	public String getProdName() {
@@ -44,20 +49,12 @@ public class ProductDetailVO {
 		this.prodName = prodName;
 	}
 
-	public String getShowCategory() {
-		return showCategory;
+	public String getPlaceTraction() {
+		return placeTraction;
 	}
 
-	public void setShowCategory(String showCategory) {
-		this.showCategory = showCategory;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
+	public void setPlaceTraction(String placeTraction) {
+		this.placeTraction = placeTraction;
 	}
 
 	public String getTextOfPrd() {
@@ -68,12 +65,12 @@ public class ProductDetailVO {
 		this.textOfPrd = textOfPrd;
 	}
 
-	public String getSellUesrId() {
-		return sellUesrId;
+	public String getSellUserId() {
+		return sellUserId;
 	}
 
-	public void setSellUesrId(String sellUesrId) {
-		this.sellUesrId = sellUesrId;
+	public void setSellUserId(String sellUserId) {
+		this.sellUserId = sellUserId;
 	}
 
 	public String getSelfIntroduce() {
@@ -84,11 +81,11 @@ public class ProductDetailVO {
 		this.selfIntroduce = selfIntroduce;
 	}
 
-	public String[] getSellUserImg() {
+	public String getSellUserImg() {
 		return sellUserImg;
 	}
 
-	public void setSellUserImg(String[] sellUserImg) {
+	public void setSellUserImg(String sellUserImg) {
 		this.sellUserImg = sellUserImg;
 	}
 
@@ -108,39 +105,66 @@ public class ProductDetailVO {
 		this.prodNum = prodNum;
 	}
 
-	public int getCountInter() {
-		return countInter;
+	public int getCategoryNumber() {
+		return categoryNumber;
 	}
 
-	public void setCountInter(int countInter) {
-		this.countInter = countInter;
+	public void setCategoryNumber(int categoryNumber) {
+		this.categoryNumber = categoryNumber;
 	}
 
-	public int getCountCom() {
-		return countCom;
+	public int getInterestCnt() {
+		return interestCnt;
 	}
 
-	public void setCountCom(int countCom) {
-		this.countCom = countCom;
+	public void setInterestCnt(int interestCnt) {
+		this.interestCnt = interestCnt;
 	}
 
-	public int getCountView() {
-		return countView;
+	public int getCommCnt() {
+		return commCnt;
 	}
 
-	public void setCountView(int countView) {
-		this.countView = countView;
+	public void setCommCnt(int commCnt) {
+		this.commCnt = commCnt;
+	}
+
+	public int getViewCnt() {
+		return viewCnt;
+	}
+
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
+	}
+
+	public int getAreaNum() {
+		return areaNum;
+	}
+
+	public void setAreaNum(int areaNum) {
+		this.areaNum = areaNum;
+	}
+
+	public Date getInputDate() {
+		return inputDate;
+	}
+
+	public void setInputDate(Date inputDate) {
+		this.inputDate = inputDate;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductDetailVO [imgList=" + Arrays.toString(imgList) + ", prodName=" + prodName + ", showCategory="
-				+ showCategory + ", location=" + location + ", textOfPrd=" + textOfPrd + ", sellUesrId=" + sellUesrId
-				+ ", selfIntroduce=" + selfIntroduce + ", sellUserImg=" + Arrays.toString(sellUserImg) + ", price="
-				+ price + ", prodNum=" + prodNum + ", countInter=" + countInter + ", countCom=" + countCom
-				+ ", countView=" + countView + "]";
+		return "ProductDetailVO [prodName=" + prodName + ", placeTraction=" + placeTraction + ", textOfPrd=" + textOfPrd
+				+ ", sellUserId=" + sellUserId + ", selfIntroduce=" + selfIntroduce + ", sellUserImg=" + sellUserImg
+				+ ", price=" + price + ", prodNum=" + prodNum + ", categoryNumber=" + categoryNumber + ", interestCnt="
+				+ interestCnt + ", commCnt=" + commCnt + ", viewCnt=" + viewCnt + ", areaNum=" + areaNum
+				+ ", inputDate=" + inputDate + "]";
 	}
+
+
 	
 	
 	
-}//class
+
+}// class

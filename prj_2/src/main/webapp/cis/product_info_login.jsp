@@ -10,52 +10,22 @@
 	href="http://localhost/prj_2/lmh/main.css">
 <link rel="stylesheet" type="text/css"
 	href="http://localhost/prj_2/lms/font-awesome/css/font-awesome.min.css">
-	
 <style type="text/css">
-#buy_page_top{
-	height:800px;
+
+.buy_page{
+	height: 650px;
 }
 /* 상품 이미지 틀 */
 
-.img_file_set{
+
+#carouselSize{
 	float:left;
-}
-.main_img {
-	positon:absolute;
-	border: 1px solid #333;
-
-	width: 660px;
-	height: 620px;
-	
-	
-}
- 
-#button_left {
-	position:relative;
-	top:280px;
-	left:20px;
-	font-size:40px;
-	border:none;
-	background-color:#ffffff;
+	margin-left:50px;
+	width:600px;
+	height:600px;
+	border:1px solid #000000; 
 }
 
-#button_right {
-	position:relative;
-	top:280px;
-	left:550px;
-	font-size:40px;
-	border:none;
-	background-color:#ffffff;
-}
-
-.sub_img{
-	position:relative;
-	width:120px;
-	height:120px;
-	margin-top:10px;
-	border: 1px solid #333;
-}
-/* 상품 이미지 틀 end */
 
 
 /* 북마크 & 쉐어버튼 */
@@ -67,7 +37,6 @@
 	background-image: url('http://localhost/prj_2/images/free-icon-love-7476962.png');
 	border:none;
 	background-color:white;
-	margin-right:50px;
 }
 
 #sharebutton {
@@ -79,40 +48,42 @@
 
 /* 북마크 & 쉐어버튼 */
 /* 상품 제목 및 정보 */
-.product_info {
-	width: 450px;
-	height: 580px;
-	margin-left: 700px ;
+#product_info_table {
+	margin-left:30px;
 }
-
-.prod-info-line{
-	width:450px;
+#prod-info{
+	float:right;
+	margin-right:30px;
 }
 
 .prod-info-dt{
-	margin-left: 30px ;
+/* 	margin-left: 30px ; */
 	font-size:22px;
-	float:left;
+/* 	float:left; */
+	width:200px;
 }
+
 .prod-info-dd{
-	margin-left:180px;
+	margin-left:1px;
 	font-size:19px;
+	width:200px;
 }
 
 #prod-title{
-	font-size:30px;
+	font-size:30pt;
+	width:200px;
 }
 
 #prod-price{
-	font-size:30px;
-	margin-left: 30px ;
+	font-size:30px;	
+	margin-left:30px;
+
 }
 
-#qna_link_button {
+#updatePrdInfo {
 	width: 450px;
 	height: 84px;
 	float: right;
-	margin-left:700px;
 	background-color:#ffffff;
 	font-size:15pt;
 	borderline-color:#FFF;
@@ -125,7 +96,8 @@
 	padding: 10px 0;
 	background-color: #e0e0e0;
 	width:1200px;
-	height:220px;
+	height:300px;
+	margin:center;
 	
 }
 
@@ -143,6 +115,9 @@
 	border-radius:100%;
 }
 
+#comment-qna-button{
+	margin-top:40px;
+}
 /* 판매자 정보 및 페이지 내 이동버튼*/
 /* 판매자의 코멘트창*/
 #user_comment{
@@ -194,7 +169,6 @@ padding:15px 20px;
 #refreshButton{
 	background-color: #e0e0e0;
 	background-image: none;
-
 	border:none;
 }
 .requestText{
@@ -259,10 +233,11 @@ padding:15px 20px;
 /* 댓글 작성 폼 */
 .comment_form { 
 	width:800px;
-  	padding: 10px 20px;;
+  	padding: 10px 20px;
   	background-color: #ffffff;
   	border: 1px solid #000000;
   	margin-top:20px;
+  	margin-left:10px;
   	position:relative;
 }
 #comment_profile_img{
@@ -271,6 +246,7 @@ padding:15px 20px;
 	border-radius:100%;
 	background-color:#e0e0e0;
 }
+
 #comment_id{
 	border:none; 
 	font-size:16pt;
@@ -281,17 +257,17 @@ padding:15px 20px;
 /* 댓글 내용 입력 필드 */
  .comment_content { 
   margin-bottom: 10px;
-  width: 770px;
+  width: 750px;
   resize:vertical;
   border: 1px solid #cccccc;
   border-radius: 2px;
   padding: 10px;
-  font-size: 14px;
+  font-size: 14pt;
   color: #666666;
 }
 
 .comment_submit{
-	margin-left:720px;
+	margin-left:680px;
 	width:80px;
 	height:35px;
 	background-color:#8B6FBD;
@@ -314,6 +290,7 @@ padding:15px 20px;
 	border-radius:5px;
 	margin-left:360px;
 	margin-top:20px;
+	font-size:15pt;
 }
 #other-prod-title{
 	margin-left:220px;
@@ -373,7 +350,7 @@ padding:15px 20px;
 	height:160px;
 	border: 1px solid #333;
 	margin-left:220px;
-	margin-top:400px;
+	margin-top:390px;
 } 
 .card-desc4{
 	position: absolute;
@@ -388,7 +365,7 @@ padding:15px 20px;
 	height:160px;
 	border: 1px solid #333;
 	margin-left:500px;
-	margin-top:400px;
+	margin-top:390px;
 } 
 .card-desc5{
 	position: absolute;
@@ -403,7 +380,7 @@ padding:15px 20px;
 	height:160px;
 	border: 1px solid #333;
 	margin-left:780px;
-	margin-top:400px;
+	margin-top:390px;
 } 
 .card-desc6{
 	position: absolute;
@@ -419,8 +396,16 @@ padding:15px 20px;
 }
 </style>
 <script>
-
+$(function(){
+	  $(".dropdown-toggle").click(function(){
+	    $(".dropdown-menu").toggle();
+	  });
+});
 </script>
+<!-- Boot strap 시작  -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<div class="wrap">
@@ -468,70 +453,82 @@ padding:15px 20px;
 		<br/>
 		<br/>
 <div class="buy_page">
-<div id = "buy_page_top">
-<div class="img_file_set">
-		<div class="main_img">
-		<img src="">
-		<input type="button" id="button_left" value="<">
-		<input type="button" id="button_right" value=">">
-	</div>
-	<br />
-<div class="sub_img">
-	부이미지 <img src="">
-</div> 
-</div><!-- class="img_file_set" -->
-<button 
+<div id="carouselSize">
+<div id="carouselExampleIndicators" class="carousel slide"  >
+
+  <div class="carousel-indicators" >
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  
+  <div class="carousel-inner" >
+	 <div class="carousel-item active">
+      <img src="images/carouselEx.PNG" class="d-block w-100  " alt="..." style="">
+    </div>
+    <div class="carousel-item active">
+      <img src="images/carouselEx2.PNG" class="d-block w-100  " alt="..." style="">
+    </div> 
+  </div>
+  
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+
+
+
+<div id="prod-info">
+<input 
 		type="button" 
 		id="bookmark" 
 		onclick=" "
 		<% if (isSeller) { %>hidden<% } %>
-		<% if(isMarked) { %><%} %>
-		></button>
+		<% if(isMarked) { %><%} %>/>
 		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->
-<br/>
-<div class="product_info">
-	<div id="prod-title"style="font-size:30pt"><strong>상품제목</strong></div>
-	<hr class="prod-info-line">
-	<div id="prod-price"><strong>가격</strong></div>
-	<hr class="prod-info-line">
-	<div class="prod-info">
-		<dl class="prod-info-row">
-			<dt class="prod-info-dt">상품번호</dt>
-			<dt class="prod-info-dd">001</dt>
-		</dl>
-		<dl class="prod-info-row">
-			<dt class="prod-info-dt">카테고리</dt>
-			<dd class="prod-info-dd">자전거</dd>
-		</dl>
-		<dl class="prod-info-row">
-			<dt class="prod-info-dt">거래지역</dt>
-			<dd class="prod-info-dd">논현동</dd>
-		</dl>
-		<hr class="prod-info-line">
-		<dl class="prod-info-row">
-			<dt class="prod-info-dt">관심</dt>
-			<dd class="prod-info-dd">40회</dd>
-		</dl>
-		<dl class="prod-info-row">
-			<dt class="prod-info-dt">문의글</dt> 
-			<dd class="prod-info-dd">15개</dd>
-		</dl>
-		<dl class="prod-info-row">
-			<dt class="prod-info-dt">조회수</dt>
-			<dd class="prod-info-dd">30</dd>
-		</dl>
-		<hr class="prod-info-line">
-	</div>
-	<br/>
-	<br/>
-	<button type="button" 
-			id="qna_link_button" 
-			onclick="location.href='http://localhost/prj_2/cis/sell_page.jsp'"
-			<% if (!isSeller) { %>hidden<% } %>
-			>상품 정보 수정하기</button>
-</div>
-</div>
+<div id="prod-title" >상품제목</div>
+<hr style="width:450px">
+<div id="prod-price">가격</div>
+<hr style="width:450px">
 
+<table id="product_info_table" 	>
+	<tr>
+		<td class="prod-info-dt">상품번호</td><td class="prod-info-dd">가격</td>
+	</tr>
+	<tr>
+		<td  class="prod-info-dt">카테고리</td><td  class="prod-info-dd">카테고리명</td>
+	</tr>
+	<tr>
+		<td class="prod-info-dt" >거래지역</td><td  class="prod-info-dd">거래지역 설정</td>
+	</tr>
+	</table>
+	<hr style="width:450px">
+	<table id="product_info_table" >
+	<tr>
+		<td class="prod-info-dt">관심</td><td  class="prod-info-dd">관심 수</td>
+	</tr>
+	<tr>
+		<td class="prod-info-dt" >문의글</td><td  class="prod-info-dd">문의글 수</td>
+	</tr>
+	<tr>
+		<td class="prod-info-dt" >조회수</td><td  class="prod-info-dd">조회수 종합</td>
+	</tr>
+</table>
+<hr style="width:450px">
+	<input type="button" 
+			value="상품 정보 수정하기"
+			id="updatePrdInfo" 
+			onclick="location.href='http://localhost/prj_2/cis/sell_page.jsp'"
+			<%--<% if (!isSeller) { %><% } %> --%>
+			/>
+</div>
+</div>
 <!-- 판매자 정보 및 페이지스크롤 이동 툴 -->
 <div class="sell_user_info">
 	<img src="" id="profile-img" />
@@ -541,13 +538,11 @@ padding:15px 20px;
 		<div style="font-size:15pt;margin-top:10px">판매자 자기소개</div>
 	</div>
 
-	<!-- class="sell_user_comment_qna" -->
-</div>
-
-	<div>
+	<div id="comment-qna-button">
 		<input type="button" class="sell_user_comment"value="판매자 코멘트";/>
 		<input type="button" class="sell_user_qna"value="문의글"style="float:right"/>
 	</div>
+</div>
 <br /><!-- 판매자 코멘트 -->
 <br/>
 
@@ -560,7 +555,7 @@ padding:15px 20px;
          </select>
 </div>
 <hr>
-<textarea id="user_comment"style="font-size:20pt">제품설명</textarea>
+<textarea id="user_comment"style="font-size:16pt">제품설명</textarea>
 </div>
 <br />
 
@@ -597,9 +592,26 @@ padding:15px 20px;
 	<div class="comment-tag">
 	<input type="text" class="user_id" value=userId><input type="text"class="write-date"value="날짜">
 	<br/>
+	<div class="dropdown">
 	<i class="fa fa-ellipsis-v" aria-hidden="true"<%-- <% if (isMyCom) { %>hidden<% } %> --%>></i>
+<!--   		<button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    		<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+		  </button>
+  		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    		<a class="dropdown-item" href="#">수정하기</a>
+    		<a class="dropdown-item" href="#">삭제하기</a>
+  		</div> -->
+	</div>
 	</div>
 	<hr class="qna_line">
+<!-- 	<table>	
+		<tr>
+			<td >문의글</td><td >user id</td><td >write date</td>
+		</tr>
+		<tr>
+			<td ></td><td ></td><td >button</td>
+		</tr>
+	</table> -->
 </div>
 <!-- 일정 댓글 수마다 페이지 겟수가 늘어나게 해야됨. -->
 	<div id="all-page-button">
@@ -608,12 +620,14 @@ padding:15px 20px;
 		<input type="button"id="page-button-2"value="2">		
 		<input type="button"id="page-button-right"value=">">		
 	</div>
-	<div class="comment_form">
+	<form class="comment_form">
+	<div>
 		<img src="" id="comment_profile_img"/>
     	<input type="text" id="comment_id" placeholder="구매자 명"/>
-   		<textarea placeholder="댓글을 입력하세요" class="comment_content" style="font-size:12pt;"></textarea>
+   		<textarea placeholder="댓글을 입력하세요" class="comment_content"></textarea>
   		<input type="button"  value="문의하기" class="comment_submit"/>
 	</div>
+	</form>
 	
 </div>
 <!-- 다른 상품 목록 -->
@@ -736,15 +750,13 @@ padding:15px 20px;
  
 </div>
    
-   
 
-</div>
 
 <!-- class : buy_page 메인 div -->
 <!-- 상품 상세 페이지 내용부분 -->
 <!-- footer 부분 -->
 <div class="footer">
-			<hr class="hr_footer">
+			<hr >
 
 				<div class="footer_text">
 					대표 김용현, 황도연 | 사업자번호 375-87-00088<br> 직업정보제공사업 신고번호
@@ -752,9 +764,9 @@ padding:15px 20px;
 					전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
 				</div>
 
-
-			</div>
-			<!-- footer-->
 </div>
+</div>
+
+<!-- footer-->
 </body>
 </html>

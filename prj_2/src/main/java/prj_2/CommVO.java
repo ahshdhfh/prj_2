@@ -2,18 +2,19 @@ package prj_2;
 import java.sql.Date;
 
 public class CommVO {
-	private String id, writeCom;
-	private int commentNum;
+	private String id, prodComments;
+	private int commNum,prodNum;
 	private Date writeDate;
 	
 	public CommVO() {
-	
+		
 	}
 
-	public CommVO(String id, String writeCom, int commentNum, Date writeDate) {
+	public CommVO(String id, String prodComments, int commNum, int prodNum, Date writeDate) {
 		this.id = id;
-		this.writeCom = writeCom;
-		this.commentNum = commentNum;
+		this.prodComments = prodComments;
+		this.commNum = commNum;
+		this.prodNum = prodNum;
 		this.writeDate = writeDate;
 	}
 
@@ -25,20 +26,28 @@ public class CommVO {
 		this.id = id;
 	}
 
-	public String getWriteCom() {
-		return writeCom;
+	public String getprodComments() {
+		return prodComments;
 	}
 
-	public void setWriteCom(String writeCom) {
-		this.writeCom = writeCom;
+	public void setprodComments(String prodComments) {
+		this.prodComments = prodComments;
 	}
 
-	public int getCommentNum() {
-		return commentNum;
+	public int getcommNum() {
+		return commNum;
 	}
 
-	public void setCommentNum(int commentNum) {
-		this.commentNum = commentNum;
+	public void setcommNum(int commNum) {
+		this.commNum = commNum;
+	}
+
+	public int getProdNum() {
+		return prodNum;
+	}
+
+	public void setProdNum(int prodNum) {
+		this.prodNum = prodNum;
 	}
 
 	public Date getWriteDate() {
@@ -48,6 +57,8 @@ public class CommVO {
 	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
+
+	
 	
 	
 }

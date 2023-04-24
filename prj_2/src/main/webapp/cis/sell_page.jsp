@@ -10,11 +10,11 @@
 <style type="text/css">
 
 /* 상품 이미지 */
-.input-img{
+#input-img{
 border: 1px solid #333;
 width:180px;
 height:180px;
-margin-left:130px;
+margin-left:20px;
 margin-top:-20px;
 text-align:center;
 }
@@ -33,42 +33,45 @@ width:500px;
 height:30px;
 border-radius: 5px;
 margin-left:20px;
+padding:2px;
 }
 
 #select_category{
 width:150px;
 height:40px;
 margin-left:20px;
-
+border-radius: 5px;
 }
+
 #input-price{
 width:170px;
 height:40px;
 border-radius: 5px;
 margin-left:20px;
+padding:2px;
 }
 
 #share-check{
-
 margin-left:20px;
 }
+
 #input-explain{
-width:520px;
-height:220px;
+width:600px;
 border-radius: 5px;
-resize:none;
+resize:vertical;
+padding:10px;
 }
 
 #input-location{
 width:440px;
 height:50px;
 border-radius: 5px;
+padding:2px;
 }
 
 #cancel-button{
 width:180px;
 height:65px;
-
 border: none;
 border-radius: 5px;
 background-color: #E0E0E0;
@@ -77,10 +80,10 @@ font-size: 22px;
 font-weight: bold;
 margin-right:10px
 }
+
 #complete-button{
 width: 180px;
 height : 65px;
-
 border: none;
 border-radius: 5px;
 background-color: #8B6FBD;
@@ -89,6 +92,7 @@ font-size: 22px;
 font-weight: bold;
 margin-left:10px
 }
+
 
 .button-check{
 text-align:center;
@@ -136,7 +140,6 @@ $(function(){
 		if($("#input-location").val()==""){
 			chkNull();
 		}//end if
-		
 	
 	});//click
 });//ready
@@ -182,15 +185,31 @@ function chkNull(){
 	
 	$("#frm").submit();
 }//chkNull
+
+/* 제목 입력 시 옆에서 문자 카운트  */
+function countTextLength() {
+	  var inputText = document.getElementById("input-title").value; // 입력된 텍스트 값 가져오기
+	  var textLength = inputText.length; // 텍스트 길이 계산
+	  var countElement = document.getElementById("text-count"); // 글자 수를 표시할 요소 가져오기
+	  countElement.innerHTML = textLength + "/40"; // 글자 수 표시
+}//countTextLength
+
+/* 나눔하기 체크 시 가격 0원으로 설정 */
+function handleCheckboxChange() {
+  const inputPrice = document.getElementById('input-price');
+  const shareCheck = document.getElementById('share-check');
+  if (shareCheck.checked) {
+    inputPrice.value = 0;
+  }
+}
+/* 작동 안됨, 마저 수정 필요  */
 </script>
 </head>
 
 
 
-
 <body>
 <div class="wrap">
-
   <div class="header">
        <div class="logo">
        <a href="http://localhost/prj_2/lmh/main_login.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
@@ -210,7 +229,7 @@ function chkNull(){
        </div>
 
           <div class="logout">
-         <a href="http://localhost/prj_2/lmh/main_logout.jsp" class="a_login" >로그아웃</a>
+         <a href="http://localhost/prj_2/lmh/logout.jsp" class="a_login" >로그아웃</a>
        </div>
   </div><!-- header-->
    
@@ -223,7 +242,7 @@ function chkNull(){
 <br/>
 <form id="frm" action="http://localhost/prj_2/cis/product_info_login.jsp" method="post">
 <div>상품이미지(0/6)
-<div class="input-img">클릭해주세요</div>
+<input type="file" id="input-img"/>
 </div>
 <pre id="caution">
 * 상품 이미지는 640x640에 최적화 되어 있습니다.
@@ -236,15 +255,24 @@ function chkNull(){
 </pre>
 <br/>
 <hr>
-<br>
-<div>제목*   
-<input type="text"id="input-title"placeholder="내용을 입력해주세요">
-<!-- <input type="text"id="input-title"> -->
+<br/>
+
+<!-- <div>
+  제목*
+  <input type="text" id="input-title" placeholder="내용을 입력해주세요" oninput="countChars()">
+  <span id="char-count">0/40</span>
+</div> -->
+
+<div>
+  <label for="input-title"> 제목*</label>
+  <input type="text" id="input-title" oninput="countTextLength()" maxlength="40">
+  <span id="text-count">  0/40</span>
 </div>
-<br>
+<br/>
 <hr>
 <br/>
-<div>카테고리*   
+<div>
+<label>카테고리*</label>   
           <select id="select_category">
              <option value="자전거">자전거</option>
              <option value="의류">의류</option>
@@ -255,17 +283,20 @@ function chkNull(){
 <br/>
 <hr>
 <br/>
-<div>가격*  
-<input type="text"id="input-price"placeholder="숫자만 입력해주세요">원
-<input type="checkbox"id="share-check">나눔하기
+<div>
+<label for= "input-price">가격* </label> 
+<input type="text"id="input-price" placeholder="숫자만 입력해주세요">  원
+<input type="checkbox" name="share" id="share-check">나눔하기
 <!-- 나눔하기 체크 시 가격을 0원으로 띄우는 기능 -->
 </div>
 <br/>
 <hr>
 <br/>
-<div style="font-size:20pt">자세한 설명* </div>
+<div >
+<label style="font-size:20pt">자세한 설명*</label>
+</div>
 <br/>
-<textarea id="input-explain"></textarea>
+<textarea id="input-explain" style="font-size:16pt"></textarea>
 <br/>
 <br/>
 <br/>
@@ -273,7 +304,8 @@ function chkNull(){
 <hr>
 
 <br/>
-<div>거래희망장소*  
+<div>
+<label >거래희망장소*</label>  
 <input type="text" id="input-location"placeholder="위치추가 >">
 </div>
 <br/>
