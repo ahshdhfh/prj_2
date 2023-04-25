@@ -3,7 +3,7 @@
 <%@page import="prj_2.MainProdVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%request.setCharacterEncoding("UTF-8"); %>    
 <!-- 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -28,13 +28,21 @@ position: relative;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
 <script type="text/javascript">
-	var category=${param.category};
-	var searchInput=${param.searchInput};
-	alert(searchInput);
+	//var category=${param.category};
+	//var searchInput=${param.searchInput};
+	
+	var category=null;
+	var searchInput=null;
 	var dong=null;
 
 $(function(){
 	
+	try{
+		category=<%=request.getParameter("category")%>;
+		searchInput=<%=request.getParameter("searchInput")%>;
+		dong=<%=request.getParameter("dong")%>;
+	}catch (e) {
+	}
 	
 	$("#select_town").change(function(){		
 		dong=$("#select_town option").index($("#select_town option:selected"));
@@ -51,12 +59,22 @@ $(function(){
 }); 
 
 function callProdList() {
+	alert("<%=request.getParameter("searchInput")%>");
+	try{
+		searchInput="<%=request.getParameter("searchInput")%>";
+		if(searchInput=="null"){
+			searchInput="";
+		}
+	}catch (e) {
+	}
 	
-	var jsonParam={categoryName : category, dongName:dong, searchName :  searchInput };
+	var jsonParam={"categoryName" : category, "dongName":dong , "searchName" : searchInput };
 	$.ajax({
 		url : "buy_data_json.jsp",
 		data : jsonParam,
 		dataType : "JSON",
+		contentType: "application/json",
+		type: "get",
 		error : function( xhr ){
 			alert( "서버에서 문제가 발생하였습니다" ); //사용자에게 보여줌
 			console.log( "에러코드 : " +xhr.status); //개발자가봄
@@ -93,12 +111,10 @@ function callProdList() {
 </head>
 <body>
 <div class="wrap">
-
   
   <div class="header">
       <%@ include file="header.jsp" %>
   </div>
-  
   
   <form id="categoryFrm"  action="http://localhost/prj_2/lmh/buy.jsp" method="get">
      <div class="area_buy_bike"> 
@@ -124,7 +140,6 @@ function callProdList() {
          </select>
     </div><!--div_select_town -->
      
-    
        <div class="div_select_category"> 
           <select class="select_category" id="select_category">
              <option value="0" >모든 카테고리</option>
@@ -139,26 +154,18 @@ function callProdList() {
 </form><!-- categoryFrm -->
     
 
-
-
 <table class="popular_sale_table" id="popular_sale_table">
   <tr>
   </tr>
 </table> <!--popular_sale_table  -->
 
-
-
- 
 </div> <!-- wrap -->
 
 
    <div class="footer">
       <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
    </div><!-- footer-->
-   
-   
 
- 
 
 </body>
 </html>

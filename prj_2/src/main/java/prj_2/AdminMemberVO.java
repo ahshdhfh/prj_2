@@ -1,18 +1,32 @@
 package prj_2;
 
+import java.sql.Date;
+
 /**
  * 관리자 유저테이블 VO
  * @author user
  */
 public class AdminMemberVO {
 
-	private String userID, nickName, addr, detailedAddr, createDate, actiAreaNum;
-
+	private String userID, nickName, addr, detailedAddr, actiAreaNum;
+	private Date createDate;
+	
 	public AdminMemberVO() {
 	}
 
 	public String getUserID() {
 		return userID;
+	}
+	
+	
+
+	public AdminMemberVO(String userID, String nickName, String addr, String detailedAddr, Date createDate, String actiAreaNum) {
+		this.userID = userID;
+		this.nickName = nickName;
+		this.addr = addr;
+		this.detailedAddr = detailedAddr;
+		this.createDate = createDate;
+		this.actiAreaNum = actiAreaNum;
 	}
 
 	public void setUserID(String userID) {
@@ -43,11 +57,11 @@ public class AdminMemberVO {
 		this.detailedAddr = detailedAddr;
 	}
 
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 

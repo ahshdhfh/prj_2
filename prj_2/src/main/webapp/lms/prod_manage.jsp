@@ -1,10 +1,19 @@
+<%@page import="prj_2.AdminProductVO"%>
+<%@page import="java.util.List"%>
+<%@page import="prj_2.ManageMentProdDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 부트스트랩 시작  -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<!-- 부트스트랩 끝  -->
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lms/main_v20230217.css">
 <link rel="stylesheet" href="http://localhost/prj_2/lms/font-awesome/css/font-awesome.min.css" >
 <style type="text/css">
@@ -12,10 +21,10 @@
 
 /* 화면구성  */
 #wrap { width: 1200px; height: 800px; margin: 0px auto; }
-#header { width: 200px; height: 800px; float: left; border: 1px solid #333  }
+#header { width: 200px; height: 800px; float: left; background-color: #9B59B6   }
 #container { width: 990px; height: 800px;  float: right;   }
 #con_header { height: 60px;   }
-#con_main {height: 740px; border: 1px solid #333; position: relative;  }
+#con_main {height: 740px;  position: relative;  }
 
 /* 테이블 */
 #search_commdb { position: absolute; top:50px; left: 30px;  }
@@ -59,16 +68,16 @@ tr{ height: 30px; }
 <div id="wrap" > <!-- wrap( w: 800 x h:950 ) -->
 		<div id="header" ><!-- header(w: 200 x h : 1400 ) --> 
 		<div>
-		<a href="http://localhost/prj_2/lms/dashboard.html"><img src="http://localhost/prj_2/mages/logo.PNG" width="150"></a>
+		<a href="http://localhost/prj_2/lms/dashboard.jsp"><img src="http://localhost/prj_2/images/logo.png" width="150"></a>
 		</div>
 		<br>
 		 <h4 class="col_tit"><i class="fa fa-bars" aria-hidden="true"></i>Menu</h4>
 		       <div class="menu">
                		<ul>
-                              <li><a href="http://localhost/prj_2/lms/dashboard.html"><i class="fa fa-th-large" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;Dashboard <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                              <li><a href="http://localhost/prj_2/lms/member_manage.html"><i class="fa fa-user" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;회원관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                              <li><a href="http://localhost/prj_2/lms/prod_manage.html"><i class="fa fa-cart-plus" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;상품관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                              <li><a href="http://localhost/prj_2/lms/comm_manage.html"><i class="fa fa-commenting-o" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;댓글관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/dashboard.jsp"><i class="fa fa-th-large" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;Dashboard <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/member_manage.jsp"><i class="fa fa-user" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;회원관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/prod_manage.jsp"><i class="fa fa-cart-plus" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;상품관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/comm_manage.jsp"><i class="fa fa-commenting-o" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;댓글관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
                               <li><a href="http://localhost/prj_2/lms/adminlogin.jsp"><i class="fa fa-sign-out" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;로그아웃 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
                   	</ul>
                 </div>
@@ -90,59 +99,27 @@ tr{ height: 30px; }
 			<input type="button" value="확인" class="btn_search" style="float: right">
 			</div>
 			
+			<%
+				ManageMentProdDAO mpDAO=new ManageMentProdDAO();
+				List<AdminProductVO> list=mpDAO.prodSearch("");
+				
+				pageContext.setAttribute("prodList", list);
+			%>
+			
 				<div id=table_div>
 				<table class="table_comm" cellspacing="0">
 				<tr class="table_header">
 				<td width="80">상품번호</td><td width="80">카테고리</td><td width="400">상품명</td><td width="80">회원명</td><td width="120">작성일</td>
 				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>				
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>		
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>				
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>	
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>				
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>	
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>	
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>				
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>				
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>				
-				<tr>
-				<td></td><td></td><td></td><td></td><td></td>
-				</tr>															
+					<c:forEach var="pVO" items="${prodList}" varStatus="i" >
+						<tr>
+						<td class="prdCol"><c:out value=" ${ pVO.prodNum }" /></td>
+						<td class="prdCol"><c:out value=" ${ pVO.categoryName }" /></td>
+						<td class="prdCol"><c:out value=" ${ pVO.prodName }" /></td>
+						<td class="prdCol"><c:out value=" ${ pVO.userId }" /></td>
+						<td class="prdCol"><c:out value=" ${ pVO.inputDate }" /></td>
+						</tr>																			
+					</c:forEach>													
 				</table>
 				</div>
 			</div>

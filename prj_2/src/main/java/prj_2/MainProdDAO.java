@@ -152,9 +152,9 @@ public class MainProdDAO {
     
     public List<MainProdVO> CategoryData(String prodSearch, String prodCategory, String prodArea) throws SQLException {  
         List<MainProdVO> MainProdlist = new ArrayList<MainProdVO>();
-        System.out.println(prodSearch);
-        System.out.println("dfs"+prodArea);
-        System.out.println("dfd"+prodCategory);
+        System.out.println("search :"+prodSearch);
+        System.out.println("area : "+prodArea);
+        System.out.println("category :"+prodCategory);
         
         if(prodArea.equals("0")) {
         	prodArea="";
@@ -164,9 +164,6 @@ public class MainProdDAO {
         	prodCategory="";
         }
         
-        if(prodSearch.equals("")) {
-        	prodSearch="";
-        }
        
         //1. JNDI 사용객체 생성
         

@@ -131,6 +131,37 @@ box-shadow: 5px 5px 5px 5px gray
 
 
 </style>
+<!-- jQeury CDN 시작  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQeury CDN 끝  -->
+<script type="text/javascript">
+
+$(function() {
+	
+	$("#btn").click(function() {
+		if($("#id").val()==""){
+			alert("아이디는 필수 입력!!!");
+			$("#id").focus();
+			return;
+		}//end if
+
+		if($("#pass").val()==""){
+			alert("비밀번호는 필수 입력!!!");
+			$("#pass").focus();
+			return;
+		}//end if
+			
+		if($("#id").val().length>19){
+			alert("아이디는 20자 까지만 입력가능");
+			$("#id").focus();
+			return
+		}
+		$("#frm").submit();	
+	});
+	
+});
+
+</script>
 </head>
 <body>
 
@@ -138,25 +169,23 @@ box-shadow: 5px 5px 5px 5px gray
 
   <div class="header">
        <div class="logo">
-       <a href=""><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.PNG"></a>
+       <a href=""><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
        </div>
   </div><!-- header-->
-  
+  <form action="http://localhost/prj_2/lms/admin_login_process.jsp" method="post"  id="frm" name="frm" >
   <div class="area_login">
      <div class="loginTitle">관리자 로그인</div>
      
      <div class="input_login">
-     <input type="text" class="text_input_login"  placeholder="아이디를 입력해주세요"> 
+     <input type="text" class="text_input_login"  placeholder="아이디를 입력해주세요" id="id" name="adminId"> 
      </div>
-     
      <div class="input_password">
-     <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요"> 
+     <input type="password"  class="text_input_password" placeholder="비밀번호를 입력해주세요" id="pass" name="adminPassword" > 
      </div>
          
       <div class="div_btn_login">
-        <input type="button"  value="로그인" class="btn_login" onclick="location.href='http://localhost/prj_2/lms/dashboard.html'" >
+        <input type="button"  value="로그인" class="btn_login"  id="btn">
      </div>
-     
      <div class="div_notice">
         Note: This is the <br><br>
 		Administrator Sign-In Page.<br><br>
@@ -165,8 +194,8 @@ box-shadow: 5px 5px 5px 5px gray
 		<a href="http://localhost/prj_2/lmh/main_logout.jsp">standard Sign-in Page.</a>
      </div>
           
-
   </div><!-- 로그인 -->
+ </form>   
 
 <div class="footer">
       <hr class="hr_footer">
@@ -177,38 +206,7 @@ box-shadow: 5px 5px 5px 5px gray
         주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
         전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
        </div>
-       
-      <!-- <div class="inquiry1">
-        <a href="#void"  class="a_footer"">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer"">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer"">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer"">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer"">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer"">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer"">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer"">비전과계획</a>
-       </div> -->
+    
    </div><!-- footer-->
    
   </div><!--wrap  -->

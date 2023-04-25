@@ -1,3 +1,7 @@
+<%@page import="prj_2.CategoryCntVO"%>
+<%@page import="java.util.List"%>
+<%@page import="prj_2.DashBoardDAO"%>
+<%@page import="prj_2.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -5,19 +9,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lms/main_v20230217.css">
 <link rel="stylesheet" href="http://localhost/prj_2/lms/font-awesome/css/font-awesome.min.css">
 <style type="text/css">
 
 /* 화면구성  */
 #wrap { width: 1200px; height: 1050px; margin: 0px auto;  }
-#header { width: 200px; height: 1050px; float: left;   }
+#header { width: 200px; height: 1050px; float: left; background-color: #9B59B6   }
 #container { width: 988px; height: 1050px;  float: right;   }
 #con_header { height: 60px;   }
 #con_main {height: 990px;  position: relative;  }
 
 /* 메뉴 */
-.col_tit {font-size: 20px; color: #8F27A4; padding-bottom: 10px;}
+.col_tit {font-size: 20px; color: #000000; padding-bottom: 10px;}
 .menu { }
 .menu li {position: relative;}
 .menu li a {
@@ -138,6 +143,10 @@
 <!-- jQeury CDN 시작  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQeury CDN 끝  -->
+	<%
+	DashBoardDAO dDAO=new DashBoardDAO();
+ 	CategoryCntVO cVO=dDAO.categoryCnt();
+	%>
 <script type="text/javascript">
 (function( $ ) {
     "use strict";
@@ -163,15 +172,22 @@
 }(jQuery));
 
 /* 원형차트 */
+
 google.charts.load("current", {packages:["corechart"]});
 google.charts.setOnLoadCallback(drawChart);
+
 function drawChart() {
+	var cycleCnt=<%=cVO.getCycleCnt()%>;
+	var clothCnt=<%=cVO.getClothCnt()%>;
+	var partsCnt=<%=cVO.getPartsCnt()%>;
+	var suppliesCnt=<%=cVO.getSuppliesCnt()%>;
+	
   var data = google.visualization.arrayToDataTable([
     ['Task', 'Hours per Day'],
-    ['자전거',     200],
-    ['의류',      240],
-    ['용품',  500],
-    ['부품', 600],
+    ['자전거',cycleCnt],
+    ['의류',clothCnt],
+    ['용품',partsCnt],
+    ['부품',suppliesCnt],
   ]);
 
   var options = {
@@ -195,11 +211,14 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
-    ['Year', '신규회원', '탈퇴회원'],
-    ['2004',  1000,      400],
-    ['2005',  1170,      460],
-    ['2006',  660,       1120],
-    ['2007',  1030,      540]
+    ['Month', '신규회원', '탈퇴회원'],
+    ['1월',  1000,      400],
+    ['2월',  1170,      460],
+    ['3월',  660,       1120],
+    ['4월',  1030,      540],
+    ['5월',  1030,      540],
+    ['6월',  3030,      140],
+    ['7월',  1030,      540]
   ]);
 
   var options = {
@@ -263,16 +282,16 @@ function drawBasic() {
 <div id="wrap" > <!-- wrap( w: 800 x h:950 ) -->
 		<div id="header"><!-- header(w: 200 x h : 1400 ) --> 
 		<div>
-		<a href="http://localhost/prj_2/lms/dashboard.html"><img src="http://localhost/prj_2/lms/images/logo.PNG" width="150"></a>
+		<a href="http://localhost/prj_2/lms/dashboard.jsp"><img src="http://localhost/prj_2/images/logo.png" width="150"></a>
 		</div>
 		<br>
-		 <h4 class="col_tit"><i class="fa fa-bars" aria-hidden="true"></i>Menu</h4>
+		 <h4 class="col_tit">Menu</h4>
 		       <div class="menu">
                		<ul>
-                              <li><a href="http://localhost/prj_2/lms/dashboard.html"><i class="fa fa-th-large" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;Dashboard <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                              <li><a href="http://localhost/prj_2/lms/member_manage.html"><i class="fa fa-user" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;회원관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                              <li><a href="http://localhost/prj_2/lms/prod_manage.html"><i class="fa fa-cart-plus" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;상품관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                              <li><a href="http://localhost/prj_2/lms/comm_manage.html"><i class="fa fa-commenting-o" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;댓글관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/dashboard.jsp"><i class="fa fa-th-large" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;Dashboard <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/member_manage.jsp"><i class="fa fa-user" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;회원관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/prod_manage.jsp"><i class="fa fa-cart-plus" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;상품관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                              <li><a href="http://localhost/prj_2/lms/comm_manage.jsp"><i class="fa fa-commenting-o" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;댓글관리 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
                               <li><a href="http://localhost/prj_2/lms/adminlogin.jsp"><i class="fa fa-sign-out" aria-hidden="true" style="position: absolute; left: 1px; top: 10px;" ></i>&ensp;로그아웃 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
                   	</ul>
                 </div>
@@ -327,11 +346,18 @@ function drawBasic() {
 </div>
 		
 		<div id="day_info">
-			<div class="day_info_set" style="background-color:#2C3E50; color: white;">오늘 총 방문 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;100</span></div>
-			<div class="day_info_set" style="background-color:#2C3E50; color: white;">총 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;100</span></div>
-			<div class="day_info_set" style="background-color:#3498DB; color: white;">신규가입 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;100</span></div>
-			<div class="day_info_set" style="background-color:#E74C3C; color: white; ">오늝 탈퇴한 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;100</span></div>
-			<div class="day_info_set" style="background-color:#E0E0E0; ">거래완료 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;100</span></div>
+			<%
+				int totalMember=dDAO.memberCnt();
+				int totalLoginCnt=dDAO.totalVisit();
+				int newMemberCnt=dDAO.newMemberCnt();
+				int newAndWithdrawallCnt=dDAO.withdrawalMembers();
+				int tradingStatusCnt=dDAO.tradingStatusCnt();
+			%>
+			<div class="day_info_set" style="background-color:#2C3E50; color: white;">오늘 총 로그인 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=totalLoginCnt %></span></div>
+			<div class="day_info_set" style="background-color:#2C3E50; color: white;">총 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=totalMember %></span></div>
+			<div class="day_info_set" style="background-color:#3498DB; color: white;">신규가입 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=newMemberCnt %></span></div>
+			<div class="day_info_set" style="background-color:#E74C3C; color: white; ">오늘 탈퇴한 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=newAndWithdrawallCnt %></span></div>
+			<div class="day_info_set" style="background-color:#E0E0E0; ">거래완료 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=tradingStatusCnt %></span></div>
 		</div>
 		
 		<!-- 가로차트  -->

@@ -10,6 +10,15 @@ public class CategoryCntVO {
 	
 	public CategoryCntVO() {
 	}
+	
+
+	public CategoryCntVO(int cycleCnt, int clothCnt, int partsCnt, int suppliesCnt) {
+		this.cycleCnt = cycleCnt;
+		this.clothCnt = clothCnt;
+		this.partsCnt = partsCnt;
+		this.suppliesCnt = suppliesCnt;
+	}
+
 
 	public int getCycleCnt() {
 		return cycleCnt;

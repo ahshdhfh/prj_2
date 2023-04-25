@@ -6,6 +6,11 @@ import java.sql.SQLException;
 
 public class InsertProdDAO {
 
+	/**
+	 * 상품등록 메소드
+	 * @param pVO
+	 * @throws SQLException
+	 */
 	public void insertProdInfo(ProductInsertVO pVO)throws SQLException {
 		
 		Connection con = null;
@@ -51,7 +56,7 @@ public class InsertProdDAO {
 				pstmt=con.prepareStatement(insertPrdImg.toString());
 				pstmt.setString(1, pVO.getprodImg()[i]);
 				pstmt.executeQuery();
-			}
+			}//end for
 			
 			
 		}finally {
@@ -61,7 +66,7 @@ public class InsertProdDAO {
 	}//insertProdInfo
 	
 	/**
-	 * 상품의 정보를 수정하는 메소드
+	 * 상품의 정보를 수정하는 메소드 (상품이미지는 삭제하고 다시 insert 해야함)
 	 * @return
 	 */
 	public int updatePrd(ProductInsertVO pVO)throws SQLException {
@@ -86,14 +91,7 @@ public class InsertProdDAO {
 			.append("		update product					 	")
 			.append("		set  PROD_NAME=?, PRICE=?,DETAIL_TXT=?, PLACE_TRANSACTION=?, CATEGORY_NUM=?	")
 			.append("		where  prod_num=? 				");
-			
-			//상품 이미지 정보 수정 sql문
-			updatePrdImg
-			.append("		update product_img	")
-			.append("		set prod_img=?			")
-			.append("		where prod_num=?	");
-			
-			
+						
 			pstmt=con.prepareStatement(updatePrd.toString());
 		//5. 바인드 변수 값 설정
 			pstmt.setString(1, pVO.getProdName());
@@ -106,11 +104,19 @@ public class InsertProdDAO {
 		//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeQuery();
 			
+			//상품 이미지 정보 수정 sql문
+			updatePrdImg
+			.append("		update product_img	")
+			.append("		set prod_img=?			")
+			.append("		where prod_num=?	");
+						
 			for(int i=0;i<pVO.getprodImg().length;i++ ) {
 				pstmt=con.prepareStatement(updatePrdImg.toString());
 				pstmt.setString(1, pVO.getprodImg()[i]);
-			}
+			}//end for
+			
 			pstmt.setInt(2,pVO.getProdNum());
+			
 			pstmt.executeQuery();
 		}finally {
 		//7. 연결끊기

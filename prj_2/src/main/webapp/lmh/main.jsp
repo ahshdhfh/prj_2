@@ -136,7 +136,7 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 
 
    <div class="more_popular_items"> 
-          <a href="http://localhost/prj_2/lmh/buy.jsp?category=0&searchInput=''"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
+          <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
    </div>
 
 </form>

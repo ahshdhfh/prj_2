@@ -1,5 +1,7 @@
 package prj_2;
 
+import java.sql.Date;
+
 /**
  * 관리자 댓글테이블 VO
  * @author user
@@ -7,9 +9,18 @@ package prj_2;
 public class AdminCommVO {
 	
 	private int commentNum, prodNum;
-	private String userId, prodComment, writeDate;
+	private String userId, prodComment;
+	private Date writeDate;	
 	
 	public AdminCommVO() {
+	}
+
+	public AdminCommVO(int commentNum, int prodNum, String userId, String prodComment, Date writeDate) {
+		this.commentNum = commentNum;
+		this.prodNum = prodNum;
+		this.userId = userId;
+		this.prodComment = prodComment;
+		this.writeDate = writeDate;
 	}
 	
 	public int getCommentNum() {
@@ -36,17 +47,17 @@ public class AdminCommVO {
 	public void setProdComment(String prodComment) {
 		this.prodComment = prodComment;
 	}
-	public String getWriteDate() {
+	public Date getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "AdminCommVO [commentNum=" + commentNum + ", prodNum=" + prodNum + ", userId=" + userId
 				+ ", prodComment=" + prodComment + ", writeDate=" + writeDate + "]";
-	}
+	}	
 	
-}
+}//VO
