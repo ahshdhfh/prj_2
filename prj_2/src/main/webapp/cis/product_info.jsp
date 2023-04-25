@@ -1,23 +1,24 @@
+<%@page import="prj_2.ProductDetailVO"%>
+<%@page import="prj_2.ShowProdDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>강남콩마켓</title>
 
-<link rel="stylesheet" type="text/css"
-	href="http://localhost/prj_2/lmh/main.css">
-<link rel="stylesheet" type="text/css"
-	href="http://localhost/prj_2/lms/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lms/font-awesome/css/font-awesome.min.css">
 <style type="text/css">
 
 .buy_page{
 	height: 650px;
 }
 /* 상품 이미지 틀 */
-
 
 #carouselSize{
 	float:left;
@@ -26,8 +27,6 @@
 	height:600px;
 	border:1px solid #000000; 
 }
-
-
 
 /* 북마크 & 쉐어버튼 */
 #bookmark {
@@ -396,6 +395,10 @@ padding:15px 20px;
 	border: 1px solid #EAEBEE;
 }
 </style>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 시작 -->
+
 <script>
 $(function(){
 	  $(".dropdown-toggle").click(function(){
@@ -448,10 +451,10 @@ $(function(){
   
   <div class="carousel-inner" >
 	 <div class="carousel-item active">
-      <img src="images/carouselEx.PNG" class="d-block w-100  " alt="..." style="">
+      <img src="../images/bike_shoes.png" class="d-block w-100" alt="..." style="">
     </div>
     <div class="carousel-item active">
-      <img src="images/carouselEx2.PNG" class="d-block w-100  " alt="..." style="">
+      <img src="../images/bike_shoes.png" class="d-block w-100" alt="..." style="">
     </div> 
   </div>
   
@@ -476,32 +479,37 @@ $(function(){
 		<% if (isSeller) { %>hidden<% } %>
 		<% if(isMarked) { %><%} %>/>
 		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->
-<div id="prod-title" >상품제목</div>
+<%
+	ShowProdDAO spDAO=new ShowProdDAO();
+	ProductDetailVO pdVO=spDAO.showProdInfo(42);
+	
+%>				
+<div id="prod-title" ><%=pdVO.getProdName() %></div>
 <hr style="width:450px">
-<div id="prod-price">가격</div>
+<div id="prod-price"><fmt:formatNumber pattern="#,###,###" value='<%=pdVO.getPrice() %>' />원</div>
 <hr style="width:450px">
 
 <table id="product_info_table" 	>
 	<tr>
-		<td class="prod-info-dt">상품번호</td><td class="prod-info-dd">가격</td>
+		<td class="prod-info-dt">상품번호</td><td class="prod-info-dd"><%=pdVO.getProdNum()%></td>
 	</tr>
 	<tr>
-		<td  class="prod-info-dt">카테고리</td><td  class="prod-info-dd">카테고리명</td>
+		<td  class="prod-info-dt">카테고리</td><td  class="prod-info-dd"><%=pdVO.getCategoryNumber()%></td>
 	</tr>
 	<tr>
-		<td class="prod-info-dt" >거래지역</td><td  class="prod-info-dd">거래지역 설정</td>
+		<td class="prod-info-dt" >거래지역</td><td  class="prod-info-dd"><%=pdVO.getTextOfPrd()%></td>
 	</tr>
 	</table>
 	<hr style="width:450px">
 	<table id="product_info_table" >
 	<tr>
-		<td class="prod-info-dt">관심</td><td  class="prod-info-dd">관심 수</td>
+		<td class="prod-info-dt">관심</td><td  class="prod-info-dd"><%=pdVO.getInterestCnt()%></td>
 	</tr>
 	<tr>
-		<td class="prod-info-dt" >문의글</td><td  class="prod-info-dd">문의글 수</td>
+		<td class="prod-info-dt" >문의글</td><td  class="prod-info-dd"><%=pdVO.getCommCnt()%></td>
 	</tr>
 	<tr>
-		<td class="prod-info-dt" >조회수</td><td  class="prod-info-dd">조회수 종합</td>
+		<td class="prod-info-dt" >조회수</td><td  class="prod-info-dd"><%=pdVO.getViewCnt()%></td>
 	</tr>
 </table>
 <hr style="width:450px">
@@ -539,7 +547,7 @@ $(function(){
          </select>
 </div>
 <hr>
-<textarea id="user_comment"style="font-size:16pt">제품설명</textarea>
+<textarea id="user_comment"style="font-size:16pt"><%=pdVO.getPlaceTraction()%></textarea>
 </div>
 <br />
 
@@ -557,6 +565,7 @@ $(function(){
 	<img src="http://localhost/prj_2/images/refresh_icon-removebg-preview.png"/>
 	</button> 
 	<br/>
+	
 	<hr class="qna_line">
 	<textarea class="requestText" placeholder="문의글"></textarea>
 	<div class="comment-tag">
@@ -564,6 +573,7 @@ $(function(){
 	<br/>
 	<i class="fa fa-ellipsis-v" aria-hidden="true"<% if (isMyCom) { %>hidden<% } %>></i>
 	</div>
+	
 	<hr class="qna_line">
 	<textarea class="requestText" placeholder="문의글"></textarea>
 	<div class="comment-tag">
@@ -571,14 +581,15 @@ $(function(){
 	<br/>
 	<i class="fa fa-ellipsis-v" aria-hidden="true"<%-- <% if (isMyCom) { %>hidden<% } %> --%>></i>
 	</div>
+	
 	<hr class="qna_line">
 	<textarea class="requestText" placeholder="문의글"></textarea>
 	<div class="comment-tag">
 	<input type="text" class="user_id" value=userId><input type="text"class="write-date"value="날짜">
 	<br/>
+	
 	<div class="dropdown">
 	<i class="fa fa-ellipsis-v" aria-hidden="true"<%-- <% if (isMyCom) { %>hidden<% } %> --%>></i>
-
 	</div>
 	</div>
 	<hr class="qna_line">
@@ -608,120 +619,29 @@ $(function(){
 <br>
 <div id="other-prod">
 <div id="other-prod-title">다른 중고 물품
-<input type="button"id="move-mainpage-button"value="상품 더보기 >"onclick="location.href='http://localhost/prj_2/lmh/main_login.jsp'"/>
+<input type="button"id="move-mainpage-button"value="상품 더보기 >"onclick="location.href='http://localhost/prj_2/lmh/buy.jsp'"/>
 </div>
-<div class="card-photo1"onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'">
-     <img alt="매물" src="" class="photo">
-</div>
-   
-   <div class="card-desc1">
-       <h2 class="card-title">자전거</h2>
-      
-       <div class="card-price ">
-           200,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-		</div>
-</div><!-- card-photo1 -->
+<%
+MainProdDAO MainProdDAO = new MainProdDAO();
+List<MainProdVO> MainProdlist = MainProdDAO.CategoryData("","","");	
 
-<div class="card-photo2"onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'">
-     <img alt="매물" src="" class="photo">
-</div>
-   
-   <div class="card-desc2">
-       <h2 class="card-title">자전거2</h2>
-      
-       <div class="card-price ">
-           250,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-		</div>
-</div><!-- card-photo2 -->
+pageContext.setAttribute("prodPopular", MainProdlist);
 
-<div class="card-photo3"onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'">
-     <img alt="매물" src="" class="photo">
+%>
+<c:forEach var="MainProdVO" items="${prodPopular}" varStatus="i" begin="1">
+<c:if test="${i.count <= 6}">
+<div class="card-photo${i.index}"onclick="location.href='http://localhost/prj_2/cis/product_info.jsp'">
+     <img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"> 
 </div>
-   
-   <div class="card-desc3">
-       <h2 class="card-title">자전거2</h2>
-      
-       <div class="card-price ">
-           250,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-		</div>
-</div><!-- card-photo3 -->
-   
-
-<div class="card-photo4"onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'">
-     <img alt="매물" src="" class="photo">
+   <div class="card-desc${i.index}">
+       <span class="card-title">${MainProdVO.prodName}</span>   
+       <div class="card-price ">${MainProdVO.price}</div>
+       <div class="card-region-name"> ${MainProdVO.areaName}</div>
+       <div class="card-counts"><span>${MainProdVO.viewCnt}</span></div>
 </div>
-   
-   <div class="card-desc4">
-       <h2 class="card-title">자전거2</h2>
-      
-       <div class="card-price ">
-           250,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-		</div>
-</div><!-- card-photo4 -->
-
-   
- <div class="card-photo5"onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'">
-     <img alt="매물" src="" class="photo">
-</div>
-   
-   <div class="card-desc5">
-       <h2 class="card-title">자전거2</h2>
-      
-       <div class="card-price ">
-           250,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-		</div>
-</div><!-- card-photo5 -->
-
- <div class="card-photo6">
-     <img alt="매물" src="" class="photo">
-</div>
-   
-   <div class="card-desc6">
-       <h2 class="card-title">자전거2</h2>
-      
-       <div class="card-price ">
-           250,000원
-       </div>
-       <div class="card-region-name">
-          강남구 역삼동
-       </div>
-       <div class="card-counts">
-          <span>조회 150</span>
-		</div>
-</div><!-- card-photo4 -->
-   
- 
-</div>
+</c:if>
+</c:forEach>
+</div> <!-- 마지막 div  -->
    
 
 

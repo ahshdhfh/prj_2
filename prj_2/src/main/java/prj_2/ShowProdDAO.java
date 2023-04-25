@@ -13,8 +13,8 @@ public class ShowProdDAO {
 	/**
 	 * 상품의 정보를 띄우는 메소드*
 	 */
-	public List<ProductDetailVO> showProdInfo(int prodNum) throws SQLException {
-		List<ProductDetailVO> list = new ArrayList<ProductDetailVO>();
+	public ProductDetailVO showProdInfo(int prodNum) throws SQLException {
+		ProductDetailVO list = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -31,7 +31,7 @@ public class ShowProdDAO {
 			StringBuilder showPrdImg = new StringBuilder();
 
 			showPrdInfo
-					.append("	select prod_name,input_date,view_cnt,interest_cnt,price,detail_txt,		")
+					.append("	select prod_name,input_date,view_cnt,interest_cnt,p.ACTI_AREA_NUM,price,detail_txt,		")
 					.append("	place_transaction, CATEGORY_NUM, u.USER_ID,PERSONAL_INTRO,		")
 					.append("	(select count(*)															")
 					.append("	from prod_comment pc												")
@@ -39,43 +39,48 @@ public class ShowProdDAO {
 					.append("	from 	product p, users u											")
 					.append("	where	u.user_id=p.user_id and p.prod_num=?		");
 			
-			showPrdImg
-					.append("	select PROD_IMG							")
-					.append("	from		PRODUCT_IMG				")
-					.append("	where prod_num=?						");
-
 			pstmt = con.prepareStatement(showPrdInfo.toString());
 
 			pstmt.setInt(1, prodNum);
 			rs=pstmt.executeQuery();
 
-			ProductDetailVO pVO = null;
-
-			while (rs.next()) {
+			if(rs.next()) {
 				String name = rs.getString("prod_name");
-				Date date = rs.getDate("inputDate");
-				int viewCnt = rs.getInt("viewCnt");
-				int interCnt = rs.getInt("interestCnt");
+				Date date = rs.getDate("input_date");
+				int viewCnt = rs.getInt("view_cnt");
+				int interCnt = rs.getInt("interest_cnt");
 				int price = rs.getInt("price");
-				String detailTxt = rs.getString("textOfPrd");
-				String pTransaction = rs.getString("placeTraction");
-				int category = rs.getInt("categoryNumber");
-				String user = rs.getString("sellUserId");
-				int areaNum = rs.getInt("areaNum");
-				String perIntro = rs.getString("selfIntroduce");
-				int commentCnt = rs.getInt("commCnt");
+				String detailTxt = rs.getString("detail_txt");
+				String pTransaction = rs.getString("place_transaction");
+				int category = rs.getInt("CATEGORY_NUM");
+				String user = rs.getString("USER_ID");
+				int areaNum = rs.getInt("ACTI_AREA_NUM");
+				String perIntro = rs.getString("PERSONAL_INTRO");
+				int commentCnt = rs.getInt("comm_cnt");
 
-				pVO = new ProductDetailVO(null, name, detailTxt, pTransaction, user, perIntro, user, price, prodNum, category, interCnt, commentCnt, viewCnt, areaNum, date);
+				list = new ProductDetailVO(null, name, detailTxt, pTransaction, user, perIntro, user, price, prodNum, category, interCnt, commentCnt, viewCnt, areaNum, date);
 
-				list.add(pVO);
-			} // end while
+			} // end if
 			pstmt.executeQuery();
+			pstmt.close();
+			rs.close();
 			
-				for(int i=0;i<pVO.getProdImg().length;i++) {
+			
+			showPrdImg
+			.append("	select PROD_IMG				")
+			.append("	from PRODUCT_IMG			")
+			.append("	where PROD_NUM=?			");
+
 					pstmt=con.prepareStatement(showPrdImg.toString());
-					pstmt.setString(1, pVO.getProdImg()[i]);
-					pstmt.executeQuery();
-				}//end for
+					pstmt.setInt(1, prodNum);
+					rs=pstmt.executeQuery();
+			int i=0;
+			String[] str=new String[10];
+			while(rs.next()) {
+				str[i]=rs.getString("PROD_IMG");
+			}
+			
+			list.setProdImg(str);
 				
 		} finally {
 			dbCon.dbClose(rs, pstmt, con);
@@ -84,6 +89,10 @@ public class ShowProdDAO {
 		return list;
 	}// showProdInfo
 
+	
+	
+	
+	
 	/**
 	 * 북마크 기능 메소드
 	 * @return

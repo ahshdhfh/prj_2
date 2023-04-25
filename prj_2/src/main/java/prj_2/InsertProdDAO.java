@@ -51,11 +51,13 @@ public class InsertProdDAO {
 			
 		//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeQuery();
+			pstmt.close();
 			
 			for(int i=0;i<pVO.getprodImg().length;i++ ) {
 				pstmt=con.prepareStatement(insertPrdImg.toString());
 				pstmt.setString(1, pVO.getprodImg()[i]);
 				pstmt.executeQuery();
+				pstmt.close();
 			}//end for
 			
 			
@@ -64,6 +66,10 @@ public class InsertProdDAO {
 		//7. 연결 끊기
 		}//end finally
 	}//insertProdInfo
+	
+	
+	
+	
 	
 	/**
 	 * 상품의 정보를 수정하는 메소드 (상품이미지는 삭제하고 다시 insert 해야함)
@@ -84,7 +90,8 @@ public class InsertProdDAO {
 		//4. 쿼리문 생성객체 얻기
 			StringBuilder updatePrd=new StringBuilder();
 			
-			StringBuilder updatePrdImg= new StringBuilder();
+			StringBuilder deletePrdImg= new StringBuilder();
+			StringBuilder insertPrdImg= new StringBuilder();
 			
 			//상품 정보 수정 sql문
 			updatePrd
@@ -103,21 +110,33 @@ public class InsertProdDAO {
 			
 		//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeQuery();
+			pstmt.close();
+			
 			
 			//상품 이미지 정보 수정 sql문
-			updatePrdImg
-			.append("		update product_img	")
-			.append("		set prod_img=?			")
+			deletePrdImg
+			.append("		delete from PRODUCT_IMG	")
 			.append("		where prod_num=?	");
 						
+			pstmt=con.prepareStatement(deletePrdImg.toString());
+			pstmt.setInt(1, pVO.getProdNum());
+			pstmt.executeQuery();
+			pstmt.close();
+			
+			insertPrdImg
+			.append("insert into PRODUCT_IMG(PROD_IMG_NUM, PROD_NUM, PROD_IMG) values(GANGNAMKONG.SEQ_PRODUCT_IMG.NEXTVAL,		")
+			.append("?,?)																										");
+						
+			//6. 쿼리문 수행 후 결과 얻기			
 			for(int i=0;i<pVO.getprodImg().length;i++ ) {
-				pstmt=con.prepareStatement(updatePrdImg.toString());
+				pstmt=con.prepareStatement(insertPrdImg.toString());
 				pstmt.setString(1, pVO.getprodImg()[i]);
+				pstmt.setInt(2,  pVO.getProdNum());
+				pstmt.executeQuery();
+				pstmt.close();
 			}//end for
 			
-			pstmt.setInt(2,pVO.getProdNum());
-			
-			pstmt.executeQuery();
+		
 		}finally {
 		//7. 연결끊기
 			dbCon.dbClose(null, pstmt, con);	
