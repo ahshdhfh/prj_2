@@ -3,18 +3,14 @@
     
         <!-- 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>강남콩마켓 로그인</title>
-
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
-
 .area_login{
 height: 670px; 
 width: 1200px;
@@ -121,13 +117,15 @@ font-size: 22px;
 font-weight: bold;
 }
 </style>
-
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
-
-
 <script type="text/javascript">
+
+	if(<%=request.getParameter("flag")%>==false){
+		alert("아이디나 비밀번호를 다시 확인해주세요");
+	}//end if
+	
 
     function chkNull(){
     	if($("#id").val() == ""){
@@ -197,17 +195,7 @@ font-weight: bold;
      
 </form> <!--postFrm  -->    
   
-  
   </div><!-- area_login -->
-
-  
-  
-  
-  
-  
-
-   
   </div><!--wrap  -->
-
 </body>
 </html>
