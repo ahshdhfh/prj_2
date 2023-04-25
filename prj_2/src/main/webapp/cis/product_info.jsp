@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -401,39 +402,22 @@ $(function(){
 	    $(".dropdown-menu").toggle();
 	  });
 });
+
+//댓글 페이지
 </script>
 <!-- Boot strap 시작  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<!-- Boot strap 끗  -->
 
 </head>
 <body>
 	<div class="wrap">
 
-		<div class="header">
-			<div class="logo">
-			<a href="http://localhost/prj_2/lmh/main_login.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
-			</div>
+  <div class="header">
+      <%@ include file="../lmh/header.jsp" %>
+  </div>
 
-			<div class="search_area">
-				<input type="text" class="search" placeholder="물품을 검색해 보세요">
-			</div>
-			<!-- search-->
-
-			<div class="div_select_login"> 
-            	<select class="select_login" onchange="window.location.href=this.value">
-             		<option value="나의 마켓">나의 마켓</option>
-            	 	<option value="http://localhost/html_prj/project/mypage.jsp">나의 마켓</option>
-             		<option value="http://localhost/prj_2/cis/sell_page.jsp">상품 등록</option>
-             		<option value="http://localhost/html_prj/project/EditInfoPassword.jsp">개인정보수정</option>
-         		</select>
-     		  </div>
-
-       		<div class="logout">
-         		<a href="http://localhost/prj_2/cis/product_info_logout.jsp" class="a_login" >로그아웃</a>
-      	 	</div>
-		</div>
-		<!-- header-->
 <!-- 유저의 구매자/판매자를 구분하는 스크립트릿 -->
 <%
   	String userRole = (String) session.getAttribute("userRole"); // 세션에서 사용자의 역할 정보를 가져옴
@@ -594,24 +578,11 @@ $(function(){
 	<br/>
 	<div class="dropdown">
 	<i class="fa fa-ellipsis-v" aria-hidden="true"<%-- <% if (isMyCom) { %>hidden<% } %> --%>></i>
-<!--   		<button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    		<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-		  </button>
-  		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    		<a class="dropdown-item" href="#">수정하기</a>
-    		<a class="dropdown-item" href="#">삭제하기</a>
-  		</div> -->
+
 	</div>
 	</div>
 	<hr class="qna_line">
-<!-- 	<table>	
-		<tr>
-			<td >문의글</td><td >user id</td><td >write date</td>
-		</tr>
-		<tr>
-			<td ></td><td ></td><td >button</td>
-		</tr>
-	</table> -->
+
 </div>
 <!-- 일정 댓글 수마다 페이지 겟수가 늘어나게 해야됨. -->
 	<div id="all-page-button">
@@ -619,7 +590,9 @@ $(function(){
 		<input type="button"id="page-button-1"value="1">		
 		<input type="button"id="page-button-2"value="2">		
 		<input type="button"id="page-button-right"value=">">		
-	</div>
+	</div> 
+
+	
 	<form class="comment_form">
 	<div>
 		<img src="" id="comment_profile_img"/>
@@ -755,16 +728,9 @@ $(function(){
 <!-- class : buy_page 메인 div -->
 <!-- 상품 상세 페이지 내용부분 -->
 <!-- footer 부분 -->
-<div class="footer">
-			<hr >
-
-				<div class="footer_text">
-					대표 김용현, 황도연 | 사업자번호 375-87-00088<br> 직업정보제공사업 신고번호
-					2016-서울서초-0051<br> 주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
-					전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
-				</div>
-
-</div>
+   <div class="footer">
+      <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
+   </div><!-- footer-->
 </div>
 
 <!-- footer-->

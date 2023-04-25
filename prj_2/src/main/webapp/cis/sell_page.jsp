@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,13 @@
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 
+#label-input-img{
+width:180px;
+height:180px;
+}
+
 /* 상품 이미지 */
-#input-img{
+ #input-img{
 border: 1px solid #333;
 width:180px;
 height:180px;
@@ -18,7 +24,15 @@ margin-left:20px;
 margin-top:-20px;
 text-align:center;
 }
-
+.square {
+width:180px;
+height:180px;
+border: 1px solid #333;
+cursor: pointer;
+margin-left:130px;
+margin-top:-20px;
+text-align:center;
+}
 #caution{
 font-size:1.5pt;
 color:#0055FF;
@@ -45,7 +59,7 @@ border-radius: 5px;
 
 #input-price{
 width:170px;
-height:40px;
+height:25px;
 border-radius: 5px;
 margin-left:20px;
 padding:2px;
@@ -64,7 +78,7 @@ padding:10px;
 
 #input-location{
 width:440px;
-height:50px;
+height:35px;
 border-radius: 5px;
 padding:2px;
 }
@@ -186,23 +200,20 @@ function chkNull(){
 	$("#frm").submit();
 }//chkNull
 
+/* 이미지 파일 업로드 기능 */
+
+
 /* 제목 입력 시 옆에서 문자 카운트  */
 function countTextLength() {
 	  var inputText = document.getElementById("input-title").value; // 입력된 텍스트 값 가져오기
 	  var textLength = inputText.length; // 텍스트 길이 계산
 	  var countElement = document.getElementById("text-count"); // 글자 수를 표시할 요소 가져오기
-	  countElement.innerHTML = textLength + "/40"; // 글자 수 표시
+	  countElement.innerHTML = textLength + "/30"; // 글자 수 표시
 }//countTextLength
 
-/* 나눔하기 체크 시 가격 0원으로 설정 */
-function handleCheckboxChange() {
-  const inputPrice = document.getElementById('input-price');
-  const shareCheck = document.getElementById('share-check');
-  if (shareCheck.checked) {
-    inputPrice.value = 0;
-  }
-}
-/* 작동 안됨, 마저 수정 필요  */
+/* 나눔하기 체크 시 가격 0원으로 설정 *//* 작동 안됨, 마저 수정 필요  */
+
+
 </script>
 </head>
 
@@ -210,28 +221,11 @@ function handleCheckboxChange() {
 
 <body>
 <div class="wrap">
-  <div class="header">
-       <div class="logo">
-       <a href="http://localhost/prj_2/lmh/main_login.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
-       </div>
-       
-       <div class="search_area">
-       <input type="text" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-      <div class="div_select_login"> 
-         <select class="select_login" onchange="window.location.href=this.value">
-             <option value="나의 마켓">나의 마켓</option>
-             <option value="http://localhost/html_prj/project/mypage.jsp">나의 마켓</option>
-<!--       <option value="http://211.63.89.152/html_prj/project2nd/sell_page.jsp">상품 등록</option> -->
-             <option value="http://localhost/html_prj/project/EditInfoPassword.jsp">개인정보수정</option>
-         </select>
-       </div>
 
-          <div class="logout">
-         <a href="http://localhost/prj_2/lmh/logout.jsp" class="a_login" >로그아웃</a>
-       </div>
-  </div><!-- header-->
+  <div class="header">
+      <%@ include file="../lmh/header.jsp" %>
+  </div>
+
    
  <br/>
  <br/>
@@ -241,11 +235,14 @@ function handleCheckboxChange() {
 <hr>
 <br/>
 <form id="frm" action="http://localhost/prj_2/cis/product_info_login.jsp" method="post">
-<div>상품이미지(0/6)
-<input type="file" id="input-img"/>
-</div>
+<div>상품이미지(0/6)</div>
+  <div class="square">
+<label id="label-input-img">
+<input type="file" id="input-img" style="display: none;">
+</label>
+  </div>
 <pre id="caution">
-* 상품 이미지는 640x640에 최적화 되어 있습니다.
+* 상품 이미지는 600x600에 최적화 되어 있습니다.
 - 상품 이미지는 PC에서는 1:1, 모바일에서는 1:1.23 비율로 보여집니다.
 - 이미지는 상품 등록 시 정사각형으로 잘려서 등록됩니다.
 - 이미지를 클릭할 경우 원본 이미지를 확인할 수 있습니다.
@@ -257,16 +254,11 @@ function handleCheckboxChange() {
 <hr>
 <br/>
 
-<!-- <div>
-  제목*
-  <input type="text" id="input-title" placeholder="내용을 입력해주세요" oninput="countChars()">
-  <span id="char-count">0/40</span>
-</div> -->
 
 <div>
   <label for="input-title"> 제목*</label>
-  <input type="text" id="input-title" oninput="countTextLength()" maxlength="40">
-  <span id="text-count">  0/40</span>
+  <input type="text" id="input-title" oninput="countTextLength()" maxlength="30">
+  <span id="text-count">  0/30</span>
 </div>
 <br/>
 <hr>
@@ -284,10 +276,15 @@ function handleCheckboxChange() {
 <hr>
 <br/>
 <div>
-<label for= "input-price">가격* </label> 
-<input type="text"id="input-price" placeholder="숫자만 입력해주세요">  원
-<input type="checkbox" name="share" id="share-check">나눔하기
+<!-- <label for= "input-price">가격* </label> 
+<input type="text" id="input-price" placeholder="숫자만 입력해주세요" >  원
+<input type="checkbox" name="share" id="share-check">나눔하기 -->
+<label for="input-price">가격*</label>
+<input type="text" id="input-price" placeholder="숫자만 입력해주세요" pattern="[0-9]+" required>원
+<input type="checkbox" name="share" id="share-check" 
+	onclick="if(this.checked) document.getElementById('input-price').value='0'; else document.getElementById('input-price').value='';">나눔하기
 <!-- 나눔하기 체크 시 가격을 0원으로 띄우는 기능 -->
+<!-- 숫자 이외에 문자열 입력 안되게 하는 것 구현 안됨 -->
 </div>
 <br/>
 <hr>
@@ -311,33 +308,24 @@ function handleCheckboxChange() {
 <br/>
 <br/>
 <hr>
-
 <br/>
 <br/>
 <br/>
 <br/>
+</form>
 <!-- 취소/작성완료 버튼 -->
 <div class="button-check">
 <input type="button"id="cancel-button"value="취소"onclick="location.href='http://localhost/prj_2/lmh/main_login.jsp'">
 <input type="button"id="complete-button"value="작성완료">
 <!-- onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'" -->
 </div>
-</form>
 <br/>
 <br/>
 <br/>
 <br/>
 <!-- footer 부분 -->
    <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 김용현, 황도연 | 사업자번호 375-87-00088<br>
-        직업정보제공사업 신고번호 2016-서울서초-0051<br>
-        주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
-        전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
-       </div>
-
+      <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
    </div><!-- footer-->
    
    
