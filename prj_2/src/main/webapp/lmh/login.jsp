@@ -131,15 +131,16 @@ font-weight: bold;
 
     function chkNull(){
     	if($("#id").val() == ""){
-    		alert("아이디는 필수 입력!!");
+    		alert("아이디를 입력해 주세요");
     		$("#id").focus();
     		return;
     	}//end if
     	if($("#pass").val() == ""){
-    		alert("비밀번호는 필수 입력!!");
+    		alert("비밀번호를 입력해 주세요");
     		$("#pass").focus();
     		return;
     	}//end if
+    	
     	
     	$("#postFrm").submit();
    

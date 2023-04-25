@@ -1,4 +1,4 @@
-<%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
+<%-- <%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
 <%@page import="prj_2.LoginSessionVO"%>
 <%@page import="prj_2.LoginVO"%>
 <%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
@@ -141,15 +141,14 @@ font-weight: bold;
 
 
 
-<%  System.out.println(lVO.getUserId());
-System.out.println(lVO.getUserPassword());
-%>
-
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
+
+
+
 <script type="text/javascript">
-if("<%= request.getMethod() %>" == "GET") {
+if(<%= request.getMethod() %> == "GET") {
 	alert("정상적인 방식으로 요청하지 않으셨습니다");
 	location.href="http://localhost/prj_2/lmh/login.jsp";
 }//end if
@@ -158,12 +157,10 @@ if("<%= request.getMethod() %>" == "GET") {
 <%
 //웹 파라메터의 아이디와 비밀번호가 존재하는 경우(백엔드에서 유효성검증을 한다) 
 if( lVO.getUserId() == null || "".equals(lVO.getUserId()) ||
-  lVO.getUserPassword() == null || "".equals(lVO.getUserPassword())){
-	response.sendRedirect("http://localhost/prj_2/lmh/login.jsp");
-	
-	return;
+  lVO.getUserPassword() == null || "".equals(lVO.getUserPassword())){%> 
+	location.href="http://localhost/prj_2/lmh/login.jsp";	
 }//end if
-%>
+
 
 <%
 //비밀번호를 MD5 algorithm을 사용하여 일방향 해시로 암호화 수행한다
@@ -178,10 +175,11 @@ String name=userDAO.selectLogin(lVO).getNickName();
 if( name==null ) {//empty면 로그인실패	
 	%>
 	alert("아이디나 비밀번호를 다시 확인해주세요");
-}
-	
-	<%
-	
+<%
+}else if("".equals(name)){
+	%>
+	alert("아이디나 비밀번호를 다시 확인해주세요");	
+	<%	
 }else{
 	
 	//이름을 어떤 페이지에서든 사용하기 위해 session 설정
@@ -193,16 +191,15 @@ if( name==null ) {//empty면 로그인실패
 	%>
 	location.href="main.jsp";
 	<%
-
 }//end else		
-	%>
+%>
 
 </script>
 </head>
 <body>
 <form id="frm" name="frm"  action="main.jsp" method="post">
-<input type="hidden" value="<%=session.getAttribute("nickName") %>" name="nickName"/>
+<input type="hidden" value="<%=session.getAttribute("nickName") %>" name="nickName"/> 
 </form>
 
 </body>
-</html>
+</html> --%>
