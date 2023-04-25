@@ -62,7 +62,7 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 	<div id="div1">
 		<font id="font1">환영합니다!<br>구매와 판매를 통해 마켓을 즐겨보세요!</font>
 	</div>
-	<a href="http://localhost/prj_2/lmh/main_logout.jsp">
+	<a href="http://localhost/prj_2/lmh/main.jsp">
 	<input type="button" id="whiteBtn2" value="메인으로 이동"></a>
 	<a href="http://localhost/prj_2/lmh/login.jsp">
 	<input type="button" id="colorBtn2" value="상품 판매하기">

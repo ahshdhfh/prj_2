@@ -14,10 +14,8 @@ String userId = request.getParameter("userId");//아이디 값 할당
 String userName=request.getParameter("userName");//이름 값 할당
 String email=request.getParameter("email")+"@"+request.getParameter("email2");//이메일 값 할당
 
-
 DataEncrypt de = new DataEncrypt("Tkddydgangnamkong");//암호화 키
-//email=de.encryption(email);//이메일 암호화하기
-
+email=de.encryption(email);//이메일 암호화하기
 UserDAO userDAO = new UserDAO();
 
 if(userId==null){//아이디가 없는경우 - 아이디찾기

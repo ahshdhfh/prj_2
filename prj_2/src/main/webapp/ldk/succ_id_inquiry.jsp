@@ -77,7 +77,7 @@ loginBox는 container의 시작점이 loginBox의 시작좌표가된다.
 	<a href="http://localhost/prj_2/lmh/main_login.jsp">
 	<input type="button" id="whiteBtn2" value="홈으로">
 	</a>
-	<a href="http://localhost/prj_2/ldk/pass_inquiry.jsp">
+	<a href="http://localhost/prj_2/ldk/pass_inquiry.jsp?userId=<%=request.getParameter("userId") %>">
 	<input type="button" id="colorBtn2" value="비밀번호 찾기">
 	</a>
 </div><!-- container -->

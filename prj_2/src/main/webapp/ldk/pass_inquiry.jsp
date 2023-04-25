@@ -110,7 +110,7 @@ $(function(){
 	</div>
 	<div id="div3">
 		<label id="font1">아이디&nbsp</label>
-		<input type="text" id="inputBox1" name="userId" placeholder="아이디">
+		<input type="text" id="inputBox1" name="userId" placeholder="아이디" value="<%=request.getParameter("userId")!=null?request.getParameter("userId"):"" %>">
 	</div>
 	<div id="div4">
 		<label id="font1">이메일&nbsp</label>

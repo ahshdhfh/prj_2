@@ -1,3 +1,7 @@
+<%@page import="prj_2.MainProdVO"%>
+<%@page import="java.util.List"%>
+<%@page import="prj_2.MainProdDAO"%>
+<%@page import="prj_2.LoginSessionVO"%>
 <%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -69,6 +73,7 @@ function passValid2(){
 
 function checkNull() {
 	var obj=document.frm;
+	
 	if(obj.pass1.value==""){
 		alert("비밀번호를 입력하세요.")
 		obj.pass1.focus();
@@ -83,6 +88,21 @@ function checkNull() {
 	obj.submit();
 	
 }//checknull
+function validateSearchInput() {
+    var searchInput = document.querySelector('.search');
+    if (searchInput.value.trim() === '') {
+        alert('검색어를 입력하세요.');
+        searchInput.focus();
+        return false;
+    } else {
+        var mainProdSearchDAO = new MainProdSearchDAO();
+        mainProdSearchDAO.selectProd(searchInput.value, function(result) {
+            location.href = 'http://localhost/prj_2/lmh/buy.jsp?search=' + encodeURIComponent(searchInput.value);
+        });
+        return false;
+    }
+}
+
 </script>
 </head>
 
@@ -93,42 +113,101 @@ function checkNull() {
 <div class="wrap">
 
 <div class="header">
-       <!-- <div class="logo"> -->
-       <a href="http://localhost/prj_2/lmh/main_login.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
-       <!-- </div> -->
-       
-       <div class="search_area">
-       <input type="search" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-      
+<%
+String userId=null;
 
- <% request.setCharacterEncoding("UTF-8"); //post 방식의 한글 처리 : request.setCharacterEncoding("변경할 charset");
+userId=request.getParameter("userId");
+String nickName=""; 
+LoginSessionVO lVO = (LoginSessionVO)session.getAttribute("loginData");
 
-String userId = (String)session.getAttribute("userId");
 
-if(userId==null){
-	userId=request.getParameter("userId"); 
-}
 
-UserDAO userDAO = new UserDAO();
+/* System.out.println("send 후 세션값 : "+(String)session.getAttribute("nickName")); */
+/* nickName = (String)request.getAttribute("nickName");
+System.out.println(nickName); */
 
 %>
 
+ <% if ( lVO == null  ){ 
+	 userId=request.getParameter("userId");
+	 ;%> 
+ 
 
-       <div class="div_select_login"> 
+
+
+
+
+
+<%
+MainProdDAO MainProdDAO = new MainProdDAO();
+List<MainProdVO> MainProdlist = MainProdDAO.SearchData(request.getParameter("search"));
+
+pageContext.setAttribute("prodSearch", MainProdlist);
+%>
+
+
+      <!-- 검색창폼 -->
+<form action="/search" method="get" onSubmit="return validateSearchInput()">
+
+    <!-- 로고 -->
+   <a href="http://localhost/prj_2/lmh/main.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
+
+
+   <div class="search_area"><!--  검색창   -->
+   <input type="search"  class="search" placeholder="물품을 검색해 보세요" > <!--list 검색가능   -->
+   </div>
+
+       
+       
+       
+       <div class="join_member"> 
+          <a href="http://localhost/prj_2/ldk/membership_term.jsp"  class="a_join_member"">회원가입</a>
+       </div>
+
+       <div class="login">
+         <a href="http://localhost/prj_2/lmh/login.jsp" class="a_login" >로그인</a>
+       </div>
+</form>
+
+
+
+  
+  
+  <% } else {
+	  userId=lVO.getUserId();
+  	System.out.print("else");
+  %>
+              
+
+       <a href="http://localhost/prj_2/lmh/main.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
+
+
+
+       <div class="search_area">
+       <input type="search" class="search" placeholder="물품을 검색해 보세요"> <!--list 검색가능  -->
+       </div><!-- search-->
+       </form>
+  
+
+ <div class="div_select_login"> 
          <select class="select_login" onchange="window.location.href=this.value">
-             <option value="이름"  hidden><%=userId %> 님</option>
-             <option value="http://localhost/prj_2/kbk/mypage.jsp" >나의 마켓</option>
-             <option value="http://localhost/prj_2/cis/sell_page.jsp">상품 등록</option>
-             <option value="http://localhost/prj_2/kbk/editInfoPassword.jsp">개인정보수정</option>
+             <option value="이름" ><%= lVO.getNickName() %>님</option>
+             <option value="http://211.63.89.134/prj_2/kbk/mypage.jsp" >나의 마켓</option>
+             <option value="http://211.63.89.152/prj_2/cis/sell_page.jsp">상품 등록</option>
+             <option value="http://211.63.89.134/prj_2/kbk/EditInfoPassword.jsp">개인정보수정</option>
          </select> 
        </div>
        
 
        <div class="logout">
-         <a href="http://localhost/prj_2/lmh/main_logout.jsp" class="a_login" >로그아웃</a>
+         <a href="http://localhost/prj_2/lmh/logout.jsp" class="a_login" >로그아웃</a>
        </div>
+       
+ <% }//end else 
+ if(userId==null){
+	 response.sendRedirect("../lmh/main.jsp");
+ }
+ %>
   </div><!-- header-->
    
    

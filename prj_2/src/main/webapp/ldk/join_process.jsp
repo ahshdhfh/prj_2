@@ -1,3 +1,4 @@
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
 <%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
 <%@page import="java.security.MessageDigest"%>
 <%@page import="java.sql.SQLException"%>
@@ -29,10 +30,13 @@ request.setCharacterEncoding("UTF-8");//Post 방식이므로 캐릭터셋 인코
 	//패스워드 암호화 SHA
 	userVO.setUserPassword(DataEncrypt.messageDigest("MD5", userVO.getUserPassword()));//암호화 한 패스워드를 다시 셋팅하기
 
-	userVO.setEmail(userVO.getEmail()+"@"+userVO.getEmail2());//이메일 하나로 합치기
 	DataEncrypt de = new DataEncrypt("Tkddydgangnamkong");//암호화 키
-	userVO.setEmail( de.encryption(userVO.getUserPassword()) );//이메일 주소 암호화하기
-
+	DataDecrypt dd = new DataDecrypt("Tkddydgangnamkong");
+	
+	userVO.setEmail(userVO.getEmail()+"@"+userVO.getEmail2());//이메일 하나로 합치기
+	
+	userVO.setEmail( de.encryption( userVO.getEmail()) );//이메일 주소 암호화하기
+	
 	boolean emailFlag=userDAO.eMailDup(userVO.getEmail());// 이메일 중복확인
 	
 	if(emailFlag){//중복아님! 인서트
