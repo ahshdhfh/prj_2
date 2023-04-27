@@ -1,10 +1,11 @@
+<%@page import="prj_2.SetCommVO"%>
+<%@page import="prj_2.RegisterCommentDAO"%>
 <%@page import="prj_2.ProductDetailVO"%>
 <%@page import="prj_2.ShowProdDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -422,7 +423,7 @@ $(function(){
   </div>
 
 <!-- 유저의 구매자/판매자를 구분하는 스크립트릿 -->
-<%
+<%-- <%
   	String userRole = (String) session.getAttribute("userRole"); // 세션에서 사용자의 역할 정보를 가져옴
   // 사용자가 구매자인지 판매자인지를 판별함
   	boolean isBuyer = "buyer".equals(userRole); 
@@ -433,7 +434,7 @@ $(function(){
 
 	String commentRole =(String)session.getAttribute("commentRole");
 	boolean isMyCom = "comment".equals(commentRole);
-%>
+%> --%>
 <%
 	ShowProdDAO spDAO=new ShowProdDAO();
 	ProductDetailVO pdVO=spDAO.showProdInfo(42);
@@ -484,8 +485,8 @@ $(function(){
 		type="button" 
 		id="bookmark" 
 		onclick=" "
-		<% if (isSeller) { %>hidden<% } %>
-		<% if(isMarked) { %><%} %>/>
+		 />
+		
 		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->			
 <div id="prod-title" ><%=pdVO.getProdName() %></div>
 <hr style="width:450px">
@@ -516,12 +517,20 @@ $(function(){
 	</tr>
 </table>
 <hr style="width:450px">
+<%
+if(lsVO!=null){
+	
+if(lsVO.getUserId()==pdVO.getuserId()){//로그인한 사람과 상품올린사람의 아이디가 일치할때 수정하기버튼 나옴
+%>	
 	<input type="button" 
 			value="상품 정보 수정하기"
 			id="updatePrdInfo" 
-			onclick="location.href='http://localhost/prj_2/cis/sell_page.jsp'"
+			onclick="location.href='http://localhost/prj_2/cis/sell_page.jsp?prodNum=<%=pdVO.getProdNum() %>'"
 			<%--<% if (!isSeller) { %><% } %> --%>
 			/>
+<%}
+}
+%>
 </div>
 </div>
 <!-- 판매자 정보 및 페이지스크롤 이동 툴 -->
@@ -544,7 +553,7 @@ $(function(){
 <div>
 <div id="comment-tile-saletag">
 <b style="font-size:20pt">판매자코멘트</b>
-          <select class="prod-sale-tag" name="판매중" <% if (!isSeller) { %>hidden<% } %>>
+          <select class="prod-sale-tag" name="판매중">
              <option value="판매중">판매중</option>
              <option value="거래완료">거래완료</option>
          </select>
@@ -557,47 +566,29 @@ $(function(){
 <!-- 문의글칸 -->
 <!-- form을 table로 가져와야 되는 구조...
 다시 작성 필요. -->
+<%  RegisterCommentDAO rcDAO = new RegisterCommentDAO();
+List<SetCommVO> list= rcDAO.setCommList(7); 
+/* for(SetCommVO str : list){
+	System.out.println(str.getProdComment()); 
+} */
+pageContext.setAttribute("commList", list);
+%>
 <hr class="qna_line">
 <br>
-<div id = qna-toolbar>
 <div class="qna-list">
 <br/>
-<hr class="qna_line">
+<div id = qna-toolbar>
 <b style="font-size:30pt;">문의글</b>
-	<button type="button" id="refreshButton" >
-	<img src="http://localhost/prj_2/images/refresh_icon-removebg-preview.png"/>
-	</button> 
-	<br/>
-	
-	<hr class="qna_line">
-	<textarea class="requestText" placeholder="문의글"></textarea>
-	<div class="comment-tag">
-	<input type="text" class="user_id" value=userId><input type="text"class="write-date"value="날짜">
-	<br/>
-	<i class="fa fa-ellipsis-v" aria-hidden="true"<% if (isMyCom) { %>hidden<% } %>></i>
-	</div>
-	
-	<hr class="qna_line">
-	<textarea class="requestText" placeholder="문의글"></textarea>
-	<div class="comment-tag">
-	<input type="text" class="user_id" value=userId><input type="text"class="write-date"value="날짜">
-	<br/>
-	<i class="fa fa-ellipsis-v" aria-hidden="true"<%-- <% if (isMyCom) { %>hidden<% } %> --%>></i>
-	</div>
-	
-	<hr class="qna_line">
-	<textarea class="requestText" placeholder="문의글"></textarea>
-	<div class="comment-tag">
-	<input type="text" class="user_id" value=userId><input type="text"class="write-date"value="날짜">
-	<br/>
-	
-	<div class="dropdown">
-	<i class="fa fa-ellipsis-v" aria-hidden="true"<%-- <% if (isMyCom) { %>hidden<% } %> --%>></i>
-	</div>
-	</div>
-	<hr class="qna_line">
 
-</div>
+	<br/>
+	<hr class="qna_line">
+<c:forEach var="scVO" items="${commList}" varStatus="i" begin="0">
+
+
+</c:forEach>
+	
+
+
 <!-- 일정 댓글 수마다 페이지 겟수가 늘어나게 해야됨. -->
 	<div id="all-page-button">
 		<input type="button"id="page-button-left"value="<">		
@@ -617,6 +608,7 @@ $(function(){
 	</form>
 	
 </div>
+</div>
 <!-- 다른 상품 목록 -->
 <hr>
 <br>
@@ -632,6 +624,7 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 
 %>
 <c:forEach var="MainProdVO" items="${prodPopular}" varStatus="i" begin="1">
+
 <c:if test="${i.count <= 6}">
 <div class="card-photo${i.index}"onclick="location.href='http://localhost/prj_2/cis/product_info.jsp'">
      <img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"> 
@@ -642,6 +635,8 @@ pageContext.setAttribute("prodPopular", MainProdlist);
        <div class="card-region-name"> ${MainProdVO.areaName}</div>
        <div class="card-counts"><span>${MainProdVO.viewCnt}</span></div>
 </div>
+
+
 </c:if>
 </c:forEach>
 </div> <!-- 마지막 div  -->

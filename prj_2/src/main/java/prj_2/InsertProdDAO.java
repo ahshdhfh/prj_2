@@ -2,16 +2,17 @@ package prj_2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InsertProdDAO {
 
 	/**
 	 * 상품등록 메소드
-	 * @param pVO
+	 * @param piVO
 	 * @throws SQLException
 	 */
-	public void insertProdInfo(ProductInsertVO pVO)throws SQLException {
+	public void insertProdInfo(ProductInsertVO piVO)throws SQLException {
 		
 		Connection con = null;
 		PreparedStatement pstmt=null;
@@ -40,22 +41,22 @@ public class InsertProdDAO {
 
 
 			//5. 바인드 변수 값 설정
-			pstmt.setString(1, pVO.getProdName());
-			pstmt.setString(2, pVO.getShare());
-			pstmt.setInt(3, pVO.getPrice());
-			pstmt.setString(4, pVO.getTextOfPrd());
-			pstmt.setString(5, pVO.getPlaceTraction());
-			pstmt.setInt(6, pVO.getCategoryNumber());
-			pstmt.setInt(7, pVO.getAreaNum());
-			pstmt.setString(8, pVO.getUserId());
+			pstmt.setString(1, piVO.getProdName());
+			pstmt.setString(2, piVO.getShare());
+			pstmt.setInt(3, piVO.getPrice());
+			pstmt.setString(4, piVO.getTextOfPrd());
+			pstmt.setString(5, piVO.getPlaceTraction());
+			pstmt.setInt(6, piVO.getCategoryNumber());
+			pstmt.setInt(7, piVO.getAreaNum());
+			pstmt.setString(8, piVO.getUserId());
 			
 		//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeQuery();
 			pstmt.close();
 			
-			for(int i=0;i<pVO.getprodImg().length;i++ ) {
+			for(int i=0;i<piVO.getprodImg().length;i++ ) {
 				pstmt=con.prepareStatement(insertPrdImg.toString());
-				pstmt.setString(1, pVO.getprodImg()[i]);
+				pstmt.setString(1, piVO.getprodImg()[i]);
 				pstmt.executeQuery();
 				pstmt.close();
 			}//end for
@@ -75,7 +76,7 @@ public class InsertProdDAO {
 	 * 상품의 정보를 수정하는 메소드 (상품이미지는 삭제하고 다시 insert 해야함)
 	 * @return
 	 */
-	public int updatePrd(ProductInsertVO pVO)throws SQLException {
+	public int updatePrd(ProductInsertVO piVO)throws SQLException {
 		
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -101,12 +102,12 @@ public class InsertProdDAO {
 						
 			pstmt=con.prepareStatement(updatePrd.toString());
 		//5. 바인드 변수 값 설정
-			pstmt.setString(1, pVO.getProdName());
-			pstmt.setInt(2, pVO.getPrice());
-			pstmt.setString(3, pVO.getTextOfPrd());
-			pstmt.setString(4, pVO.getPlaceTraction());
-			pstmt.setInt(5, pVO.getCategoryNumber());
-			pstmt.setInt(6, pVO.getProdNum());
+			pstmt.setString(1, piVO.getProdName());
+			pstmt.setInt(2, piVO.getPrice());
+			pstmt.setString(3, piVO.getTextOfPrd());
+			pstmt.setString(4, piVO.getPlaceTraction());
+			pstmt.setInt(5, piVO.getCategoryNumber());
+			pstmt.setInt(6, piVO.getProdNum());
 			
 		//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeQuery();
@@ -119,7 +120,7 @@ public class InsertProdDAO {
 			.append("		where prod_num=?	");
 						
 			pstmt=con.prepareStatement(deletePrdImg.toString());
-			pstmt.setInt(1, pVO.getProdNum());
+			pstmt.setInt(1, piVO.getProdNum());
 			pstmt.executeQuery();
 			pstmt.close();
 			
@@ -128,10 +129,10 @@ public class InsertProdDAO {
 			.append("?,?)																										");
 						
 			//6. 쿼리문 수행 후 결과 얻기			
-			for(int i=0;i<pVO.getprodImg().length;i++ ) {
+			for(int i=0;i<piVO.getprodImg().length;i++ ) {
 				pstmt=con.prepareStatement(insertPrdImg.toString());
-				pstmt.setString(1, pVO.getprodImg()[i]);
-				pstmt.setInt(2,  pVO.getProdNum());
+				pstmt.setString(1, piVO.getprodImg()[i]);
+				pstmt.setInt(2,  piVO.getProdNum());
 				pstmt.executeQuery();
 				pstmt.close();
 			}//end for
@@ -144,5 +145,76 @@ public class InsertProdDAO {
 		return 0;
 	
 	}//updatePRd
+	/**
+	 * 수정할 정보를 수정페이지에 세팅하는 메소드
+	 * @return
+	 */
+	public ProductInsertVO setSelectPrd(int prodNum)throws SQLException {
+		
+		ProductInsertVO piVO = null;
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs = null;
+		DbConnection dbCon=DbConnection.getInstance();
+		
+		try {
+			//1. JNDI 사용객체 생성
+			//2. DateSource를 얻어주기
+			//3. Connection 얻기
+			con=dbCon.getConn();
+			//4. 쿼리문 생성객체 얻기
+			StringBuilder selectPrd=new StringBuilder();
+			StringBuilder selectImg= new StringBuilder();
+			
+
+			//상품 정보 수정 sql문
+			//PROD_NUM	PROD_NAME	INPUT_DATE	VIEW_CNT	INTEREST_CNT	SHARING_CHECK	PRICE	DETAIL_TXT	PLACE_TRANSACTION	CATEGORY_NUM	ACTI_AREA_NUM	USER_ID	
+			
+			selectPrd
+			.append("		select	  PROD_NUM,	PROD_NAME,	INPUT_DATE	VIEW_CNT,	INTEREST_CNT,  	")
+			.append("	SHARING_CHECK, 	PRICE, 	DETAIL_TXT,  PLACE_TRANSACTION,  	CATEGORY_NUM, 	ACTI_AREA_NUM, 	USER_ID		 	")
+			.append("		from      PRODUCT					")
+			.append("		where  prod_num=? 					");
+			
+			pstmt=con.prepareStatement(selectPrd.toString());
+			//5. 바인드 변수 값 설정
+			pstmt.setInt(1, prodNum);
+			
+	
+			//6. 쿼리문 수행 후 결과 얻기
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				piVO = new ProductInsertVO(null, rs.getString("prod_name"), rs.getString("DETAIL_TXT"), rs.getString("SHARING_CHECK"), rs.getString("PLACE_TRANSACTION"), 
+						rs.getString("USER_ID"), rs.getInt("price"), rs.getInt("CATEGORY_NUM"), rs.getInt("ACTI_AREA_NUM"), rs.getInt("PROD_NUM"));
+			}//end if
+			
+			pstmt.close();
+
+			//상품 이미지 정보 수정 sql문
+			selectImg
+			.append("		select	PROD_IMG			")
+			.append("		from    PRODUCT_IMG	")
+			.append("		where prod_num=?		");
+			
+			pstmt=con.prepareStatement(selectImg.toString());
+			pstmt.setInt(1, prodNum);
+			rs.close();
+			rs=pstmt.executeQuery();
+			String[] images= new String[6];
+			int i=0;
+			while(rs.next()) {
+				images[i]=rs.getString("prod_img");
+			}//end while
+			piVO.setprodImg(images);
+	
+			
+		}finally {
+			//7. 연결끊기
+			dbCon.dbClose(rs, pstmt, con);	
+		}//end finally
+		return piVO;
+		
+	}//setSelectPrd
 	
 }//class

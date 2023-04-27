@@ -1,8 +1,13 @@
 package prj_2;
 
+import java.beans.Statement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 댓글 문의&답변과 수정, 삭제, 채택 기능을 구현한 클래스
@@ -32,9 +37,9 @@ public class RegisterCommentDAO {
 			
 			pstmt=con.prepareStatement(insertComm.toString());
 		//5. 바인드 변수 값 설정
-			pstmt.setInt(1,cVO.getcommNum());
-			pstmt.setString(2,cVO.getId());
-			pstmt.setString(3,cVO.getprodComments());
+			pstmt.setInt(1,cVO.getCommNum());
+			pstmt.setString(2,cVO.getUserId());
+			pstmt.setString(3,cVO.getProdComments());
 			
 			pstmt.executeQuery();
 		//6. 쿼리문 수행 후 결과 얻기
@@ -68,8 +73,8 @@ public class RegisterCommentDAO {
 			
 			pstmt=con.prepareStatement(updateCom.toString());
 		//5. 바인드 변수 값 설정
-			pstmt.setString(1, cVO.getprodComments());
-			pstmt.setInt(2, cVO.getcommNum());
+			pstmt.setString(1, cVO.getProdComments());
+			pstmt.setInt(2, cVO.getCommNum());
 			
 			pstmt.executeQuery();
 		//6. 쿼리문 수행 후 결과 얻기
@@ -99,7 +104,7 @@ public class RegisterCommentDAO {
 			pstmt=con.prepareStatement(deleteCom);
 			
 			//5. 바인드 변수 값 설정
-			pstmt.setInt(1, cVO.getcommNum());
+			pstmt.setInt(1, cVO.getCommNum());
 			//6. 쿼리문 수행 후 결과 얻기
 			pstmt.executeQuery();
 		}finally {
@@ -259,5 +264,76 @@ public class RegisterCommentDAO {
 	    } finally {
 	        dbCon.dbClose(null,pstmt, con);
 	    }
-	}
+	}//updateTablePrd
+	
+	
+		/**
+		 * 상품에 달린 댓글의 리스트를 가져오는 메소드
+		 * @param pclVO
+		 * @throws SQLException
+		 */
+		public List<SetCommVO> setCommList(int prodNum)throws SQLException {
+		   List<SetCommVO> list= new ArrayList<SetCommVO>();
+			Connection con = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet rs=null;
+		    
+		    DbConnection dbCon = DbConnection.getInstance();
+		    try {
+		        con = dbCon.getConn();
+		    //쿼리문 생성객체 작성 필요.
+		        StringBuilder commList = new StringBuilder();
+		        
+//		        SELECT p.COMMENT_NUM, p.USER_ID, p.PROD_COMMENTS, p.WRITE_DATE, p.PROD_NUM,
+//		        r.REPLY_NUM, r.REPLY_COMMENT, r.WRITE_DATE, r.COMMENT_NUM, r.USER_ID
+//		 FROM   PROD_COMMENT p
+//		        inner JOIN REPLY_COMMENT r
+//		          ON p.COMMENT_NUM = r.COMMENT_NUM
+//		 where 	p.prod_num='7';
+		        
+		        
+		        commList
+		        .append("	select p.comment_num , p.user_id p_user_id,  p.prod_comments ,												")
+		        .append( "   p.write_date p_write_date, p.prod_num , 																						")
+		        .append("	r.reply_num, r.reply_comment, r.write_date r_write_date, r.user_id	r_user_id								")
+		        .append("	FROM   PROD_COMMENT p, REPLY_COMMENT r																		")
+		        .append("	where 	p.prod_num=? and p.COMMENT_NUM = r.COMMENT_NUM										");
+
+		        
+		        pstmt=con.prepareStatement(commList.toString());
+		        pstmt.setInt(1, prodNum);
+		        
+		        rs=pstmt.executeQuery();
+
+		        SetCommVO scVO=null;
+		        //public SetCommVO(String commId, String replyId,
+		        //String prodComment, String replyComment,
+		        //int commNum, int prodNum,
+				//int replyNum, Date comWriteDate, Date replyWriteDate)
+		        while(rs.next()) {
+					/* scVO= */
+							/*
+							 * new SetCommVO(rs.getString("p_user_id"), rs.getString("r_user_id"),
+							 * rs.getString("prod_comments"), rs.getString("reply_comment"),
+							 * rs.getInt("comment_num"), rs.getInt("prod_num"), rs.getInt("reply_num"),
+							 * rs.getDate("p_write_date"), rs.getDate("r_write_date"));
+							 */
+		     /*   	list.add(scVO);*/
+		        }//end while
+				/*
+				 * while(rs.next()) { // 댓글 정보 처리 CommVO comm = new CommVO();
+				 * comm.setUserId(rs.getString("user_id"));
+				 * comm.setCommNum(rs.getInt("comment_num"));
+				 * comm.setProdComments(rs.getString("prod_comments"));
+				 * comm.setWriteDate(rs.getDate("write_date"));
+				 * 
+				 * ReplyCommVO repCom= new ReplyCommVO(); }
+				 */
+		         
+		    } finally {
+		        dbCon.dbClose(rs,pstmt, con);
+		    }//end finally
+		    return list;
+		}//setCommList
+		
 }//class

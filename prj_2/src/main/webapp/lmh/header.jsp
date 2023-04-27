@@ -12,7 +12,7 @@
 request.setCharacterEncoding("UTF-8");
 String nickName=""; 
 
-LoginSessionVO lVO = (LoginSessionVO)session.getAttribute("loginData");
+LoginSessionVO lsVO = (LoginSessionVO)session.getAttribute("loginData");
 /* System.out.println("send 후 세션값 : "+(String)session.getAttribute("nickName")); */
 /* nickName = (String)request.getAttribute("nickName");
 System.out.println(nickName); */
@@ -44,7 +44,7 @@ System.out.println(nickName); */
    </div>
 </form><!-- search-->
 
- <% if ( lVO == null  ){  %>
+ <% if ( lsVO == null  ){  %>
            
        <div class="join_member"> 
           <a href="http://localhost/prj_2/ldk/membership_term.jsp" class="a_join_member">회원가입</a>
@@ -55,12 +55,11 @@ System.out.println(nickName); */
        </div>
   
   <% } else {
-  	System.out.print("else");
   %>
              
  <div class="div_select_login"> 
          <select class="select_login">
-             <option value="이름" ><%= lVO.getNickName() %>님</option>
+             <option value="이름" ><%= lsVO.getNickName() %>님</option>
              <option value="http://211.63.89.134/prj_2/kbk/mypage.jsp" >나의 마켓</option>
              <option value="http://211.63.89.152/prj_2/cis/sell_page.jsp">상품 등록</option>
              <option value="http://211.63.89.134/prj_2/kbk/EditInfoPassword.jsp">개인정보수정</option>

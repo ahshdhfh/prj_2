@@ -2,7 +2,7 @@ package prj_2;
 import java.sql.Date;
 
 public class CommVO {
-	private String id, prodComments;
+	private String userId, prodComments;
 	private int commNum,prodNum;
 	private Date writeDate;
 	
@@ -10,35 +10,35 @@ public class CommVO {
 		
 	}
 
-	public CommVO(String id, String prodComments, int commNum, int prodNum, Date writeDate) {
-		this.id = id;
+	public CommVO(String userId, String prodComments, int commNum, int prodNum, Date writeDate) {
+		this.userId = userId;
 		this.prodComments = prodComments;
 		this.commNum = commNum;
 		this.prodNum = prodNum;
 		this.writeDate = writeDate;
 	}
 
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getprodComments() {
+	public String getProdComments() {
 		return prodComments;
 	}
 
-	public void setprodComments(String prodComments) {
+	public void setProdComments(String prodComments) {
 		this.prodComments = prodComments;
 	}
 
-	public int getcommNum() {
+	public int getCommNum() {
 		return commNum;
 	}
 
-	public void setcommNum(int commNum) {
+	public void setCommNum(int commNum) {
 		this.commNum = commNum;
 	}
 
