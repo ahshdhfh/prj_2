@@ -2,7 +2,7 @@ package prj_2;
 
 import java.sql.Date;
 
-public class PurchaseListVO { //±¸¸Å³»¿ª
+public class PurchaseListVO { //ï¿½ï¿½ï¿½Å³ï¿½ï¿½ï¿½
 	
 	public int prodNum;
 	public String prodName,sellerId;
@@ -12,6 +12,17 @@ public class PurchaseListVO { //±¸¸Å³»¿ª
 	}
 
 	
+	
+	public PurchaseListVO(int prodNum, String prodName, String sellerId, Date transactionDate) {
+		super();
+		this.prodNum = prodNum;
+		this.prodName = prodName;
+		this.sellerId = sellerId;
+		this.transactionDate = transactionDate;
+	}
+
+
+
 	public int getProdNum() {
 		return prodNum;
 	}

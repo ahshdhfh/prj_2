@@ -1,5 +1,10 @@
+<%@page import="prj_2.LoginSessionVO"%>
+<%@page import="prj_2.ModifyProfileVO"%>
+<%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,18 +50,13 @@ a{color: #000000;}
   }//changProfileImage
   
   
-  function nickValid() {
   
-		var obj=document.frm;
-		if(obj.nickname.value==""){
-			alert("닉네임을 입력해주세요.")
-			obj.nickname.focus();
-			return;
-	
-		}else{
-			alert("사용가능한 닉네임입니다.");
-		}
-	}//
+  
+  function openNickPop(){
+		//부모창에서 발생한 값을 자식창에 넘기기 위해 web parameter를 사용한다.
+		window.open("http://localhost/prj_2/ldk/popup_nick.jsp","popup","width=520,height=320,top="
+				+(window.screenY+100)	+",left="+(window.screenX+100));
+	}//openNickPop
 	
   function checkNull() {
   
@@ -78,47 +78,54 @@ a{color: #000000;}
 <div class="wrap">
 
   <div class="header">
-       <div class="logo"></div>
-       
-       <div class="search_area">
-       <input type="text" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-       <div class="div_select_login"> 
-          <select class="select_login" name="이미현 님" >
-             <option value="나의 마켓">나의 마켓</option>
-             <option value="나의 마켓">나의 마켓</option>
-             <option value="상품 등록">상품 등록</option>
-             <option value="개인정보수정">개인정보수정</option>
-         </select>
-       </div>
-       
-
-       <div class="logout">
-         <a href="http://211.63.89.143/html_prj/project/main_logout.jsp" class="a_login" >로그아웃</a>
-       </div>
+	<%-- <c:import url="http://localhost/prj_2/lmh/header.jsp "/> --%>
   </div><!-- header-->
    
    
 <div id="container">
-<form name="frm" id="frm" action="mypage.jsp" method="post">
+ <%
+ /* 
+ LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
+ if(lsVO!=null){
+ String sessionId=lsVO.getUserId();
+ }else{
+ 	response.sendRedirect("http://localhost/prj_2/lmh/login.jsp");
+ }
+ */
+ 
+ 
+ 
+ 
+UserDAO uDAO=new UserDAO();
+ 
+//String sessionId=lsVO.getUserId();
+String sessionId="abcd1";
+ModifyProfileVO mpVO=uDAO.setProfile(sessionId);
+String img=mpVO.getUserImg();
+String nickname=mpVO.getNickName();
+String intro=mpVO.getPersonalIntro();
+%>
+
+
+
+<form name="frm" id="frm" action="edit_profile_process.jsp" method="post" enctype="multipart/form-data">
 	<div class="h1"><h1>프로필 수정</h1></div>
 	<div class="pic">
-		<img src="http://211.63.89.134/html_prj/project/images/profile.png" id="profileImg" class="profile_img">
+		<img src="C:/Users/user/git/prj_2/prj_2/src/main/webapp/kbk/upload/<%= img %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" id="profileImg" class="profile_img">
 		 <input id="profileInput"
              type="file"
-             name="user_Img"
+             name="userImgFile"
              accept="image/*"
              onchange="changeProfileImage();"/>
 	</div>
 	
 	<div class="editInfo">
 	<label>닉네임</label><br>
-	<input type="text" id="nickname" name="nickname"/>
-	<input type="button" id="idBtn" value="중복확인" onclick="nickValid()"/><br>
+	<input type="text" id="nickname" name="nickName" value=" <%= nickname %> "/>
+	<input type="button" id="idBtn" value="중복확인" onclick="openNickPop()"/><br>
 	<br>
 	<label>자기소개</label><br>
-	<textarea id="intro" name="personal_Intro"></textarea><br>
+	<textarea id="intro" name="personalIntro" ><%= intro %></textarea><br>
 	</div>
 
 
@@ -128,47 +135,8 @@ a{color: #000000;}
 </div><!-- container -->
      
 <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 4조 | 사업자번호 123-45-67890<br>
-        직업정보제공사업 신고번호 2023-서울강남-0000<br>
-        주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
-        전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
-       </div>
-       
-      <!-- <div class="inquiry1">
-        <a href="#void"  class="a_footer"">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer"">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer"">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer"">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer"">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer"">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer"">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer"">비전과계획</a>
-       </div> -->
-   </div><!-- footer-->
+      <c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
+</div><!-- footer-->
 </div>
 </body>
 </html>

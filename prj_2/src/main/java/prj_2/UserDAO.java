@@ -450,7 +450,7 @@ public class UserDAO {
 			//4. 쿼리문 생성객체 얻기
 			StringBuilder selectInfo = new StringBuilder();
 			selectInfo 
-			.append("	select email, addr, detailaddr, tel, acti_area_num, zipcode	")
+			.append("	select email, addr, detailed_addr, tel, acti_area_num, zipcode	")
 			.append("	from users	")
 			.append("	where user_id=? ");
 			
@@ -464,7 +464,7 @@ public class UserDAO {
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 			miVO = new ModifyInfoVO(rs.getString("email"), rs.getString("addr"),
-					rs.getString("detailaddr"), rs.getString("tel"),
+					rs.getString("detailed_addr"), rs.getString("tel"),
 					rs.getInt("acti_area_num"), rs.getInt("zipcode"));
 			}
 			

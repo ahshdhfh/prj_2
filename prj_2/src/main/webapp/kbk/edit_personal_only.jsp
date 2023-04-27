@@ -1,5 +1,11 @@
+<%@page import="prj_2.LoginSessionVO"%>
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
+<%@page import="prj_2.ModifyInfoVO"%>
+<%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,16 +14,16 @@
 
 <link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
 <style type="text/css">
-#container{  height: 1300px;position: relative; }
+#container{  height: 1100px;position: relative; }
 #footer{  height: 300px;}
 #logo{width:202px; height: 54px;position: absolute; left: 128px; top: 13px;}
 #div0{position: absolute;width:500px;height:100px;left:360px;top: 60px;}
 #divName{position: absolute;width:500px;height:100px;left:360px;top: 130px;}
-#divEmail{position: absolute;width:500px;height:100px;left:360px;top: 250px;}
-#divLoc2{position: absolute;width:500px;height:100px;left:360px;top: 370px;}
-#divTel{position: absolute;width:500px;height:100px;left:360px;top: 600px;}
-#divLoc{position: absolute;width:500px;height:100px;left:360px;top: 710px;}
-#divBtn{position: absolute;width:500px;height:100px;left:360px;top: 850px;}
+#divEmail{position: absolute;width:500px;height:100px;left:360px;top: 150px;}
+#divLoc2{position: absolute;width:500px;height:100px;left:360px;top: 270px;}
+#divTel{position: absolute;width:500px;height:100px;left:360px;top: 500px;}
+#divLoc{position: absolute;width:500px;height:100px;left:360px;top: 610px;}
+#divBtn{position: absolute;width:500px;height:100px;left:360px;top: 750px;}
 #font1{font-size:20px;font-family: "고딕"; font-weight:bold; color: #333333; }
 #inputBox, #addr, #addr2{width:500px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
 #zipcode{width:230px;height: 50px;border: 2px solid #333; border-radius: 10px;color:#5E5E5E;font-size: 15px;cursor: pointer;}
@@ -37,7 +43,32 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
+<% 
+ /* LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
+String sessionId=lsVO.getUserId();
+String sessionId="abcd18"; */
+UserDAO uDAO=new UserDAO();
+ModifyInfoVO miVO=uDAO.selectInfo("abcd18");
+
+String email=miVO.getEmail();
+String addr=miVO.getAddr();
+String detailAddr=miVO.getDetailAddr();
+String phone=miVO.getTel();
+int actAreaNum=miVO.getActAreaNum();
+int zipcode=miVO.getZipcode();
+
+DataDecrypt dd=new DataDecrypt("Tkddydgangnamkong");
+String tempEmail=dd.decryption(email);
+String email1 = tempEmail.substring(0,tempEmail.lastIndexOf("@"));
+String email2 = tempEmail.substring(tempEmail.lastIndexOf("@")+1);
+
+String tel=phone.substring(3,11);
+%>
 <script type="text/javascript">
+$(function() {
+	$('#location').val('<%= actAreaNum %>').prop("selected",true);
+});//ready
+
 function findZip() {
     new daum.Postcode({
         oncomplete: function(data) {
@@ -66,7 +97,7 @@ function findZip() {
             document.getElementById("zipcode").value = data.zonecode;
             document.getElementById("addr").value = roadAddr;
             //커서 상세주소입력으로 이동
-            document.getElementById("detailed_Addr").focus();
+            document.getElementById("addr2").focus();
         }
     }).open();
 }
@@ -93,7 +124,7 @@ $(function(){
 	  $('#email_select').change(function(){
 	   if($('#email_select').val() == "1"){
 	    $("#last_email").val(""); //값 초기화
-	    $("#last_email").attr("readonly",true);
+	    $("#last_email").attr("readonly",false); //활성화
 	   } else if($('#email_select').val() == ""){
 	    $("#last_email").val(""); //값 초기화
 	    $("#last_email").attr("readonly",true); //textBox 비활성화
@@ -128,14 +159,9 @@ function checkNull() {
 		obj.addrBtn.focus();
 		return;
 	}
-	if(obj.detailed_Addr.value==""){
+	if(obj.addr2.value==""){
 		alert("상세주소를 입력하세요.")
-		obj.detailed_Addr.focus();
-		return;
-	}
-	if(obj.acti_Area_Num.value=="동선택"){
-		alert("활동지역을 선택하세요.")
-		obj.acti_Area_Num.focus();
+		obj.addr2.focus();
 		return;
 	}
 	if(obj.tel2.value==""){
@@ -143,15 +169,15 @@ function checkNull() {
 		obj.tel2.focus();
 		return;
 	}
-	if(document.getElementById("output9").innerHTML!=""){//이름 유효성검증 
-		alert("전화번호를 확인하세요")
-		obj.name.email();
+	if(obj.actLocalNum.value=="동선택"){
+		alert("활동지역을 선택하세요.")
+		obj.actLocalNum.focus();
 		return;
 	}
 	
 	obj.submit();
+	
 }//checknull
-
 </script>
 
 </head>
@@ -161,47 +187,17 @@ function checkNull() {
 <div class="wrap">
 
 <div class="header">
-       <!-- <div class="logo"> -->
-       <a href="http://localhost/prj_2/lmh/main_login.jsp"><img class="logo" src="http://localhost/prj_2/images/logo.png"></a>
-       <!-- </div> -->
-       
-       <div class="search_area">
-       <input type="search" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-      
-
- <% request.setCharacterEncoding("UTF-8"); //post 방식의 한글 처리 : request.setCharacterEncoding("변경할 charset");
-String id=request.getParameter("id"); %>
-
-
-       <div class="div_select_login"> 
-         <select class="select_login" onchange="window.location.href=this.value">
-             <option value="이름"  hidden><%=id %> 님</option>
-             <option value="http://localhost/prj_2/kbk/mypage.jsp" >나의 마켓</option>
-             <option value="http://localhost/prj_2/cis/sell_page.jsp">상품 등록</option>
-             <option value="http://localhost/prj_2/kbk/editInfoPassword.jsp">개인정보수정</option>
-         </select> 
-       </div>
-       
-
-       <div class="logout">
-         <a href="http://localhost/prj_2/lmh/main_logout.jsp" class="a_login" >로그아웃</a>
-       </div>
-  </div><!-- header-->
+<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
+</div><!-- header-->
    
 <div id="container">
 <div id="div0"><h2>개인정보 수정</h2></div>
-<form name="frm" id="frm" action="http://localhost/prj_2/kbk/mypage.jsp" method="post">
-<div id="divName"> 
-	<font id="font1">이름</font><br>
-	<input type="text" class="inputBox_id" placeholder="이름" readonly id="name" name="user_Name">
-</div>
+<form name="frm" id="frm" action="edit_personal_only_process.jsp" method="post">
 
 <div id="divEmail"> 
 	<font id="font1">이메일</font><br>
-	<input type="text" class="inputBox_email1" placeholder="이메일" name="email" id="email"><strong>@</strong>
-	<input type="text" id="last_email" size="10" class="inputBox_email2" name="email2" id="email2">
+	<input type="text" class="inputBox_email1" value="<%= email1 %>" name="email" id="email"><strong>@</strong>
+	<input type="text" id="last_email" size="10" class="inputBox_email2" name="email2" id="email2" value="<%= email2 %>">
 	<select class="inputBox_email2" id="email_select" name="email_select">
 		<option value="" selected>선택없음</option>
 		<option value="gmail.com">gmail.com</option>
@@ -216,32 +212,32 @@ String id=request.getParameter("id"); %>
 
 <div id="divLoc2"> 
 	<font id="font1">주소</font><br>
-	<input type="text" id="zipcode" name="zipcode" id="zipcode" placeholder="우편번호" readonly="readonly"/>
+	<input type="text" id="zipcode" name="zipcode" id="zipcode" value="<%= zipcode %>" readonly="readonly"/>
 	<input type="button" class="idBtn" name="addrBtn" value="주소찾기"  onclick="findZip()"/>
 	<div>
-	<input type="text" id="addr" name="addr" placeholder="주소" readonly="readonly" id="addr"/>
+	<input type="text" id="addr" name="addr" readonly="readonly" id="addr" value="<%= addr %>"/>
 	</div>
-	<input type="text" id="addr2" name="detailed_Addr" placeholder="상세주소" id="addr2">
+	<input type="text" id="addr2" name="addr2" id="addr2" value="<%= detailAddr %>">
 </div>
 
 <div id="divLoc"> 
 	<font id="font1">활동 지역</font><br>
-	<select class="inputBox" name="acti_Area_Num" id="location">
+	<select class="inputBox" name="actLocalNum" id="location">
 		<option value="동선택">동선택</option>
-		<option>압구정동</option>
-		<option>신사동</option>
-		<option>청담동</option>
-		<option>논현동</option>
-		<option>삼성동</option>
-		<option>역삼동</option>
-		<option>대치동</option>
-		<option>도곡동</option>
-		<option>개포동</option>
-		<option>일원동</option>
-		<option>수서동</option>
-		<option>자곡동</option>
-		<option>율현동</option>
-		<option>세곡동</option>
+		<option value="1">압구정동</option>
+		<option value="2">신사동</option>
+		<option value="3">청담동</option>
+		<option value="4">논현동</option>
+		<option value="5">삼성동</option>
+		<option value="6">역삼동</option>
+		<option value="7">대치동</option>
+		<option value="8">도곡동</option>
+		<option value="9">개포동</option>
+		<option value="10">일원동</option>
+		<option value="11">수서동</option>
+		<option value="12">자곡동</option>
+		<option value="13">율현동</option>
+		<option value="14">세곡동</option>
 	</select>
 </div>
 
@@ -252,7 +248,7 @@ String id=request.getParameter("id"); %>
 		<option>011</option>
 		<option>017</option>
 	</select>
-	<input type="text" class="inputBox_tel2" placeholder="-없이 입력" maxlength="8" name="tel2" id="tel2">
+	<input type="text" class="inputBox_tel2" value="<%= tel %>" maxlength="8" name="tel2" id="tel2">
 </div>
 <div id="divBtn"> 
 	<input type="button" id="nextBtn" value="개인정보 수정" onclick="checkNull()">
@@ -262,16 +258,8 @@ String id=request.getParameter("id"); %>
 <!-- container -->
      
 <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 4조 | 사업자번호 123-45-67890<br>
-        직업정보제공사업 신고번호 2023-서울강남-0000<br>
-        주소 서울 강남구 테헤란로 132 (강남콩서비스)<br>
-        전화 1234-1234 | 고객문의 cs@gangnamkongservice.com<br>
-       </div>
-       
-   </div><!-- footer-->
+	<c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
+</div><!-- footer-->
 
 </div>
 </body>

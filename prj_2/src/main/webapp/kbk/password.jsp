@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,27 +25,9 @@
 <body>
 <div class="wrap">
 
-  <div class="header">
-       <div class="logo"></div>
-       
-       <div class="search_area">
-       <input type="text" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-       <div class="div_select_login"> 
-          <select class="select_login" name="이미현 님" >
-             <option value="나의 마켓">나의 마켓</option>
-             <option value="나의 마켓">나의 마켓</option>
-             <option value="상품 등록">상품 등록</option>
-             <option value="개인정보수정">개인정보수정</option>
-         </select>
-       </div>
-       
-
-       <div class="logout">
-         <a href="http://211.63.89.143/html_prj/project/main_logout.jsp" class="a_login" >로그아웃</a>
-       </div>
-  </div><!-- header-->
+<div class="header">
+	<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
+</div><!-- header-->
    
    
 <div id="container">
@@ -55,47 +39,8 @@
      
      
 <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 김용현, 황도연 | 사업자번호 375-87-00088<br>
-        직업정보제공사업 신고번호 2016-서울서초-0051<br>
-        주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
-        전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
-       </div>
-       
-      <div class="inquiry1">
-        <a href="#void"  class="a_footer">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer">비전과계획</a>
-       </div>
-   </div><!-- footer -->
+	<c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
+</div><!-- footer -->
 
 </div><!-- wrap -->
 </body>
