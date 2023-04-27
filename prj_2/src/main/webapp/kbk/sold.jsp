@@ -1,4 +1,4 @@
-<%@page import="prj_2.PurchaseListVO"%>
+<%@page import="prj_2.SoldVO"%>
 <%@page import="java.util.List"%>
 <%@page import="prj_2.MyPageDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -9,12 +9,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>구매내역</title>
+<title>거래완료</title>
 
 <link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
 <style type="text/css">
 
-#container{position: relative; width: 1200px; height: 500px; margin: 0px auto;}
+#container{position: relative; width: 1200px; height: 400px;}
 table {
     width: 60%;
     border-collapse: collapse;
@@ -30,9 +30,13 @@ table {
     border-bottom: 1px solid #444444;
     text-align: left;
   }
+  th:first-child, td:first-child {
+    border-left: none;
+  }
   .bcolor{
    background-color: #B17CC6; color: #FFFFFF;
   }
+  a{color: #000000;}
 </style>
 </head>
 
@@ -50,28 +54,28 @@ table {
 <div id="container">
 <div>
 <% MyPageDAO mpDAO=new MyPageDAO(); %>
-<% List<PurchaseListVO> purchase=mpDAO.selectPurchase("abcd7"); %>
+<% List<SoldVO> sold=mpDAO.selectSold("abcd5"); %>
 <table>
 	<tr>
-	<th colspan="2"><h2>구매 내역</h2></th>
+	<th colspan="2"><h2>거래 완료</h2></th>
 	<th><h2></h2></th>
 	<th><h2></h2></th>
 	</tr>
 	<tr class="bcolor">
 	<td width="100px">상품번호</td>
 	<td>상품명</td>
-	<td>판매자</td>
+	<td>구매자</td>
 	<td>거래날짜</td>
 	</tr>
-	<%
-	for( PurchaseListVO pVO : purchase ) {
-		if(pVO.getProdNum()!=0){
+<%
+	for( SoldVO sVO : sold  ) {
+		if(sVO.getProd_Num()!=0){
 			%>
 			<tr>
-				<td><%= pVO.getProdNum() %></td>
-				<td><%= pVO.getProdName() %></td>
-				<td><%= pVO.getSellerId() %></td>
-				<td><%= pVO.getTransactionDate() %></td>
+				<td><%= sVO.getProd_Num() %></td>
+				<td><%= sVO.getProd_Name() %></td>
+				<td><%= sVO.getPurchaser_Id() %></td>
+				<td><%= sVO.getTransaction_Date() %></td>
 			</tr>
 	<%
 		}else{
@@ -85,10 +89,11 @@ table {
 	 %>
 </table>
 </div>
+
 </div><!-- container -->
      
 <div class="footer">
-	<c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
+      <c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
 </div><!-- footer-->
 
 </div>

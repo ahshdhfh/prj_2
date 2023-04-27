@@ -10,6 +10,17 @@ public class OnSaleListVO {
 	
 	public OnSaleListVO() {
 	}
+	
+	
+
+	public OnSaleListVO(int prodNum, String prodName, Date inputDate) {
+		super();
+		this.prodNum = prodNum;
+		this.prodName = prodName;
+		this.inputDate = inputDate;
+	}
+
+
 
 	public int getProdNum() {
 		return prodNum;

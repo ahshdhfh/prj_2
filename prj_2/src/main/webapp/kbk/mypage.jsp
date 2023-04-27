@@ -1,5 +1,13 @@
+<%@page import="org.apache.catalina.ha.backend.Sender"%>
+<%@page import="prj_2.LoginSessionVO"%>
+<%@page import="prj_2.UserDAO"%>
+<%@page import="prj_2.ModifyProfileVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    session="true"
+    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +75,27 @@ li {
   
   a{color: #000000;}
 </style>
+<script type="text/javascript">
+<%
+/* 
+LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
+if(lsVO!=null){
+String sessionId=lsVO.getUserId();
+	 */
+	 UserDAO uDAO=new UserDAO();
+	 
+	String sessionId="abcd1";
+	ModifyProfileVO mpVO=uDAO.setProfile(sessionId);
+	String img=mpVO.getUserImg();
+	String nickname=mpVO.getNickName();
+	String intro=mpVO.getPersonalIntro();
+	/* 
+}else{
+	response.sendRedirect("http://localhost/prj_2/lmh/login.jsp");
+}//end else
+ */
+%>
+</script>
 </head>
 
 
@@ -74,44 +103,17 @@ li {
 <div class="wrap">
 
 <div class="header">
-       <div class="logo">
-       <a href="http://211.63.89.143/html_prj/project/main_login.jsp"><img id="logo" alt="logo"  src="http://211.63.89.143/html_prj/project/images/logo.PNG"></a>
-       </div>
-       
-       <div class="search_area">
-       <input type="search" class="search" placeholder="물품을 검색해 보세요">
-       </div><!-- search-->
-       
-      
-
- <% request.setCharacterEncoding("UTF-8"); //post 방식의 한글 처리 : request.setCharacterEncoding("변경할 charset");
-String nickname=request.getParameter("nickname"); %>
-
-
-       <div class="div_select_login"> 
-         <select class="select_login" onchange="window.location.href=this.value">
-             <option value="이름"  hidden><%=nickname %> 님</option>
-             <option value="http://localhost/prj_2/kbk/mypage.jsp" >나의 마켓</option>
-             <option value="http://211.63.89.152/html_prj/project2nd/sell_page.jsp">상품 등록</option>
-             <option value="http://localhost/prj_2/kbk/editInfoPassword.jsp">개인정보수정</option>
-         </select> 
-       </div>
-       
-
-       <div class="logout">
-         <a href="http://211.63.89.143/html_prj/project/main_logout.jsp" class="a_login" >로그아웃</a>
-       </div>
+	<%-- <c:import url="http://localhost/prj_2/lmh/header.jsp"/> --%>
 </div><!-- header-->
    
 	<div id="container">
 
 	<div id="infoLeft">
-		<div><img src="http://localhost/prj_2/kbk/images/profile.png" class="profile_img"> </div>
-		<div class="nickname">xx님</div>
-		<div class="myinfo">강남구 xx동</div>
-		<div class="myinfo">자기소개가 없습니다.</div>
-		<div class="profileEdit"><a href="http://localhost/prj_2/kbk/editProfile.jsp">프로필수정</a></div>
-		<div class="profileEdit"><a href="http://localhost/prj_2/kbk/editInfoPassword.jsp">회원정보수정</a></div>
+		<div><img src="C:/Users/user/git/prj_2/prj_2/src/main/webapp/kbk/upload/<%= img %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" class="profile_img"> </div>
+		<div class="nickname"><%= nickname %>님 </div>
+		<div class="myinfo"><%= intro %></div>
+		<div class="profileEdit"><a href="http://localhost/prj_2/kbk/edit_profile.jsp">프로필수정</a></div>
+		<div class="profileEdit"><a href="http://localhost/prj_2/kbk/edit_info_password.jsp">회원정보수정</a></div>
 	</div>
 	
 	<div id="infoRight">
@@ -119,87 +121,48 @@ String nickname=request.getParameter("nickname"); %>
 	<div class="order-status-wrap">
 	<ul class="status-list">
 		<li class="item">
- <a href="http://localhost/prj_2/kbk/wishlist.jsp" >
-			<img src="http://localhost/prj_2/kbk/images/wishlist.png" width="100px" id="heart">
-<br>
-				<span>관심목록</span>
-				</a>
-		</li>
-		<li class="item">
-						<br>
-						<a href="http://localhost/prj_2/kbk/history.jsp">
-				<img src="http://localhost/prj_2/kbk/images/complete.png" width="100px">
-<br>
-				<span>구매내역</span>
-				</a>
+			<a href="http://localhost/prj_2/kbk/wishlist.jsp" >
+			<img src="http://localhost/prj_2/images/wishlist.png" width="100px" id="heart">
+			<br>
+			<span>관심목록</span>
+			</a>
 		</li>
 		<li class="item">
 			<br>
-			<a href="http://localhost/prj_2/kbk/onSale.jsp">
-				<img src="http://localhost/prj_2/kbk/images/shoplist.png" width="100px">
+			<a href="http://localhost/prj_2/kbk/history.jsp">
+			<img src="http://localhost/prj_2/images/complete.png" width="100px">
 <br>
-				<span>판매상품</span>
-				</a>
+			<span>구매내역</span>
+			</a>
+		</li>
+		<li class="item">
+			<br>
+			<a href="http://localhost/prj_2/kbk/on_sale.jsp">
+			<img src="http://localhost/prj_2/images/shoplist.png" width="100px">
+<br>
+			<span>판매상품</span>
+			</a>
 		</li>
 	</ul>
 </div>
-		<div>
+	<div>
 		<div class="titles">나의 동네생활</div>
-		<table class="table2">
-		<tr class="tr2">
-		<td><img src="http://localhost/prj_2/kbk/images/comment.png" width="50px"></td>
-		<td><a href="http://localhost/prj_2/kbk/comment.jsp" >나의 댓글</a></td>
-		<td>|</td>
-		<td><img src="http://localhost/prj_2/kbk/images/shoplist.png" width="50px"></td>
-		<td><a href="http://localhost/prj_2/kbk/complete.jsp" >거래완료</a></td>
-		</tr>
-		</table>
+			<table class="table2">
+				<tr class="tr2">
+					<td><img src="http://localhost/prj_2/images/comment.png" width="50px"></td>
+					<td><a href="http://localhost/prj_2/kbk/comment.jsp" >나의 댓글</a></td>
+					<td>|</td>
+					<td><img src="http://localhost/prj_2/images/receipt.png" width="50px"></td>
+					<td><a href="http://localhost/prj_2/kbk/sold.jsp" >판매완료</a></td>
+				</tr>
+			</table>
 		</div>
 	</div>
-	</div><!-- container -->
+</div><!-- container -->
      
-      <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 김용현, 황도연 | 사업자번호 375-87-00088<br>
-        직업정보제공사업 신고번호 2016-서울서초-0051<br>
-        주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
-        전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
-       </div>
-       
-      <div class="inquiry1">
-        <a href="#void"  class="a_footer">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer">비전과계획</a>
-       </div>
-   </div><!-- footer-->
+<div class="footer">
+	<c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
+</div><!-- footer-->
 </div>
 
 </body>
