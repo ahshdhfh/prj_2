@@ -434,7 +434,12 @@ $(function(){
 	String commentRole =(String)session.getAttribute("commentRole");
 	boolean isMyCom = "comment".equals(commentRole);
 %>
-
+<%
+	ShowProdDAO spDAO=new ShowProdDAO();
+	ProductDetailVO pdVO=spDAO.showProdInfo(42);
+	
+	pageContext.setAttribute("prodimgs", pdVO.getProdImg());
+%>	
 		<!-- 상품 상세 페이지 내용부분 -->
 		<br/>
 		<br/>
@@ -447,17 +452,20 @@ $(function(){
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
   </div>
   
   <div class="carousel-inner" >
+ <c:forEach var="imgs" items="${prodimgs}" varStatus="i" begin="1">
 	 <div class="carousel-item active">
-      <img src="../images/bike_shoes.png" class="d-block w-100" alt="..." style="">
-    </div>
-    <div class="carousel-item active">
-      <img src="../images/bike_shoes.png" class="d-block w-100" alt="..." style="">
+      <img src="${imgs}" class="d-block w-100" alt="..." style="" width="100%" height="600px">
     </div> 
+ </c:forEach> 
   </div>
-  
+ 
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -478,12 +486,7 @@ $(function(){
 		onclick=" "
 		<% if (isSeller) { %>hidden<% } %>
 		<% if(isMarked) { %><%} %>/>
-		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->
-<%
-	ShowProdDAO spDAO=new ShowProdDAO();
-	ProductDetailVO pdVO=spDAO.showProdInfo(42);
-	
-%>				
+		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->			
 <div id="prod-title" ><%=pdVO.getProdName() %></div>
 <hr style="width:450px">
 <div id="prod-price"><fmt:formatNumber pattern="#,###,###" value='<%=pdVO.getPrice() %>' />원</div>
@@ -494,10 +497,10 @@ $(function(){
 		<td class="prod-info-dt">상품번호</td><td class="prod-info-dd"><%=pdVO.getProdNum()%></td>
 	</tr>
 	<tr>
-		<td  class="prod-info-dt">카테고리</td><td  class="prod-info-dd"><%=pdVO.getCategoryNumber()%></td>
+		<td  class="prod-info-dt">카테고리</td><td  class="prod-info-dd"><%=pdVO.getCategoryName()%></td>
 	</tr>
 	<tr>
-		<td class="prod-info-dt" >거래지역</td><td  class="prod-info-dd"><%=pdVO.getTextOfPrd()%></td>
+		<td class="prod-info-dt" >거래지역</td><td  class="prod-info-dd"><%=pdVO.getAreaName()%></td>
 	</tr>
 	</table>
 	<hr style="width:450px">
@@ -523,11 +526,11 @@ $(function(){
 </div>
 <!-- 판매자 정보 및 페이지스크롤 이동 툴 -->
 <div class="sell_user_info">
-	<img src="" id="profile-img" />
+	<img src="<%=pdVO.getuserImg()%>" id="profile-img" />
 	<div id="user_name_addr">
-		<div ><strong>판매자명</strong></div>
-		<div style="font-size:15pt;margin-top:10px">판매자 주소지</div>
-		<div style="font-size:15pt;margin-top:10px">판매자 자기소개</div>
+		<div ><strong><%=pdVO.getuserId()%></strong></div>
+		<div style="font-size:15pt;margin-top:10px"><%=pdVO.getAreaName()%></div>
+		<div style="font-size:15pt;margin-top:10px"><%=pdVO.getpersonalIntro()%></div>
 	</div>
 
 	<div id="comment-qna-button">
@@ -547,7 +550,7 @@ $(function(){
          </select>
 </div>
 <hr>
-<textarea id="user_comment"style="font-size:16pt"><%=pdVO.getPlaceTraction()%></textarea>
+<textarea id="user_comment"style="font-size:16pt"><%=pdVO.getdetailTxt()%></textarea>
 </div>
 <br />
 

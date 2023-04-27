@@ -2,42 +2,45 @@ package prj_2;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class ProductDetailVO {
 
-	private String  prodImg[],prodName, placeTraction, textOfPrd, sellUserId, selfIntroduce, sellUserImg;
-	private int price, prodNum, categoryNumber, interestCnt, commCnt, viewCnt, areaNum;
+	private String prodName, placeTraction, detailTxt, userId, personalIntro, userImg,areaName, categoryName;
+	private int price, prodNum, interestCnt, commCnt, viewCnt;
 	private Date inputDate;
+	private List<String> prodImg;
 	
 	public ProductDetailVO() {
 	
 	}
 
-	public ProductDetailVO(String[] prodImg, String prodName, String placeTraction, String textOfPrd, String sellUserId,
-			String selfIntroduce, String sellUserImg, int price, int prodNum, int categoryNumber, int interestCnt,
-			int commCnt, int viewCnt, int areaNum, Date inputDate) {
-		this.prodImg = prodImg;
-		this.prodName = prodName;
-		this.placeTraction = placeTraction;
-		this.textOfPrd = textOfPrd;
-		this.sellUserId = sellUserId;
-		this.selfIntroduce = selfIntroduce;
-		this.sellUserImg = sellUserImg;
-		this.price = price;
-		this.prodNum = prodNum;
-		this.categoryNumber = categoryNumber;
-		this.interestCnt = interestCnt;
-		this.commCnt = commCnt;
-		this.viewCnt = viewCnt;
-		this.areaNum = areaNum;
-		this.inputDate = inputDate;
+	public ProductDetailVO(List<String> prodImg , String prodName, String placeTraction, String detailTxt, String userId,
+			String personalIntro, String userImg, int price, int prodNum, String categoryName, int interestCnt,
+			int commCnt, int viewCnt, String areaName, Date inputDate) {
+		this.prodImg = prodImg; //상품이미지
+		this.prodName = prodName; //이름
+		this.placeTraction = placeTraction; //거래희망장소
+		this.detailTxt = detailTxt; //상세설명
+		this.userId = userId; //유저아이디
+		this.personalIntro = personalIntro; //자기소개
+		this.userImg = userImg; //유저이미지
+		this.price = price; //가격
+		this.prodNum = prodNum; //상품번호
+		this.categoryName = categoryName; //카테고리 번호
+		this.interestCnt = interestCnt; //관심수
+		this.commCnt = commCnt; //댓글수
+		this.viewCnt = viewCnt; //조회수
+		this.areaName = areaName; //활동지역
+		this.inputDate = inputDate; //등록일
 	}
 
-	public String[] getProdImg() {
+
+	public List<String> getProdImg() {
 		return prodImg;
 	}
 
-	public void setProdImg(String[] prodImg) {
+	public void setProdImg(List<String> prodImg) {
 		this.prodImg = prodImg;
 	}
 
@@ -57,36 +60,36 @@ public class ProductDetailVO {
 		this.placeTraction = placeTraction;
 	}
 
-	public String getTextOfPrd() {
-		return textOfPrd;
+	public String getdetailTxt() {
+		return detailTxt;
 	}
 
-	public void setTextOfPrd(String textOfPrd) {
-		this.textOfPrd = textOfPrd;
+	public void setdetailTxt(String detailTxt) {
+		this.detailTxt = detailTxt;
 	}
 
-	public String getSellUserId() {
-		return sellUserId;
+	public String getuserId() {
+		return userId;
 	}
 
-	public void setSellUserId(String sellUserId) {
-		this.sellUserId = sellUserId;
+	public void setuserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getSelfIntroduce() {
-		return selfIntroduce;
+	public String getpersonalIntro() {
+		return personalIntro;
 	}
 
-	public void setSelfIntroduce(String selfIntroduce) {
-		this.selfIntroduce = selfIntroduce;
+	public void setpersonalIntro(String personalIntro) {
+		this.personalIntro = personalIntro;
 	}
 
-	public String getSellUserImg() {
-		return sellUserImg;
+	public String getuserImg() {
+		return userImg;
 	}
 
-	public void setSellUserImg(String sellUserImg) {
-		this.sellUserImg = sellUserImg;
+	public void setuserImg(String userImg) {
+		this.userImg = userImg;
 	}
 
 	public int getPrice() {
@@ -105,12 +108,13 @@ public class ProductDetailVO {
 		this.prodNum = prodNum;
 	}
 
-	public int getCategoryNumber() {
-		return categoryNumber;
+
+	public String getCategoryName() {
+		return categoryName;
 	}
 
-	public void setCategoryNumber(int categoryNumber) {
-		this.categoryNumber = categoryNumber;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	public int getInterestCnt() {
@@ -137,12 +141,13 @@ public class ProductDetailVO {
 		this.viewCnt = viewCnt;
 	}
 
-	public int getAreaNum() {
-		return areaNum;
+
+	public String getAreaName() {
+		return areaName;
 	}
 
-	public void setAreaNum(int areaNum) {
-		this.areaNum = areaNum;
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
 	}
 
 	public Date getInputDate() {
@@ -155,16 +160,14 @@ public class ProductDetailVO {
 
 	@Override
 	public String toString() {
-		return "ProductDetailVO [prodName=" + prodName + ", placeTraction=" + placeTraction + ", textOfPrd=" + textOfPrd
-				+ ", sellUserId=" + sellUserId + ", selfIntroduce=" + selfIntroduce + ", sellUserImg=" + sellUserImg
-				+ ", price=" + price + ", prodNum=" + prodNum + ", categoryNumber=" + categoryNumber + ", interestCnt="
-				+ interestCnt + ", commCnt=" + commCnt + ", viewCnt=" + viewCnt + ", areaNum=" + areaNum
-				+ ", inputDate=" + inputDate + "]";
+		return "ProductDetailVO [prodName=" + prodName + ", placeTraction=" + placeTraction + ", detailTxt=" + detailTxt
+				+ ", userId=" + userId + ", personalIntro=" + personalIntro + ", userImg=" + userImg + ", areaName="
+				+ areaName + ", categoryName=" + categoryName + ", price=" + price + ", prodNum=" + prodNum
+				+ ", interestCnt=" + interestCnt + ", commCnt=" + commCnt + ", viewCnt=" + viewCnt + ", inputDate="
+				+ inputDate + ", prodImg=" + prodImg + "]";
 	}
 
 
-	
-	
 	
 
 }// class
