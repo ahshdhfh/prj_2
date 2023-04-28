@@ -34,7 +34,8 @@ public class InsertProdDAO {
 			.append("GANGNAMKONG.SEQ_PRODUCT_SEQ.NEXTVAL,?,sysdate,?,?,?,?,?,?,?)									");
 			
 			insertPrdImg
-			.append("insert into PRODUCT_IMG(PROD_IMG_NUM, PROD_NUM, PROD_IMG) values(GANGNAMKONG.SEQ_PRODUCT_IMG.NEXTVAL,")
+			.append("insert into PRODUCT_IMG(PROD_IMG_NUM, PROD_NUM, PROD_IMG) " )
+			.append( "values(GANGNAMKONG.SEQ_PRODUCT_IMG.NEXTVAL,")
 			.append("GANGNAMKONG.SEQ_PRODUCT_SEQ.CURRVAL,?)	");
 			
 			pstmt=con.prepareStatement(insertPrdInfo.toString());

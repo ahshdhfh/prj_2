@@ -97,6 +97,7 @@ font-size: 22px;
 font-weight: bold;
 margin-right:10px
 }
+.profile_img{width:120px;height:120px;border-radius:50%;}
 
 #complete_button{
 width: 180px;
@@ -125,6 +126,48 @@ border: 1px solid #EAEBEE;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
 <script type="text/javascript">
+
+const imageFiles = [];
+function changeProfileImage() {
+    const imgCntElem = document.getElementById('imgCnt');//span
+    const inputElem = document.getElementById('prod_img');//file
+    const imgElem = document.getElementById('prodImg');//<img>
+    const MAX_IMAGES = 6;
+		 	 
+    	
+    // Check the number of selected files
+    if (inputElem.files.length + parseInt(imgCntElem.innerText) > MAX_IMAGES) {
+      alert("이미지는 최대 6장까지 업로드 가능합니다.");
+      inputElem.value = '';
+      return;
+    }
+
+    // Update the image count
+    imgCntElem.innerText = inputElem.files.length + parseInt(imgCntElem.innerText);
+
+    // Read and display each image
+    Array.from(inputElem.files).forEach(file => {
+      if (!file.type.startsWith('image/')) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imgElem.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+ // Read and store each image file
+
+    Array.from(inputElem.files).forEach(file => {
+      if (!file.type.startsWith('image/')) {//이미지파일이 아니라면 리턴
+        return;
+      }
+      imageFiles.push(file);//배열에 file 넣기
+    });
+    
+  }
+
 $(function(){
 	$("#complete_button").click(function(){
 		
@@ -169,10 +212,34 @@ $(function(){
 			$("#input_location").focus();
 			return;
 		}//end if
+		var obj = document.form;
+		var formData = new FormData($('#form')[0]);
+		//for (let i = 0; i < imageFiles.length; i++) { 
+		//	  formData.append("imgFile", imageFiles[i]);
+		//	}
+			  //formData.append("imgCnt", imgCntElem.innerText);//이미지 수 넣기
+		
+		// XMLHttpRequest 객체 생성
+		var xhr = new XMLHttpRequest();
+
+		// AJAX 요청 설정
+		xhr.open('POST', 'sell_page_process.jsp');
+		xhr.onload = function() {
+		  // AJAX 요청이 성공적으로 완료되었을 때의 처리
+		  console.log(xhr.responseText);
+		};
+		xhr.onerror = function() {
+		  // AJAX 요청이 실패했을 때의 처리
+		  console.error('An error occurred while submitting the form.');
+		};
+		
+		// AJAX 요청 전송
+		xhr.send(formData);
 	
-		$("#frm").submit();
+		
 	});//click
 });//ready
+
 
 
 
@@ -241,13 +308,12 @@ System.out.println(prodName);
 <div style="font-size:30pt;"><strong>기본 정보</strong></div>
 <hr>
 <br/>
-<form id="frm" action="http://localhost/prj_2/cis/sell_page_process.jsp" method="post">
-<div>상품이미지(0/6)</div>
-<label id="label-input-img">
-  <div class="square">
-<input type="file" id="input_img" style="display: none;">
+<form id="form" name="form" action="http://localhost/prj_2/cis/sell_page_process.jsp" method="post" enctype="multipart/form-data">
+  <div>상품이미지(<span id="imgCnt">0</span>/6)</div>
+  <div class="" id="inputImg" >
+    <img src="" id="prodImg" name="prodImg" class="profile_img">
+    <input type="file" id="prod_img" name="prod_img" accept="image/*" onchange="changeProfileImage()" multiple>
   </div>
-</label>
 <pre id="caution">
 * 상품 이미지는 600x600에 최적화 되어 있습니다.
 - 상품 이미지는 PC에서는 1:1, 모바일에서는 1:1.23 비율로 보여집니다.
@@ -287,7 +353,7 @@ System.out.println(prodName);
 
 <label for="input_price">가격*</label>
 <input type="number" id="input_price" placeholder="숫자만 입력해주세요"   name="price" value="<%=price%>">원
-<input type="hidden" name="hidden" value="<%=price%>"/>
+<input type="hidden" name="hidden" id="hidden" value="<%=price%>"/>
 <input type="checkbox" name="share" id="share-check" 
 	onclick="if(this.checked) document.getElementById('input_price').value='0'; else document.getElementById('input_price').value='';">나눔하기
 <!-- 나눔하기 체크 시 가격을 0원으로 띄우는 기능 -->
@@ -319,7 +385,6 @@ System.out.println(prodName);
 <br/>
 <br/>
 <br/>
-</form>
 
 <!-- 취소/작성완료 버튼 -->
 <div class="button-check">
@@ -327,6 +392,7 @@ System.out.println(prodName);
 <input type="button"id="complete_button"value="작성완료">
 <!-- onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'" -->
 </div>
+</form>
 <br/>
 <br/>
 <br/>
