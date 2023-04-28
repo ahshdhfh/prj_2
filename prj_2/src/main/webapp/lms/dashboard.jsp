@@ -146,6 +146,7 @@
 	<%
 	DashBoardDAO dDAO=new DashBoardDAO();
  	CategoryCntVO cVO=dDAO.categoryCnt();
+ 	Integer[] result=dDAO.tradingStatus();
 	%>
 <script type="text/javascript">
 (function( $ ) {
@@ -277,6 +278,47 @@ function drawBasic() {
 
 /* 총회원 수   */
 </script>
+
+<script type="text/javascript">
+/* 상품거래현황  */
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+       var data = google.visualization.arrayToDataTable([
+         ['6일전', '거래현황', { role: 'style' }],
+         ['6일전',20, '#9B59B6 '],            // RGB value
+         ['5일전',30, '#9B59B6 '],            // English color name
+         ['4일전',40, '#9B59B6 '],
+         ['3일전',50, '#9B59B6 '],
+         ['2일전',60, '#9B59B6 '],
+         ['1일전',70, '#9B59B6 ']
+
+      ]);
+
+      var options = {
+        title: '상품 거래현황',
+        hAxis: {
+          title: 'Day',
+          viewWindow: {
+            min: [7, 30, 0],
+            max: [17, 30, 0]
+          }
+        },
+        vAxis: {
+          title: '수'
+        }
+      };
+
+      var chart = new google.visualization.ColumnChart(
+        document.getElementById('chart_div1'));
+
+      chart.draw(data, options);
+    }
+/* 상품거래현황  */   
+</script>
+
 </head>
 <body>
 <div id="wrap" > <!-- wrap( w: 800 x h:950 ) -->
@@ -307,43 +349,9 @@ function drawBasic() {
 			<div id="con_main">
 			
 				<div id="chart1">	
-	<div class="graph_wrap">
-  <strong class="tit">거래현황</strong>
-  <div class="graph">
-    <!-- 기준 -->
-    <ul class="y-axis">
-      <li><span>35</span></li>
-      <li><span>30</span></li>
-      <li><span>25</span></li>
-      <li><span>20</span></li>
-      <li><span>15</span></li>
-      <li><span>10</span></li>
-      <li><span>5</span></li>
-      <li><span>0</span></li>
-    </ul>
-
-    <!-- 목록 -->
-    <ul class="x-axis">
-      <li><span>6일전</span></li>
-      <li><span>5일전</span></li>
-      <li><span>4일전</span></li>
-      <li><span>3일전</span></li>
-      <li><span>2일전</span></li>
-      <li><span>1일전</span></li>
-    </ul>
-
-    <!-- 바 그래프 (백분율 만큼 heigh값) -->
-    <ul class="bar">
-      <li style="height:100%;"><span></span></li>
-      <li style="height:70%;"><span></span></li>
-      <li style="height:30%;"><span></span></li>
-      <li style="height:30%;"><span></span></li>
-      <li style="height:30%;"><span></span></li>
-      <li style="height:30%;"><span></span></li>
-    </ul>
-  </div>
-</div>
-</div>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div1"></div>
+				</div>
 		
 		<div id="day_info">
 			<%

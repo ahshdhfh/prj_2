@@ -283,21 +283,19 @@ public class RegisterCommentDAO {
 		        con = dbCon.getConn();
 		    //쿼리문 생성객체 작성 필요.
 		        StringBuilder commList = new StringBuilder();
-		        
-//		        SELECT p.COMMENT_NUM, p.USER_ID, p.PROD_COMMENTS, p.WRITE_DATE, p.PROD_NUM,
-//		        r.REPLY_NUM, r.REPLY_COMMENT, r.WRITE_DATE, r.COMMENT_NUM, r.USER_ID
-//		 FROM   PROD_COMMENT p
-//		        inner JOIN REPLY_COMMENT r
-//		          ON p.COMMENT_NUM = r.COMMENT_NUM
-//		 where 	p.prod_num='7';
-		        
-		        
+		        		     		        
 		        commList
-		        .append("	select p.comment_num , p.user_id p_user_id,  p.prod_comments ,												")
-		        .append( "   p.write_date p_write_date, p.prod_num , 																						")
-		        .append("	r.reply_num, r.reply_comment, r.write_date r_write_date, r.user_id	r_user_id								")
-		        .append("	FROM   PROD_COMMENT p, REPLY_COMMENT r																		")
-		        .append("	where 	p.prod_num=? and p.COMMENT_NUM = r.COMMENT_NUM										");
+		        .append("	SELECT COMMENT_NUM,prod_comments,reply_num,reply_comment,write_date,user_id,prod_num													")
+		        .append( "   FROM ( SELECT COMMENT_NUM, PROD_COMMENTS, 0 AS REPLY_NUM, '' AS REPLY_COMMENT, WRITE_DATE, USER_ID, PROD_NUM																						")
+		        .append("	  FROM PROD_COMMENT											")
+		        .append("	 UNION ALL																			")
+		        .append("	SELECT COMMENT_NUM, '', REPLY_NUM, REPLY_COMMENT, WRITE_DATE, USER_ID,(													")
+		        .append("	SELECT PROD_NUM												")
+		        .append("	FROM PROD_COMMENT												")
+		        .append("	WHERE COMMENT_NUM = REPLY_COMMENT.COMMENT_NUM) AS PROD_NUM													")
+		        .append("	FROM REPLY_COMMENT )												")
+		        .append("	where prod_num=?											")
+		        .append("	ORDER BY COMMENT_NUM											");
 
 		        
 		        pstmt=con.prepareStatement(commList.toString());
@@ -305,30 +303,18 @@ public class RegisterCommentDAO {
 		        
 		        rs=pstmt.executeQuery();
 
-		        SetCommVO scVO=null;
-		        //public SetCommVO(String commId, String replyId,
-		        //String prodComment, String replyComment,
-		        //int commNum, int prodNum,
-				//int replyNum, Date comWriteDate, Date replyWriteDate)
+		    	//public SetCommVO(String userId, String prodComment, String replyComment, int commNum, int prodNum, int replyNum,
+		    	//		Date writeDate)
 		        while(rs.next()) {
-					/* scVO= */
-							/*
-							 * new SetCommVO(rs.getString("p_user_id"), rs.getString("r_user_id"),
-							 * rs.getString("prod_comments"), rs.getString("reply_comment"),
-							 * rs.getInt("comment_num"), rs.getInt("prod_num"), rs.getInt("reply_num"),
-							 * rs.getDate("p_write_date"), rs.getDate("r_write_date"));
-							 */
-		     /*   	list.add(scVO);*/
+		        	String userId=rs.getString("user_id");
+		        	String prodComment=rs.getString("prod_comments");
+		        	String replyComment=rs.getString("reply_comment");
+		        	int commNum=rs.getInt("COMMENT_NUM");
+		        	int prodNumber=rs.getInt("prod_num");
+		        	int replyNum=rs.getInt("reply_num");
+		        	Date writeDate=rs.getDate("write_date");
+		        	list.add(new SetCommVO(userId, prodComment, replyComment, commNum, prodNumber, replyNum, writeDate));
 		        }//end while
-				/*
-				 * while(rs.next()) { // 댓글 정보 처리 CommVO comm = new CommVO();
-				 * comm.setUserId(rs.getString("user_id"));
-				 * comm.setCommNum(rs.getInt("comment_num"));
-				 * comm.setProdComments(rs.getString("prod_comments"));
-				 * comm.setWriteDate(rs.getDate("write_date"));
-				 * 
-				 * ReplyCommVO repCom= new ReplyCommVO(); }
-				 */
 		         
 		    } finally {
 		        dbCon.dbClose(rs,pstmt, con);

@@ -53,7 +53,67 @@ tr{ height: 30px; }
     background: rgba(143, 39, 164,0.9);
 }
 </style>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 끝 -->
 <script type="text/javascript">
+
+$(function(){
+
+	jquery();
+	
+});//ready
+
+function search() {
+	var obj=document.frm;
+	var search=obj.id.value;
+	jquery(search);	
+}
+
+
+function jquery(search) {
+	var searchInput="";
+	
+	if(!search==""){		
+	searchInput=search;
+	}
+	
+	var jsonParam={searchName : searchInput};
+	$.ajax({
+		url : "data_comm_manage.jsp",
+		dataType: "JSON",
+		data : jsonParam,
+		error : function( xhr ){
+			console.log( xhr.status );
+		},
+		success : function ( jsonArr ){
+			var tbody="";	
+			let cnt=0;
+			
+		    if($("#table tr").length >1){
+		    	$("#table > tbody").empty(); //tbody 모두 삭제
+		    }//end if
+			
+			$.each( jsonArr,function(idx, jsonObj){
+				cnt++;
+			tbody+="<tr><td>"+
+						jsonObj.commentNum+"</td><td>"+
+						jsonObj.prodNum+"</td><td>"+
+						jsonObj.userId+"</td><td>"+
+						jsonObj.prodComment+"</td><td>"+
+						jsonObj.writeDate+"</td></tr>";																
+			} );//each
+								
+			if( cnt ==0 ){
+				tbody="<tr><td colspan='5'>댓글이 없습니다.</td><tr>"
+			}//end if
+			
+			$("#table:last").append( tbody );
+			$("#id").val()="";
+		}//success
+	});//ajax
+}//jquery
+
 </script>
 </head>
 <body>
@@ -85,33 +145,21 @@ tr{ height: 30px; }
 			<div id="con_main">
 			
 			<div id="search_commdb" >
+			<form action="" name="frm" id="frm">
 			<label  >아이디조회</label>
 			<i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-			<input type="text" class="text_search">
-			<input type="button" value="확인" class="btn_search" style="float: right">
+			<input type="text" class="text_search" name="id" id="id">
+			<input type="button" value="확인" class="btn_search" name="btn" style="float: right" onclick="search()">
+			</form>
 			</div>
 			
-			<%
-				ManageMentCommDAO mmcDAO=new ManageMentCommDAO();
-				List<AdminCommVO> list=mmcDAO.commSearch("");	
-			
-				pageContext.setAttribute("commList", list);
-			%>
-			
 				<div id=table_div>
-				<table class="table_comm" cellspacing="0">
+				<table class="table_comm" cellspacing="0" id="table">
+				<thead>
 				<tr class="table_header">
 				<td width="80">댓글번호</td><td width="80">상품번호</td><td width="80">아이디</td><td width="400">댓글</td><td width="120">작성일자</td>
 				</tr>
-					<c:forEach var="mVO" items="${commList}" varStatus="i" >
-						<tr>
-						<td class="prdCol"><c:out value=" ${ mVO.commentNum }" /></td>
-						<td class="prdCol"><c:out value=" ${ mVO.prodNum }" /></td>
-						<td class="prdCol"><c:out value=" ${ mVO.userId }" /></td>
-						<td class="prdCol"><c:out value=" ${ mVO.prodComment }" /></td>
-						<td class="prdCol"><c:out value=" ${ mVO.writeDate }" /></td>
-						</tr>																			
-					</c:forEach>															
+				</thead>														
 				</table>
 				</div>
 			</div>

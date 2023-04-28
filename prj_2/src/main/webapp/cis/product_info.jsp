@@ -436,8 +436,13 @@ $(function(){
 	boolean isMyCom = "comment".equals(commentRole);
 %> --%>
 <%
+	String prodNum=request.getParameter("prodNum");
 	ShowProdDAO spDAO=new ShowProdDAO();
-	ProductDetailVO pdVO=spDAO.showProdInfo(42);
+
+
+		//ProductDetailVO pdVO=spDAO.showProdInfo(Integer.parseInt(prodNum));
+		ProductDetailVO pdVO=spDAO.showProdInfo(42);
+	
 	
 	pageContext.setAttribute("prodimgs", pdVO.getProdImg());
 %>	
@@ -583,12 +588,14 @@ pageContext.setAttribute("commList", list);
 	<br/>
 	<hr class="qna_line">
 <c:forEach var="scVO" items="${commList}" varStatus="i" begin="0">
-
-
+	<textarea class="requestText" placeholder="문의글">${scVO.prodComment}</textarea>
+	<div class="comment-tag">
+	<input type="text" class="user_id" value="${scVO.userId}"><br>
+	<input type="text"class="write-date" value="${scVO.writeDate}">
+	<br/>
+	</div>
 </c:forEach>
 	
-
-
 <!-- 일정 댓글 수마다 페이지 겟수가 늘어나게 해야됨. -->
 	<div id="all-page-button">
 		<input type="button"id="page-button-left"value="<">		
@@ -597,7 +604,6 @@ pageContext.setAttribute("commList", list);
 		<input type="button"id="page-button-right"value=">">		
 	</div> 
 
-	
 	<form class="comment_form">
 	<div>
 		<img src="" id="comment_profile_img"/>
@@ -627,7 +633,7 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 
 <c:if test="${i.count <= 6}">
 <div class="card-photo${i.index}"onclick="location.href='http://localhost/prj_2/cis/product_info.jsp'">
-     <img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"> 
+     <a href="http://localhost/prj_2/cis/product_info.jsp?${MainProdVO.prodNum}"><img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"></a> 
 </div>
    <div class="card-desc${i.index}">
        <span class="card-title">${MainProdVO.prodName}</span>   

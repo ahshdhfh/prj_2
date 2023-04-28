@@ -60,7 +60,67 @@ tr{ height: 30px; }
 
 
 </style>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 끝 -->
 <script type="text/javascript">
+
+$(function(){
+
+	jquery();
+	
+});//ready
+
+function search() {
+	var obj=document.frm;
+	var search=obj.id.value;
+	jquery(search);	
+}
+
+
+function jquery(search) {
+	var searchInput="";
+	
+	if(!search==""){		
+	searchInput=search;
+	}
+	
+	var jsonParam={searchName : searchInput};
+	$.ajax({
+		url : "data_member_manage.jsp",
+		dataType: "JSON",
+		data : jsonParam,
+		error : function( xhr ){
+			console.log( xhr.status );
+		},
+		success : function ( jsonArr ){
+			var tbody="";	
+			let cnt=0;
+			
+		    if($("#table tr").length >1){
+		    	$("#table > tbody").empty(); //tbody 모두 삭제
+		    }//end if
+			
+			$.each( jsonArr,function(idx, jsonObj){
+				cnt++;
+			tbody+="<tr><td>"+
+						jsonObj.userID+"</td><td>"+
+						jsonObj.nickName+"</td><td>"+
+						jsonObj.addr+jsonObj.detailedAddr+"</td><td>"+
+						jsonObj.createDate+"</td></tr>";																
+			} );//each
+								
+			if( cnt ==0 ){
+				tbody="<tr><td colspan='4'>회원이 없습니다.</td><tr>"
+			}//end if
+			
+			$("#table:last").append( tbody );
+			$("#id").val()="";
+		}//success
+	});//ajax
+}//jquery
+
+
 </script>
 </head>
 <body>
@@ -92,32 +152,21 @@ tr{ height: 30px; }
 			<div id="con_main">
 			
 			<div id="search_commdb" >
+			<form action="" name="frm" id="frm">
 			<label  >회원조회</label>
 			<i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-			<input type="text" class="text_search">
-			<input type="button" value="확인" class="btn_search" style="float: right">
+			<input type="text" class="text_search" name="id" id="id">
+			<input type="button" value="확인" class="btn_search" style="float: right" onclick="search()">
+			</form>
 			</div>
 			
-			<%
-				ManageMentMemberDAO mDAO= new ManageMentMemberDAO();
-				List<AdminMemberVO> list= mDAO.memberSearch("");
-				
-				pageContext.setAttribute("memList", list);
-			%>
 				<div id=table_div>
-				<table class="table_comm" cellspacing="0">
+				<table class="table_comm" cellspacing="0" id="table">
+				<thead>
 				<tr class="table_header">
-				<td width="80">회원번호</td><td width="80">아이디</td><td width="80">닉네임</td><td width="400">주소</td><td width="120">가입일</td>
-				</tr>	
-					<c:forEach var="aVO" items="${memList}" varStatus="i" >
-						<tr>
-						<td class="prdCol"><c:out value=" ${ i.index }" /></td>
-						<td class="prdCol"><c:out value=" ${ aVO.userID }" /></td>
-						<td class="prdCol"><c:out value=" ${ aVO.nickName }" /></td>
-						<td class="prdCol"><c:out value=" ${ aVO.addr }" /><c:out value=" ${ aVO.detailedAddr }" /></td>
-						<td class="prdCol"><c:out value=" ${ aVO.createDate }" /></td>
-						</tr>																			
-					</c:forEach>
+				<td width="80">아이디</td><td width="80">닉네임</td><td width="400">주소</td><td width="120">가입일</td>
+				</tr>
+				</thead>	
 				</table>
 				</div>
 			</div>

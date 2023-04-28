@@ -15,7 +15,6 @@ public class ShowProdDAO {
 	 */
 	public ProductDetailVO showProdInfo(int prodNum) throws SQLException {
 		ProductDetailVO list =null;
-
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -82,8 +81,42 @@ public class ShowProdDAO {
 			dbCon.dbClose(rs, pstmt, con);
 			// 7. 연결 끊기
 		} // end finally
+		viewUpdate(prodNum);
 		return list;
 	}// showProdInfo
+	
+	public void viewUpdate(int prodNum) throws SQLException  {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		DbConnection dbCon = DbConnection.getInstance();
+		try {
+			// 1. JNDI 사용객체 생성
+			// 2. DateSource를 얻어주기
+			// 3. Connection 얻기
+			con = dbCon.getConn();
+			// 4. 쿼리문 생성객체 얻기
+			StringBuilder showPrdInfo = new StringBuilder();
+
+			showPrdInfo
+			.append("	update PRODUCT							")
+			.append("	set VIEW_CNT=VIEW_CNT+1				")
+			.append("	where prod_num=?						");
+			
+					pstmt=con.prepareStatement(showPrdInfo.toString());
+					pstmt.setInt(1, prodNum);
+					pstmt.executeQuery();
+				
+		} finally {
+			dbCon.dbClose(null, pstmt, con);
+			// 7. 연결 끊기
+		} // end finally
+
+	}//viewUpdate
+	
+	
+	
 
 	/**
 	 * 북마크 기능 메소드

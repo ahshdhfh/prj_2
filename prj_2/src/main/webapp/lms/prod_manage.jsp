@@ -60,7 +60,67 @@ tr{ height: 30px; }
 
 
 </style>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 끝 -->
 <script type="text/javascript">
+
+$(function(){
+
+	jquery();
+	
+});//ready
+
+function search() {
+	var obj=document.frm;
+	var search=obj.id.value;
+	jquery(search);	
+}
+
+
+function jquery(search) {
+	var searchInput="";
+	
+	if(!search==""){		
+	searchInput=search;
+	}
+	
+	var jsonParam={searchName : searchInput};
+	$.ajax({
+		url : "data_prod_manage.jsp",
+		dataType: "JSON",
+		data : jsonParam,
+		error : function( xhr ){
+			console.log( xhr.status );
+		},
+		success : function ( jsonArr ){
+			var tbody="";	
+			let cnt=0;
+			
+		    if($("#table tr").length >1){
+		    	$("#table > tbody").empty(); //tbody 모두 삭제
+		    }//end if
+			
+			$.each( jsonArr,function(idx, jsonObj){
+				cnt++;
+			tbody+="<tr><td>"+
+						jsonObj.prodNum+"</td><td>"+
+						jsonObj.categoryName+"</td><td>"+
+						jsonObj.prodName+"</td><td>"+
+						jsonObj.userId+"</td><td>"+
+						jsonObj.inputDate+"</td></tr>";																
+			} );//each
+								
+			if( cnt ==0 ){
+				tbody="<tr><td colspan='5'>댓글이 없습니다.</td><tr>"
+			}//end if
+			
+			$("#table:last").append( tbody );
+			$("#id").val()="";
+		}//success
+	});//ajax
+}//jquery
+
 
 </script>
 </head>
@@ -93,33 +153,21 @@ tr{ height: 30px; }
 			<div id="con_main">
 			
 			<div id="search_commdb" >
+			<form action="" name="frm" id="frm">
 			<label  >상품조회</label>
 			<i class="fa fa-search fa-lg" aria-hidden="true" ></i>
-			<input type="text" class="text_search">
-			<input type="button" value="확인" class="btn_search" style="float: right">
-			</div>
-			
-			<%
-				ManageMentProdDAO mpDAO=new ManageMentProdDAO();
-				List<AdminProductVO> list=mpDAO.prodSearch("");
-				
-				pageContext.setAttribute("prodList", list);
-			%>
+			<input type="text" class="text_search" name="id" id="id">
+			<input type="button" value="확인" class="btn_search" style="float: right" onclick="search()">
+			</form>
+			</div>		
 			
 				<div id=table_div>
-				<table class="table_comm" cellspacing="0">
+				<table class="table_comm" cellspacing="0" id="table">
+				<thead>
 				<tr class="table_header">
 				<td width="80">상품번호</td><td width="80">카테고리</td><td width="400">상품명</td><td width="80">회원명</td><td width="120">작성일</td>
 				</tr>
-					<c:forEach var="pVO" items="${prodList}" varStatus="i" >
-						<tr>
-						<td class="prdCol"><c:out value=" ${ pVO.prodNum }" /></td>
-						<td class="prdCol"><c:out value=" ${ pVO.categoryName }" /></td>
-						<td class="prdCol"><c:out value=" ${ pVO.prodName }" /></td>
-						<td class="prdCol"><c:out value=" ${ pVO.userId }" /></td>
-						<td class="prdCol"><c:out value=" ${ pVO.inputDate }" /></td>
-						</tr>																			
-					</c:forEach>													
+				</thead>												
 				</table>
 				</div>
 			</div>
