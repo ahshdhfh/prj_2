@@ -13,17 +13,12 @@
 <%@ include file="../ldk/login_chk.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-request.setCharacterEncoding("UTF-8");
-//response.setCharacterEncoding("UTF-8");
 
-ArrayList saveFiles = new ArrayList(); 		// 저장될 파일이름
-ArrayList originFiles = new ArrayList();	// 실제파일명.
 //가상공간에서 작업이되기때문에 실제경로와 다르다. 
 // .getRealPath()에 가상경로를 넣어주면, 그것("/upload")을 "실제경로" 변경한다.
 // 실제 경로 지정.
 //String realFolder = getServletContext().getRealPath("/upload");
 
-System.out.println("성공");
 File file=new File("C:/Users/user/git/prj_2/prj_2/src/main/webapp/images");
 /* 저장경로 =>  E:/eclipse/JAVA/Spring_05/.metadata/.plugins/org.eclipse.wst.server.core/
  tmp1/wtpwebapps/FileUploadApp / upload     */ 
@@ -35,25 +30,80 @@ int max = 5 * 1024 * 1024; //3번째인자: 업로드크기(바이트단위),  5
 MultipartRequest multi = new MultipartRequest(request, file.getAbsolutePath(), max, "UTF-8", new DefaultFileRenamePolicy());
 
 // 파라미터전송 값 얻어오기. 
-String categoryNumber = multi.getParameter("categoryNumber");
-System.out.println(categoryNumber);
-multi.getParameterNames();
 // 업로드된 파일정보를 가져온다.
-Enumeration e = multi.getFileNames();
-System.out.println(e.toString());
-// 업로드된파일 만큼 반복.
-System.out.println("최초횟수"+saveFiles.size());
-while(e.hasMoreElements())	{//리스트에 이름 저장하기
-	
-	String n = (String)e.nextElement();//파일 파라메터 이름 가져오기
-	System.out.println(n);
-	saveFiles.add(multi.getFilesystemName(n)); 				// ArrayList saveFiles 객체에 저장
-	originFiles.add(multi.getOriginalFileName(n));		// ArrayList originFiles 객체에 저장.
-}
-System.out.println("반복횟수"+saveFiles.size());
-for(int i=0;i<saveFiles.size();i++){
+String[] imgNames=multi.getParameter("imgNames").split(",");
 
-System.out.println("orifile : "+originFiles.get(i));
-System.out.println("savefile : "+saveFiles.get(i));
-}
+/////////////////////////////////////////
+        String prodName = multi.getParameter("prodName");
+        String share = multi.getParameter("share");
+        int price = Integer.parseInt(multi.getParameter("price"));
+        String textOfPrd = multi.getParameter("textOfPrd");
+        String placeTraction = multi.getParameter("placeTraction");
+        int categoryNumber = Integer.parseInt(multi.getParameter("categoryNumber"));
+        int areaNum = Integer.parseInt(multi.getParameter("areaNum"));
+
+   String prodNum = multi.getParameter("hidden");//
+	ProductInsertVO piVO = new ProductInsertVO();
+    InsertProdDAO dao = new InsertProdDAO();
+    if ("".equals(prodNum)) {//insert
+    	//상품 정보 파라메터 값 받아오기
+		
+        //ProductInsertVO에 상품 정보 저장하기	
+        piVO.setProdName(prodName);
+        piVO.setShare(share);
+        piVO.setPrice(price);
+        piVO.setTextOfPrd(textOfPrd);
+        piVO.setPlaceTraction(placeTraction);
+        piVO.setCategoryNumber(categoryNumber);
+        piVO.setAreaNum(lsVO.getActAreaNum());//세션에서
+        piVO.setUserId(lsVO.getUserId());//세션에서
+        piVO.setprodImg(imgNames);//이미지배열
+		
+        try{
+        dao.insertProdInfo(piVO);
+       	%>
+       	alert("성공적으로 등록하셨습니다!")
+       	location.href="product_info.jsp"
+       	<%
+        	
+        }catch(SQLException se){
+        	se.printStackTrace();
+        	%>
+           	alert("에러 발생! 다시 시도해주세요!")
+           	location.href="sell_page.jsp"
+           	<%
+        }
+		
+        
+    //updatePrd 메소드를 사용하는 경우
+    } else  {
+    	//상품 정보 파라메터 값 받아오기
+
+      	//ProductInsertVO에 상품 정보 저장하기
+        piVO.setProdNum(Integer.parseInt(prodNum));
+        piVO.setProdName(prodName);
+        piVO.setPrice(price);
+        piVO.setTextOfPrd(textOfPrd);
+        piVO.setPlaceTraction(placeTraction);
+        piVO.setCategoryNumber(categoryNumber);
+        piVO.setprodImg(imgNames);
+
+        try{
+        	dao.updatePrd(piVO);
+           	%>
+           	alert("성공적으로 수정되었습니다!")
+           	location.href="product_info.jsp"
+           	<%
+            	
+            }catch(SQLException se){
+            	se.printStackTrace();
+            	%>
+               	alert("에러 발생! 다시 시도해주세요!")
+               	location.href="sell_page.jsp?prodNum="+"<%=prodNum%>";
+               	<%
+            }//end catch
+    }//end else
+
+
+
 %>

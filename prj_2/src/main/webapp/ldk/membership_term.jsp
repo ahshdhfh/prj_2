@@ -67,7 +67,7 @@ function check() {
 <div id="wrap"> <!-- wrap ( w : 900 x h : 1200) -->
 <div id="header">
 	<input type="text" id="joinMembership" value="회원가입" readonly="readonly">
-	<a href="http://localhost/prj_2/lmh/main_logout.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
+	<a href="http://localhost/prj_2/lmh/main.jsp"><img id="logo" alt="logo"  src="http://localhost/prj_2/images/logo.png"></a>
 </div>
 <form name="frm">
 <div id="container">

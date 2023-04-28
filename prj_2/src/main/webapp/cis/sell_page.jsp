@@ -129,7 +129,8 @@ border: 1px solid #EAEBEE;
 
 const imageFiles = [];
 function changeProfileImage() {
-    const imgCntElem = document.getElementById('imgCnt');//span
+	document.getElementById('imgCnt').innerHTML=0;
+    var imgCntElem = document.getElementById('imgCnt');//span
     const inputElem = document.getElementById('prod_img');//file
     const imgElem = document.getElementById('prodImg');//<img>
     const MAX_IMAGES = 6;
@@ -212,13 +213,23 @@ $(function(){
 			$("#input_location").focus();
 			return;
 		}//end if
-		var obj = document.form;
-		var formData = new FormData($('#form')[0]);
+		//이미지 파일 갯수 히든으로 보내기
+		$("#imgFileCnt").val($("#imgCnt").text() );
+		alert($("#prod_img").get(0).files[0].name)
+		
+		var imgNames=[];//파일 이름 저장하기위한 배열
+		var files=$('#prod_img')[0].files//input file
+		
+		for(var i=0; i<files.length;i++){//들어간 파일의 수만큼 반복
+			imgNames[i]=$("#prod_img").get(0).files[i].name;//사진 이름 배열에 넣기
+		}
+		var formData = new FormData($('#form')[0]);//submit할 formData 객체 부르기(매개변수에 form태그 이름)
+		formData.append("imgNames", imgNames);//파일 이미지 배열 넣어주기
 		//for (let i = 0; i < imageFiles.length; i++) { 
 		//	  formData.append("imgFile", imageFiles[i]);
 		//	}
 			  //formData.append("imgCnt", imgCntElem.innerText);//이미지 수 넣기
-		
+		                 
 		// XMLHttpRequest 객체 생성
 		var xhr = new XMLHttpRequest();
 
@@ -313,6 +324,7 @@ System.out.println(prodName);
   <div class="" id="inputImg" >
     <img src="" id="prodImg" name="prodImg" class="profile_img">
     <input type="file" id="prod_img" name="prod_img" accept="image/*" onchange="changeProfileImage()" multiple>
+    <input type="hidden" id="imgFileCnt" name="imgFileCnt" value=""/>
   </div>
 <pre id="caution">
 * 상품 이미지는 600x600에 최적화 되어 있습니다.
@@ -353,7 +365,6 @@ System.out.println(prodName);
 
 <label for="input_price">가격*</label>
 <input type="number" id="input_price" placeholder="숫자만 입력해주세요"   name="price" value="<%=price%>">원
-<input type="hidden" name="hidden" id="hidden" value="<%=price%>"/>
 <input type="checkbox" name="share" id="share-check" 
 	onclick="if(this.checked) document.getElementById('input_price').value='0'; else document.getElementById('input_price').value='';">나눔하기
 <!-- 나눔하기 체크 시 가격을 0원으로 띄우는 기능 -->
