@@ -33,13 +33,13 @@ public class RegisterCommentDAO {
 			StringBuilder insertComm=new StringBuilder();
 			insertComm
 			.append("insert into PROD_COMMENT(COMMENT_NUM,USER_ID,PROD_COMMENTS,WRITE_DATE,PROD_NUM) ")
-			.append("values(?,?,?,sysdate,GANGNAMKONG.SEQ_PRODUCT_SEQ.CURRVAL)"			);
+			.append("values(GANGNAMKONG.COMMENT_NUM_SEQ.NEXTVAL,?,?,sysdate,?)		");
 			
 			pstmt=con.prepareStatement(insertComm.toString());
 		//5. 바인드 변수 값 설정
-			pstmt.setInt(1,cVO.getCommNum());
-			pstmt.setString(2,cVO.getUserId());
-			pstmt.setString(3,cVO.getProdComments());
+			pstmt.setString(1,cVO.getUserId());
+			pstmt.setString(2,cVO.getProdComments());
+			pstmt.setInt(3,cVO.getProdNum());
 			
 			pstmt.executeQuery();
 		//6. 쿼리문 수행 후 결과 얻기
@@ -295,7 +295,7 @@ public class RegisterCommentDAO {
 		        .append("	WHERE COMMENT_NUM = REPLY_COMMENT.COMMENT_NUM) AS PROD_NUM													")
 		        .append("	FROM REPLY_COMMENT )												")
 		        .append("	where prod_num=?											")
-		        .append("	ORDER BY COMMENT_NUM											");
+		        .append("	ORDER BY COMMENT_NUM,prod_comments											");
 
 		        
 		        pstmt=con.prepareStatement(commList.toString());

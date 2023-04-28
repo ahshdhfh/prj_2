@@ -43,19 +43,8 @@
 }
 
 /* 거래현황  그래프   */
-#chart1{ position: absolute; top:200px; left: 30px; border: 1px solid #333; width: 440px;  }
-.graph_wrap {max-width: 400px;margin: 0 auto;padding:20px;}
-.graph_wrap .tit {font-size: 16px;font-weight: 500;color: #333333;}
-.graph {position: relative;height: 185px;margin-top: 15px;}
-.graph .y-axis {position: absolute;width: 100%;height: 100%;z-index: 1;}
-.graph .y-axis > li {position: relative;width:calc(100% - 20px);height: calc(100% / 8);margin-left: 20px;border-top: 1px solid #8c8c8c;text-align: left;}
-.graph .y-axis > li span {position: absolute;top: -7px;left: -20px;font-size: 12px;line-height: 1;}
-.graph .x-axis {position: absolute;display: flex;bottom: -8px;left: 20px;width: calc(100% - 20px);justify-content: space-around;text-align: center;z-index: 2;}
-.graph .x-axis > li {font-size: 12px;}
-.graph .bar {display: flex;position: absolute;left: 20px;bottom: 16px;width: calc(100% - 20px);height: calc(100% - 16px);justify-content: space-around;align-items: flex-end;text-align: center;z-index: 3;}
-.graph .bar > li {flex-grow:1;margin: 0 10px;}
-.graph .bar > li span {display: inline-block;max-width: 80px;width: 100%;height: 100%;background: #8F27A4;}
-.graph .bar:before {content:'';position: absolute;top: -2px;left: 3px;height: calc(100% + 4px);width: 1px;background: #8c8c8c;}
+#chart1{ position: absolute; top:200px; left: 30px; border: 1px solid #333; width: 440px; height: 240px  }
+
 
 /* 오늘의 수치  */
 #day_info { width: 950px; height: 130px;  position: absolute; top: 20px; left: 10px; font-weight: bold;  }
@@ -147,6 +136,7 @@
 	DashBoardDAO dDAO=new DashBoardDAO();
  	CategoryCntVO cVO=dDAO.categoryCnt();
  	Integer[] result=dDAO.tradingStatus();
+ 	Integer[] dongCnt=dDAO.dongCnt();
 	%>
 <script type="text/javascript">
 (function( $ ) {
@@ -259,7 +249,7 @@ function drawBasic() {
         [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
         [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
         [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-        [66, 70], [67, 72], [68, 75], [69, 80]
+        [66, 70], [67, 72]
       ]);
 
       var options = {
@@ -372,7 +362,7 @@ function drawBasic() {
 		<div id="control">
 <div class="zt-span6 last">
 <h3><strong>지역별 상품 수</strong></h3>
-<div class="zt-skill-bar"><div data-width="88" style="">개포동<span>88%</span></div></div>
+<div class="zt-skill-bar"><div data-width="88" style="">개포동<span><%=dongCnt[0] %></span></div></div>
 <div class="zt-skill-bar"><div data-width="92" style="">논현동<span>92%</span></div></div>
 <div class="zt-skill-bar"><div data-width="20" style="">대치동<span>20%</span></div></div>
 <div class="zt-skill-bar"><div data-width="42" style="">도곡동<span>42%</span></div></div>

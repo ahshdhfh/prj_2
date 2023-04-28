@@ -35,7 +35,7 @@
 	float:right;
 	width:42px;
 	height:41px;
-	background-image: url('http://localhost/prj_2/images/free-icon-love-7476962.png');
+	background-image: url('http://localhost/prj_2/images/free-icon-love-7476962.png'); /* 하트  */
 	border:none;
 	background-color:white;
 }
@@ -71,8 +71,8 @@
 }
 
 #prod-title{
-	font-size:30pt;
-	width:200px;
+	font-size:20pt;
+	width:250px;
 }
 
 #prod-price{
@@ -174,26 +174,35 @@ padding:15px 20px;
 }
 .requestText{
 	width:650px;
-	height:130px;
+	height:100px;
 	border:none;
 	background-color: #e0e0e0;
 	resize:none;
-	font-size:16pt;
+	font-size:12pt;
+}
+
+.responseText{
+	width:650px;
+	height:100px;
+	border:none;
+	background-color: #e0e0e0;
+	resize:none;
+	font-size:12pt;
 }
 
 .comment-tag{
-	float:right;
+	text-align: right;
 }
 .user_id{
 	border:none;
-	width:50px;
+	width:100px;
 	margin-top:20px;
 	text-align:right;
 	background-color: #e0e0e0;
 }
 .write-date{
 	border:none;
-	width:50px;
+	width:100px;
 	text-align:right;
 	background-color: #e0e0e0;
 }
@@ -400,15 +409,7 @@ padding:15px 20px;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
 
-<script>
-$(function(){
-	  $(".dropdown-toggle").click(function(){
-	    $(".dropdown-menu").toggle();
-	  });
-});
 
-//댓글 페이지
-</script>
 <!-- Boot strap 시작  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
@@ -419,33 +420,100 @@ $(function(){
 	<div class="wrap">
 
   <div class="header">
-      <%@ include file="../lmh/header.jsp" %>
+       <%@ include file="../lmh/header.jsp" %>     
   </div>
+<script>
+<%// 세션에서 값 가져오기
+LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");%>
+$(function(){
+	  $(".dropdown-toggle").click(function(){
+	    $(".dropdown-menu").toggle();
+	  });
+	  
+	  $("#commentInsert").click(function() {
+		  <% if(lpVO==null) {%>alert("입력권한이 없습니다.");<% }else{%>	
+		  		$("#userId").val("<%=lpVO.getUserId()%>");
+		  		$("#prodNum").val("<%=request.getParameter("prodNum")%>");
+		  		$("#comfrm").submit();
+			 		  		
+		  	<%}%> 
+	  });
+	  
+	  
+			$("#heart").click(function() {
+				$("#heart").fadeOut(250).fadeIn(200);
+				var src=$(this).attr('src');
+				
+				if(src=='http://localhost/prj_2/images/heart_on.svg'){
+					$(this).attr('src','http://localhost/prj_2/images/heart_off.png');
+					<%-- <%
+					mpDAO.deleteInterest(userId, prodNum);
+					%> --%>
+				}
+				if(src=='http://localhost/prj_2/images/heart_off.png'){
+					$(this).attr('src','http://localhost/prj_2/images/heart_on.svg');
+					<%-- <%
+					mpDAO.insertInterest(prodNum, userId);
+					%> --%>
+				}//end else
+			});//click
+	  
+});
 
-<!-- 유저의 구매자/판매자를 구분하는 스크립트릿 -->
-<%-- <%
-  	String userRole = (String) session.getAttribute("userRole"); // 세션에서 사용자의 역할 정보를 가져옴
-  // 사용자가 구매자인지 판매자인지를 판별함
-  	boolean isBuyer = "buyer".equals(userRole); 
-  	boolean isSeller = "seller".equals(userRole);
+function replyInput(num) {
+	var tbody="";
+	var tbody2="";
+	var temp="#replyevent"+num+":last";
+	var temp1="#replyevent"+num+" tr";
+	var temp2="#replyevent"+num+" > tbody";
+	var temp3="#plusqna"+num;
+	
+	tbody="<tr><td>"+
+	"<div><form class='comment_form'><img src='' id='comment_profile_img'/>"+
+	"<input type='text' id='comment_id' placeholder='판매자 명'/>"+
+	"<textarea placeholder='댓글을 입력하세요' class='comment_content'></textarea>"+
+	"<input type='button'  value='문의하기' class='comment_submit'/>"+
+	"</form></div></td></tr>";
 
-	String bookmarkRole= (String)session.getAttribute("bookmarkRole");
-	boolean isMarked = "bookmark".equals(bookmarkRole);
+	$(temp).append( tbody );
+	
+	tbody2="<hr class='qna_line'>";
+	$(temp3).append( tbody2 );
+	
+    if($(temp3).children().length > 1 ){
+    	$(temp3).empty(); //tbody 모두 삭제
+    	
+    }//end if
+	
+    
+    if($(temp1).length >1 ){
+    	$(temp2).empty(); //tbody 모두 삭제
+    }//end if
+    
+}
 
-	String commentRole =(String)session.getAttribute("commentRole");
-	boolean isMyCom = "comment".equals(commentRole);
-%> --%>
+
+
+//댓글 페이지
+</script>
+
+
+
+  
 <%
 	String prodNum=request.getParameter("prodNum");
 	ShowProdDAO spDAO=new ShowProdDAO();
 
-
-		//ProductDetailVO pdVO=spDAO.showProdInfo(Integer.parseInt(prodNum));
-		ProductDetailVO pdVO=spDAO.showProdInfo(42);
+	
+		ProductDetailVO pdVO=spDAO.showProdInfo(Integer.parseInt(prodNum));
+		//ProductDetailVO pdVO=spDAO.showProdInfo(42);
 	
 	
 	pageContext.setAttribute("prodimgs", pdVO.getProdImg());
-%>	
+%>
+
+
+	
 		<!-- 상품 상세 페이지 내용부분 -->
 		<br/>
 		<br/>
@@ -465,7 +533,7 @@ $(function(){
   </div>
   
   <div class="carousel-inner" >
- <c:forEach var="imgs" items="${prodimgs}" varStatus="i" begin="1">
+ <c:forEach var="imgs" items="${prodimgs}" varStatus="i" begin="0">
 	 <div class="carousel-item active">
       <img src="${imgs}" class="d-block w-100" alt="..." style="" width="100%" height="600px">
     </div> 
@@ -495,13 +563,13 @@ $(function(){
 		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->			
 <div id="prod-title" ><%=pdVO.getProdName() %></div>
 <hr style="width:450px">
-<div id="prod-price"><fmt:formatNumber pattern="#,###,###" value='<%=pdVO.getPrice() %>' />원</div>
+<div id="prod-price"><fmt:formatNumber pattern="#,###,###" value='<%=pdVO.getPrice()%>' />원</div>
 <hr style="width:450px">
 
 <table id="product_info_table" 	>
 	<tr>
-		<td class="prod-info-dt">상품번호</td><td class="prod-info-dd"><%=pdVO.getProdNum()%></td>
 	</tr>
+		<td class="prod-info-dt">상품번호</td><td class="prod-info-dd"><%=pdVO.getProdNum()%></td>
 	<tr>
 		<td  class="prod-info-dt">카테고리</td><td  class="prod-info-dd"><%=pdVO.getCategoryName()%></td>
 	</tr>
@@ -564,7 +632,7 @@ if(lsVO.getUserId()==pdVO.getuserId()){//로그인한 사람과 상품올린사�
          </select>
 </div>
 <hr>
-<textarea id="user_comment"style="font-size:16pt"><%=pdVO.getdetailTxt()%></textarea>
+<textarea id="user_comment"style="font-size:16pt" readonly="readonly"><%=pdVO.getdetailTxt()%></textarea>
 </div>
 <br />
 
@@ -584,37 +652,93 @@ pageContext.setAttribute("commList", list);
 <br/>
 <div id = qna-toolbar>
 <b style="font-size:30pt;">문의글</b>
-
+<!-- 문의글 바로가기  -->
 	<br/>
 	<hr class="qna_line">
 <c:forEach var="scVO" items="${commList}" varStatus="i" begin="0">
-	<textarea class="requestText" placeholder="문의글">${scVO.prodComment}</textarea>
-	<div class="comment-tag">
+	<c:if test="${ !empty scVO.prodComment}">
+	<table>
+	<tr>
+	<td>	<textarea class="requestText" placeholder="문의글" readonly="readonly">${scVO.prodComment}</textarea></td>
+	<td style="vertical-align: top; " >
+	<div class="comment-tag" style="margin-left: 60px">
 	<input type="text" class="user_id" value="${scVO.userId}"><br>
 	<input type="text"class="write-date" value="${scVO.writeDate}">
-	<br/>
 	</div>
+	</td>
+	</tr>
+	<tr>
+	<td rowspan="2">
+		<input type="button" value="답글" onclick="replyInput(${i.index})" />
+	</td>
+	</tr>
+	</table >
+	<hr class="qna_line">
+	<table id="replyevent${i.index}" name="replyevent">
+	</table>
+	<div id="plusqna${i.index}">
+	</div>
+	</c:if>
+	<c:if test="${ !empty scVO.replyComment}">
+	<table>
+	<tr>
+	<td>	<textarea class="responseText" placeholder="문의글" readonly="readonly">&ensp;&ensp;&ensp;${scVO.replyComment}</textarea></td>
+	<td style="vertical-align: top; " >
+	<div class="comment-tag" style="margin-left: 60px">
+	<input type="text" class="user_id" value="${scVO.userId}"><br>
+	<input type="text"class="write-date" value="${scVO.writeDate}">
+	</div>
+	</td>
+	</tr>
+	<tr>
+	<td rowspan="2">
+		<input type="button" value="답글" onclick="replyInput(${i.index})" />
+	</td>
+	</tr>
+	</table>
+	<hr class="qna_line">
+	<table id="replyevent${i.index}" name="replyevent">
+	</table>
+	<div id="plusqna${i.index}">
+	</div>
+	</c:if>
 </c:forEach>
 	
 <!-- 일정 댓글 수마다 페이지 겟수가 늘어나게 해야됨. -->
 	<div id="all-page-button">
-		<input type="button"id="page-button-left"value="<">		
-		<input type="button"id="page-button-1"value="1">		
-		<input type="button"id="page-button-2"value="2">		
-		<input type="button"id="page-button-right"value=">">		
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="">1</a></li>
+    <li class="page-item"><a class="page-link" href="">2</a></li>
+    <li class="page-item"><a class="page-link" href="">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>		
 	</div> 
 
-	<form class="comment_form">
 	<div>
+	<form class="comment_form" name="comfrm" id="comfrm" method="post" action="comm_insert_process.jsp">
 		<img src="" id="comment_profile_img"/>
     	<input type="text" id="comment_id" placeholder="구매자 명"/>
-   		<textarea placeholder="댓글을 입력하세요" class="comment_content"></textarea>
-  		<input type="button"  value="문의하기" class="comment_submit"/>
-	</div>
+   		<textarea placeholder="댓글을 입력하세요" class="comment_content" id="comminput" name="comminput" ></textarea>
+   		<input type="hidden" name="userId" id="userId" >
+   		<input type="hidden" name="prodNum" id="prodNum" >
+  		<input type="button"  value="문의하기" class="comment_submit" id="commentInsert" />
 	</form>
+	</div>
 	
 </div>
 </div>
+<!-- 문의글  -->
 <!-- 다른 상품 목록 -->
 <hr>
 <br>
@@ -629,19 +753,18 @@ List<MainProdVO> MainProdlist = MainProdDAO.CategoryData("","","");
 pageContext.setAttribute("prodPopular", MainProdlist);
 
 %>
-<c:forEach var="MainProdVO" items="${prodPopular}" varStatus="i" begin="1">
+<c:forEach var="MainProdVO" items="${prodPopular}" varStatus="i" begin="0">
 
 <c:if test="${i.count <= 6}">
-<div class="card-photo${i.index}"onclick="location.href='http://localhost/prj_2/cis/product_info.jsp'">
+<div class="card-photo${i.index+1}"onclick="location.href='http://localhost/prj_2/cis/product_info.jsp'">
      <a href="http://localhost/prj_2/cis/product_info.jsp?${MainProdVO.prodNum}"><img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"></a> 
 </div>
-   <div class="card-desc${i.index}">
+   <div class="card-desc${i.index+1}">
        <span class="card-title">${MainProdVO.prodName}</span>   
        <div class="card-price ">${MainProdVO.price}</div>
        <div class="card-region-name"> ${MainProdVO.areaName}</div>
        <div class="card-counts"><span>${MainProdVO.viewCnt}</span></div>
 </div>
-
 
 </c:if>
 </c:forEach>

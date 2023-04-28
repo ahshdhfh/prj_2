@@ -7,6 +7,17 @@
     %>
     <jsp:useBean id="lVO" class="prj_2.LoginVO" scope="page" />
 	<jsp:setProperty property="*" name="lVO" />
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"  href="http://localhost/jsp_prj/common/main_v20230217.css"/>
+<style type="text/css">
+</style>
+<!-- jQuery CDN 시작 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- jQuery CDN 끝 -->	
+<script type="text/javascript">	
+	
 <%
 
 if(lVO.getUserId()==null  || "".equals(lVO.getUserId()) || lVO.getUserPassword()==null ||
@@ -26,7 +37,11 @@ if(lVO.getUserId()==null  || "".equals(lVO.getUserId()) || lVO.getUserPassword()
 		LoginSessionVO lsVO=uDAO.selectLogin(lVO);
 		session.setAttribute("loginData", lsVO);
 		session.setMaxInactiveInterval(60*60*1);
-		response.sendRedirect("main.jsp");		
+		%>
+		location.href="main.jsp";		
+		<%
 	}//end else
 
 %>
+
+</script>

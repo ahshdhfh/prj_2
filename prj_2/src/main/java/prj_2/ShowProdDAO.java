@@ -116,52 +116,99 @@ public class ShowProdDAO {
 	}//viewUpdate
 	
 	
-	
-
 	/**
 	 * 북마크 기능 메소드
+	 * select해오기
 	 * @return
 	 */
-	public void insertBookmarkPrd(ProdConditionVO pcVO) throws SQLException {
-	    Connection con = null;
+	public Boolean selectBookmarkPrd(ProdConditionVO pcVO ) throws SQLException {
+	    
+		boolean interChk = false;
+		
+		Connection con = null;
 	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
-
+	    ResultSet rs=null;
+	    
+	    
 	    DbConnection dbCon = DbConnection.getInstance();
 	    try {
 	        con = dbCon.getConn();
-	        con.setAutoCommit(false); // 트랜잭션 시작
 
-	        // 이미 북마크한 상품인지 확인
+
+	        // sql 쿼리문
 	        String selectBookmark = "SELECT * FROM INTEREST_LIST WHERE USER_ID = ? AND PROD_NUM = ?";
 	        pstmt = con.prepareStatement(selectBookmark.toString());
 	        pstmt.setString(1, pcVO.getUserId());
 	        pstmt.setInt(2, pcVO.getProdNum());
-	        rs = pstmt.executeQuery();
+	        
+	        rs=pstmt.executeQuery(selectBookmark);
 
-	        if (rs.next()) { // 이미 북마크한 상품이면 관심목록에서 제거
-	            String deleteBookmark = "DELETE FROM INTEREST_LIST WHERE USER_ID = ? AND PROD_NUM = ?";
-	            pstmt = con.prepareStatement(deleteBookmark.toString());
-	            pstmt.setString(1, pcVO.getUserId());
-	            pstmt.setInt(2, pcVO.getProdNum());
-	            pstmt.executeUpdate();
-	        } else { // 북마크한 상품이 아니면 관심목록에 추가
-	            String insertBookmark = "INSERT INTO INTEREST_LIST(USER_ID, PROD_NUM) VALUES (?, ?)";
-	            pstmt = con.prepareStatement(insertBookmark.toString());
-	            pstmt.setString(1, pcVO.getUserId());
-	            pstmt.setInt(2, pcVO.getProdNum());
-	            pstmt.executeUpdate();
-	        }
-	        con.commit(); // 트랜잭션 종료
-	    } catch (SQLException se) {
-	        if (con != null) {
-	            con.rollback(); // 트랜잭션 롤백
-	        }
-	        throw se;
-
+			
+			 while(rs.next()) {
+				 interChk=true;
+			 }
+			 
+			 
+	    }catch(SQLException se){
+	    	se.printStackTrace();
 	    } finally {
 	        dbCon.dbClose(rs,pstmt, con);
 	    }
+		return interChk;
 	}
+	
+	
+	/**
+	 * 북마크 추가하기 메소드
+	 * insert 하기
+	 * @return
+	 */
+	public void insertBookmarkPrd(ProdConditionVO pcVO) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		try {
+			con = dbCon.getConn();
+			
+			// 이미 북마크한 상품인지 확인
+			String insertBookmark = "INSERT INTO INTEREST_LIST(USER_ID, PROD_NUM) VALUES (?, ?)";
+			pstmt = con.prepareStatement(insertBookmark.toString());
+			pstmt.setString(1, pcVO.getUserId());
+			pstmt.setInt(2, pcVO.getProdNum());
+			pstmt.executeQuery();
+
+
+		} finally {
+			dbCon.dbClose(null,pstmt, con);
+		}
+	}
+	/**
+	 * 북마크 삭제하기 메소드
+	 * delete하기
+	 * @return
+	 */
+	public void deleteBookmarkPrd(ProdConditionVO pcVO) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		DbConnection dbCon = DbConnection.getInstance();
+		try {
+			con = dbCon.getConn();
+			
+			// 이미 북마크한 상품인지 확인
+			String deleteBookmark = "DELETE FROM INTEREST_LIST WHERE USER_ID = ? AND PROD_NUM = ?";
+			pstmt = con.prepareStatement(deleteBookmark.toString());
+			pstmt.setString(1, pcVO.getUserId());
+			pstmt.setInt(2, pcVO.getProdNum());
+			pstmt.executeQuery();
+		
+
+		} finally {
+			dbCon.dbClose(null,pstmt, con);
+		}
+	}	
+
+
 
 }// class
