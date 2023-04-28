@@ -40,12 +40,15 @@ String[] imgNames=multi.getParameter("imgNames").split(",");
         String textOfPrd = multi.getParameter("textOfPrd");
         String placeTraction = multi.getParameter("placeTraction");
         int categoryNumber = Integer.parseInt(multi.getParameter("categoryNumber"));
-        int areaNum = Integer.parseInt(multi.getParameter("areaNum"));
-
-   String prodNum = multi.getParameter("hidden");//
-	ProductInsertVO piVO = new ProductInsertVO();
-    InsertProdDAO dao = new InsertProdDAO();
-    if ("".equals(prodNum)) {//insert
+        int areaNum = Integer.parseInt(multi.getParameter("actAreaNum"));
+        String userId= multi.getParameter("userId");
+   		int prodNum =Integer.parseInt(multi.getParameter("hidden"));//
+	   		
+        System.out.println(prodName);
+        
+		ProductInsertVO piVO = new ProductInsertVO();
+  		InsertProdDAO dao = new InsertProdDAO();
+    if (prodNum==0) {//insert
     	//상품 정보 파라메터 값 받아오기
 		
         //ProductInsertVO에 상품 정보 저장하기	
@@ -55,16 +58,12 @@ String[] imgNames=multi.getParameter("imgNames").split(",");
         piVO.setTextOfPrd(textOfPrd);
         piVO.setPlaceTraction(placeTraction);
         piVO.setCategoryNumber(categoryNumber);
-        piVO.setAreaNum(lsVO.getActAreaNum());//세션에서
-        piVO.setUserId(lsVO.getUserId());//세션에서
+        piVO.setAreaNum(areaNum);//세션에서
+        piVO.setUserId(userId);//세션에서
         piVO.setprodImg(imgNames);//이미지배열
-		
         try{
         dao.insertProdInfo(piVO);
-       	%>
-       	alert("성공적으로 등록하셨습니다!")
-       	location.href="product_info.jsp"
-       	<%
+       	
         	
         }catch(SQLException se){
         	se.printStackTrace();
@@ -80,7 +79,7 @@ String[] imgNames=multi.getParameter("imgNames").split(",");
     	//상품 정보 파라메터 값 받아오기
 
       	//ProductInsertVO에 상품 정보 저장하기
-        piVO.setProdNum(Integer.parseInt(prodNum));
+        piVO.setProdNum(prodNum);
         piVO.setProdName(prodName);
         piVO.setPrice(price);
         piVO.setTextOfPrd(textOfPrd);

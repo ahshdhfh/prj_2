@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 public class InsertProdDAO {
 
 	/**
@@ -16,7 +18,7 @@ public class InsertProdDAO {
 		
 		Connection con = null;
 		PreparedStatement pstmt=null;
-		
+		ResultSet rs = null;
 		DbConnection dbCon = DbConnection.getInstance();
 		try {
 		//1. JNDI 사용객체 생성
@@ -33,10 +35,12 @@ public class InsertProdDAO {
 			.append("DETAIL_TXT, PLACE_TRANSACTION, CATEGORY_NUM, ACTI_AREA_NUM, USER_ID) values(	")
 			.append("GANGNAMKONG.SEQ_PRODUCT_SEQ.NEXTVAL,?,sysdate,?,?,?,?,?,?,?)									");
 			
+			String selectProdNum="	select prod_num from product where prod_name=?";
+			
+			System.out.println("뿅 1");
 			insertPrdImg
-			.append("insert into PRODUCT_IMG(PROD_IMG_NUM, PROD_NUM, PROD_IMG) " )
-			.append( "values(GANGNAMKONG.SEQ_PRODUCT_IMG.NEXTVAL,")
-			.append("GANGNAMKONG.SEQ_PRODUCT_SEQ.CURRVAL,?)	");
+			.append("	insert into PRODUCT_IMG(PROD_IMG_NUM, PROD_NUM, PROD_IMG) " )
+			.append("	values(GANGNAMKONG.SEQ_PRODUCT_IMG.NEXTVAL, ? , ?	)");
 			
 			pstmt=con.prepareStatement(insertPrdInfo.toString());
 
@@ -55,9 +59,19 @@ public class InsertProdDAO {
 			pstmt.executeQuery();
 			pstmt.close();
 			
+			pstmt=con.prepareStatement(selectProdNum);
+			pstmt.setString(1, piVO.getProdName());
+			
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				piVO.setProdNum(rs.getInt("prod_num"));
+			}
+			
+			
 			for(int i=0;i<piVO.getprodImg().length;i++ ) {
 				pstmt=con.prepareStatement(insertPrdImg.toString());
-				pstmt.setString(1, piVO.getprodImg()[i]);
+				pstmt.setInt(1, piVO.getProdNum());
+				pstmt.setString(2, piVO.getprodImg()[i]);
 				pstmt.executeQuery();
 				pstmt.close();
 			}//end for

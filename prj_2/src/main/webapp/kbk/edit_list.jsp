@@ -24,7 +24,7 @@ a{color: #000000;}
 <div class="wrap">
 
 <div class="header">
-	<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
+<%@ include file="../lmh/header.jsp" %>  
 </div><!-- header-->
    
    
@@ -34,7 +34,7 @@ a{color: #000000;}
 	
 	</div>
 	<div id="div">
-	<a href="http://localhost/prj_2/kbk/edit_password_only.jsp">
+	<a href="http://localhost/prj_2/kbk/editPasswordOnly.jsp">
 	<h3>비밀번호 수정</h3>
 	<div>계정의 비밀번호를 수정할 수 있습니다.</div>
 	</a>

@@ -7,7 +7,6 @@
     session="true"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,17 +77,20 @@ li {
 <script type="text/javascript">
 <%
 /* 
-LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
 if(lsVO!=null){
-String sessionId=lsVO.getUserId();
 	 */
+LoginSessionVO lpVO=(LoginSessionVO)session.getAttribute("loginData");
+String sessionId=lpVO.getUserId();
 	 UserDAO uDAO=new UserDAO();
 	 
-	String sessionId="abcd1";
+	//String sessionId="abcd1";
 	ModifyProfileVO mpVO=uDAO.setProfile(sessionId);
 	String img=mpVO.getUserImg();
 	String nickname=mpVO.getNickName();
 	String intro=mpVO.getPersonalIntro();
+	if(intro==null){
+		intro="소개말을 입력해주세요";
+	}
 	/* 
 }else{
 	response.sendRedirect("http://localhost/prj_2/lmh/login.jsp");
@@ -103,7 +105,7 @@ String sessionId=lsVO.getUserId();
 <div class="wrap">
 
 <div class="header">
-	<%-- <c:import url="http://localhost/prj_2/lmh/header.jsp"/> --%>
+<%@ include file="../lmh/header.jsp" %> 
 </div><!-- header-->
    
 	<div id="container">

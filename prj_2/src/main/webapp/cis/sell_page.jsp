@@ -1,3 +1,4 @@
+<%@page import="java.sql.SQLException"%>
 <%@page import="prj_2.ProductInsertVO"%>
 <%@page import="prj_2.InsertProdDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -215,13 +216,12 @@ $(function(){
 		}//end if
 		//이미지 파일 갯수 히든으로 보내기
 		$("#imgFileCnt").val($("#imgCnt").text() );
-		alert($("#prod_img").get(0).files[0].name)
 		
 		var imgNames=[];//파일 이름 저장하기위한 배열
 		var files=$('#prod_img')[0].files//input file
 		
 		for(var i=0; i<files.length;i++){//들어간 파일의 수만큼 반복
-			imgNames[i]=$("#prod_img").get(0).files[i].name;//사진 이름 배열에 넣기
+			imgNames[i]="http://localhost/prj_2/images/"+$("#prod_img").get(0).files[i].name;//사진 이름 배열에 넣기
 		}
 		var formData = new FormData($('#form')[0]);//submit할 formData 객체 부르기(매개변수에 form태그 이름)
 		formData.append("imgNames", imgNames);//파일 이미지 배열 넣어주기
@@ -247,7 +247,7 @@ $(function(){
 		// AJAX 요청 전송
 		xhr.send(formData);
 	
-		
+		location.href="../lmh/main.jsp";
 	});//click
 });//ready
 
@@ -285,15 +285,29 @@ $(function(){
 
   <div class="header">
       <%@ include file="../lmh/header.jsp" %>
+      
+      
   </div>
 <%
-ProductInsertVO piVO=null;
-if(request.getParameter("prodNum")!=null){//수정버튼으로 들어왔을때!
-int prodNum=Integer.parseInt(request.getParameter("prodNum"));
-	InsertProdDAO ipDAO = new InsertProdDAO();
-	piVO=ipDAO.setSelectPrd(prodNum);
+LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");      
+if(lpVO==null){
+	response.sendRedirect("../lmh/login.jsp");
+}
 	
-}//end
+
+ProductInsertVO piVO=null;
+int prodNum=0;
+if(request.getParameter("prodNum")!=null){//수정버튼으로 들어왔을때!
+	prodNum=Integer.parseInt(request.getParameter("prodNum"));
+	InsertProdDAO ipDAO = new InsertProdDAO();
+	try{
+		
+	piVO=ipDAO.setSelectPrd(prodNum);//set할 값 가져오기
+	}catch(SQLException se){
+		se.printStackTrace();
+	}
+	
+}//end if
 //가져올 값 초기화 설정
 String prodName="";
 String categoryNumber="";
@@ -301,15 +315,15 @@ String price="";
 String textOfPrd="";
 String placeTraction="";
 
+String userId = lpVO.getUserId();
+String actAreaNum = String.valueOf(lpVO.getActAreaNum());
 if(piVO!=null){
 	prodName=piVO.getProdName();
 	price=String.valueOf( piVO.getPrice());
 	categoryNumber=String.valueOf(piVO.getCategoryNumber());
-	//categoryNumber=piVO.getCategoryNumber();
 	textOfPrd= piVO.getTextOfPrd();
 	placeTraction=piVO.getPlaceTraction();
 }
-System.out.println(prodName);
 %>
    
  <br/>
@@ -342,7 +356,9 @@ System.out.println(prodName);
 
 <div>
   <label for="input_title"> 제목*</label>
-	<input type="hidden" name="hidden" value="<%=prodName%>"/>
+	<input type="hidden" name="hidden" value="<%=prodNum%>"/>
+	<input type="hidden" name="userId" value="<%=userId%>"/>
+	<input type="hidden" name="actAreaNum" value="<%=actAreaNum%>"/>
   	<input type="text"  id="input_title" oninput="countTextLength()" maxlength="30"  name="prodName"  value="<%=prodName%>" >
   <span id="text-count">0/30</span>
 </div>
@@ -387,7 +403,23 @@ System.out.println(prodName);
 <br/>
 <div>
 <label >거래희망장소*</label>  
-<input type="text" id="input_location"placeholder="위치추가 >"name="placeTraction" value="<%=placeTraction%>">
+<select id="input_location" name="placeTraction">
+		<option value="동선택" selected="selected">동선택</option>
+		<option value=1 >압구정동</option>
+		<option value=2>신사동</option>
+		<option value=3>청담동</option>
+		<option value=4>논현동</option>
+		<option value=5>삼성동</option>
+		<option value=6>역삼동</option>
+		<option value=7>대치동</option>
+		<option value=8>도곡동</option>
+		<option value=9>개포동</option>
+		<option value=10>일원동</option>
+		<option value=11>수서동</option>
+		<option value=12>자곡동</option>
+		<option value=13>율현동</option>
+		<option value=14>세곡동</option>
+	</select>
 </div>
 <br/>
 <br/>

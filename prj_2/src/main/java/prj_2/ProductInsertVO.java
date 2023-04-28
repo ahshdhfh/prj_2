@@ -1,10 +1,20 @@
 package prj_2;
 
+import java.util.Arrays;
+
 public class ProductInsertVO {
 	private String prodImg[], prodName, textOfPrd,share,placeTraction,userId;
 	private int price,categoryNumber,areaNum,prodNum;
 	
 	public ProductInsertVO() {
+	}
+
+	@Override
+	public String toString() {
+		return "ProductInsertVO [prodImg=" + Arrays.toString(prodImg) + ", prodName=" + prodName + ", textOfPrd="
+				+ textOfPrd + ", share=" + share + ", placeTraction=" + placeTraction + ", userId=" + userId
+				+ ", price=" + price + ", categoryNumber=" + categoryNumber + ", areaNum=" + areaNum + ", prodNum="
+				+ prodNum + "]";
 	}
 
 	public ProductInsertVO(String[] prodImg, String prodName, String textOfPrd, String share, String placeTraction,
