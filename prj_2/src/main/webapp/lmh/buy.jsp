@@ -16,11 +16,14 @@
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/buy.css">
 <style type="text/css">
 
-.area_buy_bike{
-min-height: 1500px; 
+ .area_buy_bike{
+height: 2000px;  
 width: 1200px;
 position: relative; 
-}
+} 
+
+
+
 </style>
 
 
@@ -28,8 +31,6 @@ position: relative;
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 시작 -->
 <script type="text/javascript">
-	//var category=${param.category};
-	//var searchInput=${param.searchInput};
 	
 	var category=null;
 	var searchInput=null;
@@ -44,13 +45,23 @@ $(function(){
 	}catch (e) {
 	}
 	
+	try{
+		searchInput="<%=request.getParameter("searchInput")%>";
+		if(searchInput=="null"){
+			searchInput="";
+		}
+	}catch (e) {
+	}
+	
 	$("#select_town").change(function(){		
 		dong=$("#select_town option").index($("#select_town option:selected"));
+		searchInput=null;
 		callProdList();
 	});
 	
 	$("#select_category").change(function(){		
 		category=$("#select_category option").index($("#select_category option:selected"));
+		searchInput=null;
 		callProdList();
 	});
 	
@@ -59,14 +70,6 @@ $(function(){
 }); 
 
 function callProdList() {
-	alert("<%=request.getParameter("searchInput")%>");
-	try{
-		searchInput="<%=request.getParameter("searchInput")%>";
-		if(searchInput=="null"){
-			searchInput="";
-		}
-	}catch (e) {
-	}
 	
 	var jsonParam={"categoryName" : category, "dongName":dong , "searchName" : searchInput };
 	$.ajax({
@@ -92,8 +95,8 @@ function callProdList() {
 				tbody+="</tr><tr>";
 			}
 			cnt++;
-			tbody+="<td class='prdCol' id='remov'><div><img class='prod_img' src='"+jsonObj.PROD_IMG+
-			"'/></div><div><strong><h3>"+jsonObj.PROD_NAME+
+			tbody+="<td class='prdCol' id='remov'><div><a href='http://localhost/prj_2/cis/product_info.jsp?prodNum="+jsonObj.PROD_NUM+"'><img class='prod_img' src='"+jsonObj.PROD_IMG+
+			"'/></a></div><div><strong><h3>"+jsonObj.PROD_NAME+
 			"</h3></strong><br>"+jsonObj.PRICE.toLocaleString()+
 			   "원<br>"+jsonObj.PLACE_TRANSACTION+
 			   "<br>조회"+jsonObj.VIEW_CNT+
@@ -109,15 +112,20 @@ function callProdList() {
 
 </script>
 </head>
+
+
+
+
 <body>
 <div class="wrap">
   
   <div class="header">
       <%@ include file="header.jsp" %>
-  </div>
+  </div><!--header  -->
   
-  <form id="categoryFrm"  action="http://localhost/prj_2/lmh/buy.jsp" method="get">
+     
      <div class="area_buy_bike"> 
+       <form id="categoryFrm"  action="http://localhost/prj_2/lmh/buy.jsp" method="get">
     
     <div class="div_select_town"> 
           <select class="select_town" id="select_town" >
@@ -149,8 +157,6 @@ function callProdList() {
              <option value="4" ${param.category eq '4'?"selected='selected'":""}>부품</option>
          </select>
     </div><!--div_select_category  -->
-    
-    
 </form><!-- categoryFrm -->
     
 
@@ -159,13 +165,17 @@ function callProdList() {
   </tr>
 </table> <!--popular_sale_table  -->
 
-</div> <!-- wrap -->
+
+</div><!-- area_buy_bike -->
+
 
 
    <div class="footer">
       <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
    </div><!-- footer-->
-
+   
+   
+</div><!-- wrap -->
 
 </body>
 </html>

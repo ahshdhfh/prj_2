@@ -13,9 +13,6 @@ request.setCharacterEncoding("UTF-8");
 String nickName=""; 
 
 LoginSessionVO lsVO = (LoginSessionVO)session.getAttribute("loginData");
-/* System.out.println("send 후 세션값 : "+(String)session.getAttribute("nickName")); */
-/* nickName = (String)request.getAttribute("nickName");
-System.out.println(nickName); */
 %>
 <script type="text/javascript">
  function validateSearchInput(){
@@ -58,11 +55,11 @@ System.out.println(nickName); */
   %>
              
  <div class="div_select_login"> 
-         <select class="select_login">
+         <select class="select_login" onchange="window.location.href=this.value">
              <option value="이름" ><%= lsVO.getNickName() %>님</option>
-             <option value="http://211.63.89.134/prj_2/kbk/mypage.jsp" >나의 마켓</option>
-             <option value="http://211.63.89.152/prj_2/cis/sell_page.jsp">상품 등록</option>
-             <option value="http://211.63.89.134/prj_2/kbk/EditInfoPassword.jsp">개인정보수정</option>
+             <option value="http://localhost/prj_2/kbk/mypage.jsp" >나의 마켓</option>
+             <option value="http://localhost/prj_2/cis/sell_page.jsp">상품 등록</option>
+             <option value="http://localhost/prj_2/kbk/edit_info_password.jsp">개인정보수정</option>
          </select> 
        </div>
        

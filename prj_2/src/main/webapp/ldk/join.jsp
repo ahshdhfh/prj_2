@@ -319,24 +319,24 @@ $(function(){
 
 <div id="div1"> 
 	<font id="font1">아이디</font><br>
-	<input type="text" id="inputBox_id" name="userId" placeholder="아이디" value="asdf1" onclick="openIdPop()" readonly="readonly">
+	<input type="text" id="inputBox_id" name="userId" placeholder="아이디" value="" onclick="openIdPop()" readonly="readonly">
 	<input type="button" class="idBtn" value="중복확인" onclick="openIdPop()">
 </div>
 <div id="div2"> 
 	<font id="font1">비밀번호</font><br>
-	<input type="password" id="inputBox" name="userPassword" placeholder="비밀번호 입력" onkeyup="passValid1()" value="asdfasdf">
+	<input type="password" id="inputBox" name="userPassword" placeholder="비밀번호 입력" onkeyup="passValid1()" value="">
 	<div id="output3" ></div>
 	<div id="output4" ></div>
 </div>
 <div id="div3"> 
 	<font id="font1">비밀번호 재확인</font><br>
-	<input type="password" id="inputBox" name="pass2" placeholder="비밀번호 재입력" onkeyup="passValid2()" value="asdfasdf"><br>
+	<input type="password" id="inputBox" name="pass2" placeholder="비밀번호 재입력" onkeyup="passValid2()" value=""><br>
 	<div id="output1" name="output1" ></div>
 	<div id="output2" ></div>
 </div>
 <div id="div4"> 
 	<font id="font1">이름</font><br>
-	<input type="text" id="inputBox" placeholder="이름" name="userName" onkeyup="nameValid()" value="이단군">
+	<input type="text" id="inputBox" placeholder="이름" name="userName" onkeyup="nameValid()" value="">
 	<div id="output5" ></div>
 	<div id="output6" ></div>
 </div>
@@ -348,7 +348,7 @@ $(function(){
          name="birthDate"
          max="2023-12-31"
          min="1900-01-01"
-         value="2023-04-04">
+         value="">
 	
 </div>
 <div id="div6"> 
@@ -370,7 +370,7 @@ $(function(){
 </div>
 <div id="div7"> 
 	<font id="font1">닉네임</font><br>
-	<input type="text" id="inputBox_id" name="nickName" placeholder="닉네임"  onclick="openNickPop()" readonly="readonly" value="이단">
+	<input type="text" id="inputBox_id" name="nickName" placeholder="닉네임"  onclick="openNickPop()" readonly="readonly" value="">
 	<input type="button" class="idBtn" value="중복확인"  onclick="openNickPop()">
 </div>
 <div id="div8"> 
@@ -383,33 +383,33 @@ $(function(){
 </div>
 <div id="div9"> 
 	<font id="font1">주소</font><br>
-	<input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly="readonly" value="1">
+	<input type="text" id="zipcode" name="zipcode" placeholder="우편번호" readonly="readonly" value="">
 	<input type="button" class="idBtn" name="addrBtn" value="주소찾기"  onclick="findZip()">
 </div>
 <div id="div10"> 
-	<input type="text" id="addr" name="addr" placeholder="주소" readonly="readonly" value="압구정동">
+	<input type="text" id="addr" name="addr" placeholder="주소" readonly="readonly" value="">
 </div>
 <div id="div11"> 
-	<input type="text" id="detailAddr" name="detailAddr" placeholder="상세주소" value="A">
+	<input type="text" id="detailAddr" name="detailAddr" placeholder="상세주소" value="">
 </div>
 <div id="div12"> 
 	<font id="font1">활동지역</font><br>
 	<select id="inputBox" name="actAreaNum">
-		<option value="동선택">동선택</option>
-		<option value="1" selected="selected">압구정동</option>
-		<option value="신사동">신사동</option>
-		<option value="청담동">청담동</option>
-		<option value="논현동">논현동</option>
-		<option value="삼성동">삼성동</option>
-		<option value="역삼동">역삼동</option>
-		<option value="대치동">대치동</option>
-		<option value="도곡동">도곡동</option>
-		<option value="개포동">개포동</option>
-		<option value="일원동">일원동</option>
-		<option value="수서동">수서동</option>
-		<option value="자곡동">자곡동</option>
-		<option value="율현동">율현동</option>
-		<option value="세곡동">세곡동</option>
+		<option value="동선택" selected="selected">동선택</option>
+		<option value=1 >압구정동</option>
+		<option value=2>신사동</option>
+		<option value=3>청담동</option>
+		<option value=4>논현동</option>
+		<option value=5>삼성동</option>
+		<option value=6>역삼동</option>
+		<option value=7>대치동</option>
+		<option value=8>도곡동</option>
+		<option value=9>개포동</option>
+		<option value=10>일원동</option>
+		<option value=11>수서동</option>
+		<option value=12>자곡동</option>
+		<option value=13>율현동</option>
+		<option value=14>세곡동</option>
 	</select>
 </div>
 <div id="div13"> 
@@ -419,7 +419,7 @@ $(function(){
 		<option value ="011">011</option>
 		<option value ="017">017</option>
 	</select>
-	<input type="text" id="inputBox_tel2" name="tel2" placeholder="-없이 입력" maxlength="8" value="12345678" onkeyup="telValid()">
+	<input type="text" id="inputBox_tel2" name="tel2" placeholder="-없이 입력" maxlength="8" value="" onkeyup="telValid()">
 	<div id="output9" ></div>
 	<div id="output10" ></div>
 </div>

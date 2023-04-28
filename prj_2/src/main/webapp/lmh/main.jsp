@@ -40,10 +40,6 @@ height: 140px;
 position: relative; 
 }
 
-
-/* table td {
-padding-bottom: 40px;
-} */
 </style>
 
 <!-- jQuery CDN 시작 -->
@@ -60,12 +56,7 @@ padding-bottom: 40px;
 
   <div class="header">
       <%@ include file="header.jsp" %>
-  </div>
-   
- <%--   <c:import url="dsfsf">
-   <param:<% %>>
-   </c:import> --%>
-   
+  </div>   
    
    
  <form action="" method="get">
@@ -76,19 +67,19 @@ padding-bottom: 40px;
         </div>
         
         <div class="bike">
-        <a href="http://localhost/prj_2/lmh/buy.jsp?category=1"  class="a_buy"">자전거</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=1"  class="a_buy">자전거</a>
          </div> 
          
         <div class="clothes">
-        <a href="http://localhost/prj_2/lmh/buy.jsp?category=2"  class="a_buy"">의류</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=2"  class="a_buy">의류</a>
         </div>
         
         <div class="goodes">
-        <a href="http://localhost/prj_2/lmh/buy.jsp?category=3"  class="a_buy"">용품</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=3"  class="a_buy">용품</a>
         </div>
         
         <div class="component">
-        <a href="http://localhost/prj_2/lmh/buy.jsp?category=4"  class="a_buy"" >부품</a>
+        <a href="http://localhost/prj_2/lmh/buy.jsp?category=4"  class="a_buy" >부품</a>
         </div>
    </div><!-- container-->
         
@@ -103,21 +94,18 @@ padding-bottom: 40px;
 
 <%
 MainProdDAO MainProdDAO = new MainProdDAO();
-List<MainProdVO> MainProdlist = MainProdDAO.MainData("prodPopular");
+List<MainProdVO> MainProdlist = MainProdDAO.CategoryData("","","");
  
-/* System.out.println("send 후 세션값 : "+(String)session.getAttribute("nickName")); */
-/* nickName = (String)request.getAttribute("nickName");*/
-System.out.println(nickName); 
-pageContext.setAttribute("prodPopular", MainProdlist);
+pageContext.setAttribute("prodSearch", MainProdlist);
 %>
 
 <table class="popular_sale_table">
   <tr>
-    <c:forEach var="MainProdVO" items="${prodPopular}" varStatus="i">
+    <c:forEach var="MainProdVO" items="${prodSearch}" varStatus="i">
       <c:if test="${i.count <= 8}">
         <td class="prdCol">
           <div>
-            <img class="prod_img" src="${MainProdVO.prodImg}" />
+            <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=${MainProdVO.prodNum}"><img class="prod_img" src="${MainProdVO.prodImg}" /></a>
           </div>
           <div>
             <strong><h3><c:out value="${MainProdVO.prodName}" /></h3></strong> <br>
@@ -136,7 +124,7 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 
 
    <div class="more_popular_items"> 
-          <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy"" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
+          <a href="http://localhost/prj_2/lmh/buy.jsp"  class="a_buy" style="font-weight: bold; font-size: 20px; text-decoration: underline;">인기 매물 더보기</a>
    </div>
 
 </form>

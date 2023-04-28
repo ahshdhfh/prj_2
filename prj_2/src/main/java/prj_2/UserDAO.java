@@ -214,7 +214,6 @@ public class UserDAO {
 			pstmt=con.prepareStatement(selectLogin.toString());
 
 			//5. 바인드변수 값 설정
-			System.out.println(loginVO.getUserId()+"/"+loginVO.getUserPassword());
 			
 			pstmt.setString(1, loginVO.getUserId());//1.아이디
 			pstmt.setString(2, loginVO.getUserPassword());//1.아이디
@@ -222,7 +221,6 @@ public class UserDAO {
 			//6. 쿼리문 수행 후 결과 얻기
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				System.out.println("rs.next=true");
 				lsVO = new LoginSessionVO
 						(rs.getString("nickname"),rs.getString("personal_intro"),
 						rs.getString("user_img"),rs.getString("user_id"),

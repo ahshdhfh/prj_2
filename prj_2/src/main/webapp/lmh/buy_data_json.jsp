@@ -24,12 +24,7 @@ trimDirectiveWhitespaces="true"
     searchName=request.getParameter("searchName");
     dongName=request.getParameter("dongName");
     categoryName=request.getParameter("categoryName");
-    System.out.println("searchName---------------");
-    System.out.println(searchName);
-    System.out.println("dongName---------------");
-    System.out.println(dongName);
-    System.out.println("categoryName---------------");
-    System.out.println(categoryName);
+  
 
     } catch(NullPointerException e){
        searchName="";
@@ -57,6 +52,7 @@ trimDirectiveWhitespaces="true"
        jsonTemp.put("PRICE", mpVO.getPrice());
        jsonTemp.put("PLACE_TRANSACTION", mpVO.getAreaName());
        jsonTemp.put("VIEW_CNT", mpVO.getViewCnt());   
+       jsonTemp.put("PROD_NUM", mpVO.getProdNum());   
        jsonArr.add(jsonTemp);  
        }
        
