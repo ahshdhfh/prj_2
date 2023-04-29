@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,17 +47,23 @@ table {
 <div class="wrap">
 
 <div class="header">
-	<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
 </div><!-- header-->
    
    
 <div id="container">
 <div>
-<% MyPageDAO mpDAO=new MyPageDAO(); %>
-<% List<SoldVO> sold=mpDAO.selectSold("abcd5"); %>
+<% 
+MyPageDAO mpDAO=new MyPageDAO();
+if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+	}
+String sessionId=lsVO.getUserId();
+List<SoldVO> sold=mpDAO.selectSold(sessionId);
+%>
 <table>
 	<tr>
-	<th colspan="2"><h2>거래 완료</h2></th>
+	<th colspan="2"><h2>판매 완료</h2></th>
 	<th><h2></h2></th>
 	<th><h2></h2></th>
 	</tr>

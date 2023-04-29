@@ -9,7 +9,8 @@
     session="true"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+    <%@ include file="../lmh/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,17 +54,21 @@ a{color: #000000;}
 <div class="wrap">
 
 <div class="header">
-<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
 </div><!-- header-->
    
    
 <div id="container">
+<% 
+if (lsVO == null) {
+  response.sendRedirect("../lmh/login.jsp");
+  return;
+}
 
-<% MyPageDAO mpDAO=new MyPageDAO();
-/* LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
-String sessionId=lsVO.getUserId(); */
-%>
-<% List<MyCommentVO> comment=mpDAO.selectComment("abcd1"); 
+
+String sessionId=lsVO.getUserId();
+MyPageDAO mpDAO=new MyPageDAO();
+
+List<MyCommentVO> comment=mpDAO.selectComment(sessionId); 
 MyCommentVO mcVO=new MyCommentVO();
 %>
 <table style="width: 590px; float: left">
@@ -86,7 +91,7 @@ for( MyCommentVO mcVO1 : comment) {
 	<td> <%= mcVO1.getProd_Comments() %></td>
 	</tr>
 <%
-	}
+	}//end if
 }//end for
 %>	
 </table>
@@ -108,7 +113,7 @@ for( MyCommentVO mcVO1 : comment) {
 			<td><%= mcVO1.getReply_Comment() %></td>
 		</tr>
 <%
-		}
+		}//end if
 	}//end for
 	 %>	
 			</table>

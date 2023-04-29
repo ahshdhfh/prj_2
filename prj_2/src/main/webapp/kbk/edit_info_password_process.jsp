@@ -9,7 +9,7 @@
     trimDirectiveWhitespaces="true"
     session="true"
     %>
-    <%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+    <%@ include file="../lmh/header.jsp" %>
     
 <script type="text/javascript">
 <%
@@ -20,9 +20,12 @@ if(request.getMethod()=="GET"){
 	location.href="http://localhost/prj_2/lmh/login.jsp";
     <%
 }
+if (lsVO == null) {
+  response.sendRedirect("../lmh/login.jsp");
+  return;
+}
 
- 	LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
-	String sessionId=lsVO.getUserId(); 
+String sessionId=lsVO.getUserId();
 
     String pass=request.getParameter("pass");
     if(pass==null||"".equals(pass)){

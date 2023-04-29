@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
 <style type="text/css">
 
-#container{position: relative; width: 1200px; height: 500px; margin: 0px auto;}
+#container{position: relative; width: 1200px; min-height: 500px; margin: 0px auto;}
 #div{position: absolute; margin: auto; width:1200px}
 table {
     width: 60%;
@@ -50,24 +50,22 @@ table {
 <div class="wrap">
 
 <div class="header">
-	<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
 </div><!-- header-->
    
    
 <div id="container">
 <div id="div">
 	
-<% MyPageDAO mpDAO=new MyPageDAO(); %>
-<% List<OnSaleListVO> onSale=mpDAO.selectOnSale("abcd6"); %>
-<%
-StringBuilder prodNum=new StringBuilder();
-StringBuilder prodName=new StringBuilder();
-StringBuilder uploadDate=new StringBuilder();
-for( OnSaleListVO slVO : onSale ) {
-	prodNum.append( slVO.getProdNum());
-	prodName.append( slVO.getProdName());
-	uploadDate.append(slVO.getInputDate());}//end for
+<% 
+MyPageDAO mpDAO=new MyPageDAO(); 
 
+if(lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+}
+
+String sessionId=lsVO.getUserId();
+List<OnSaleListVO> onSale=mpDAO.selectOnSale(sessionId); 
 %>
 <table>
 	<tr>

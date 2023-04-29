@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true" session="true"%>
-    <%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+    <%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 
 <!-- jQuery CDN 시작 -->
@@ -19,9 +19,17 @@ if(<%= request.getMethod() %>=="GET"){
 	alert("정상적인 방식으로 요청하지 않으셨습니다.");
 	location.href="http://localhost/prj_2/lmh/login.jsp";
 }//end if 
-//이메일, zipcode, 주소, detailedaddr, tel, actArea 
+
+
 </script>
 <%
+if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+	}
+
+	String sessionId=lsVO.getUserId();
+
 String email1=request.getParameter("email");
 String email2=request.getParameter("email2");
 String email=email1+"@"+email2;
@@ -32,12 +40,7 @@ String tel2=request.getParameter("tel2");
 String tel="010"+tel2;
 int actAreaNum=Integer.parseInt(request.getParameter("actLocalNum"));
 
-/* 
-LoginSessionVO lsVO=(LoginSessionVO)session.getAttribute("loginData");
-String sessionId=lsVO.getUserId(); 
- */
- String sessionId="abcd18";
-/* try{ */
+ try{
 	UserDAO uDAO = new UserDAO();
 	ModifyInfoVO miVO=new ModifyInfoVO();
 	miVO.setZipcode(zipcode);
@@ -49,9 +52,9 @@ String sessionId=lsVO.getUserId();
 	DataEncrypt de = new DataEncrypt("Tkddydgangnamkong");
 	miVO.setEmail( de.encryption(email) );
 	
-	//uDAO.updateInfo(miVO, sessionId);
-
-/* }catch(SQLException se){
+	uDAO.updateInfo(miVO, sessionId);
+}catch(SQLException se){
 	se.printStackTrace();
-} */
+} 
+	response.sendRedirect("mypage.jsp");
 %>

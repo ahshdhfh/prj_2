@@ -1,10 +1,12 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="prj_2.InterestListVO"%>
 <%@page import="java.util.List"%>
 <%@page import="prj_2.MyPageDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,7 @@
 <link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
 <style type="text/css">
 
-#container{position: relative; width: 1200px; height: 500px;}
+#container{position: relative; width: 1200px; min-height: 600px;}
 .grid {
     width: 100%;
     display: grid;
@@ -39,22 +41,6 @@
 <!-- jQuery CDN 끝 -->
 
 <script type="text/javascript">
-<% 
-MyPageDAO mpDAO=new MyPageDAO();
-/* String id=session.getAttribute("userId"); */
-List<InterestListVO> interest=mpDAO.selectInterest("abcd1");
-StringBuilder prodImg=new StringBuilder();
-StringBuilder prodName=new StringBuilder();
-StringBuilder prodNum=new StringBuilder();
-StringBuilder price=new StringBuilder();
-StringBuilder checkedDate=new StringBuilder();
-for( InterestListVO iVO : interest ) {
-	prodImg.append( iVO.getProdImg());
-	prodName.append( iVO.getProdName());
-	price.append( iVO.getPrice());
-}//end for
-%>
-
 	$(function() {
 		 $("#heart").hover(function() {
 			//마우스 포인터가 들어갔음
@@ -68,7 +54,17 @@ for( InterestListVO iVO : interest ) {
 		}); 
 		
 	});//ready
-
+	<% 
+	if (lsVO == null) {
+		  response.sendRedirect("../lmh/login.jsp");
+		  return;
+		} 
+		
+	MyPageDAO mpDAO=new MyPageDAO();
+	String sessionId=lsVO.getUserId();
+	InterestListVO ilVO=new InterestListVO();
+	List<InterestListVO> interest=mpDAO.selectInterest("abcd15");
+	%>
 	
 	$(function() {
 		$("#heart").click(function() {
@@ -76,25 +72,19 @@ for( InterestListVO iVO : interest ) {
 			var src=$(this).attr('src');
 			
 			if(src=='http://localhost/prj_2/images/heart_on.svg'){
+		   $("#pic").val(src);
+		   $("#frm").submit();
 				$(this).attr('src','http://localhost/prj_2/images/heart_off.png');
-				<%-- <%
-				mpDAO.deleteInterest(userId, prodNum);
-				%> --%>
 			}
 			if(src=='http://localhost/prj_2/images/heart_off.png'){
 				$(this).attr('src','http://localhost/prj_2/images/heart_on.svg');
-				<%-- <%
-				mpDAO.insertInterest(prodNum, userId);
-				%> --%>
+				 $("#pic").val(src);
+				   $("#frm").submit();
 			}//end else
 		});//click
 		
-		$("#prdImg").click(function() {
-			location.href="http://localhost/prj_2/cis/product_info_login.jsp";
-		});//click
 		
 	});//ready
-
 
 </script>
 </head>
@@ -103,7 +93,6 @@ for( InterestListVO iVO : interest ) {
 <div class="wrap">
 
 <div class="header">
-	<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
 </div><!-- header-->
    
    
@@ -112,21 +101,30 @@ for( InterestListVO iVO : interest ) {
 <div>
 <h2>관심목록</h2>
 	<div>
-		<div class="grid">
-		<c:forEach varStatus="i" begin="1" end="<%= interest.size() %>" step="1">
-			<div class="likedItem">
+	<form action="wishlist_process.jsp" id="frm" method="post">
+		<div class="grid"><%
+	for( InterestListVO iVO : interest) {
+	%>	
+	
+	<div class="likedItem">
 				<div class="itemBox">
-				<img src="<%= prodImg %>" class="ThumbNail" id="prdImg">
+				<a href="http://localhost/prj_2/cis/product_info.jsp?prod_num=<%= iVO.getProdNum()%>">
+				<input type="hidden" value="<%= iVO.getProdNum()%>" name="pNum" id="pNum"/>
+				<img src="<%= iVO.getProdImg() %>" class="ThumbNail" id="prdImg"></a>
 					<div class="ThumbNailType__ItemInfoBox-sc-1invua-7 fDnSDy">
 						<div><!-- info -->
-						<div class="ThumbNailTitle">&lt;<%= prodName %>&gt; ...</div>
-						<div class="price"><%= price %></div>
+						<div class="ThumbNailTitle">&lt;<%= iVO.getProdName() %>&gt; ...</div>
+						<div class="price"><%= iVO.getPrice() %></div>
 						</div>
-					</div><img src="http://localhost/prj_2/images/heart_on.svg" class="heart_on" id="heart">
+					</div><img src="http://localhost/prj_2/images/heart_on.svg" class="heart_on" id="heart" name="heart"/>
+				<input type="hidden" value="" name="pic" id="pic"/>
 					<div class="SellStateImg__Wrapper-sc-15fv3xr-0 fNGdVx"></div>
 				</div>
 			</div>
-		</c:forEach>
+		<%
+	}//end for
+		%>
+		</form>
 		</div>
 	</div>
 </div><!-- container -->

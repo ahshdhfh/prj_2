@@ -1,3 +1,4 @@
+<%@page import="prj_2.ModifyProfileVO"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="prj_2.UserDAO"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -5,8 +6,8 @@
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,16 +18,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
 <script type="text/javascript">
-<%-- if("<%= request.getMethod() %>"=="GET"){
+if("<%= request.getMethod() %>"=="GET"){
 	alert("정상적인 방식으로 요청하지 않으셨습니다.");
 	location.href="http://localhost/prj_2/lmh/login.jsp";
-} --%>
+}
 </script>
 </head>
 <body>
 
 
 <%
+
+if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+	}
 //POST방식
 
 int maxSize=1024*1024*500;//5mb
@@ -68,14 +74,10 @@ if(uploadFile.length()>fileSize){//업로드 제한에 걸린 파일
 
 
 
-
-
-
-
-<%-- <%
+<%
 UserDAO uDAO=new UserDAO();
-
-//String sessionId=lsVO.getUserId();
+ModifyProfileVO mpVO=new ModifyProfileVO();
+	String sessionId=lsVO.getUserId();
 try{
 uDAO.updateProfile(mpVO, sessionId);
 }catch(SQLException se){
@@ -84,11 +86,9 @@ uDAO.updateProfile(mpVO, sessionId);
 <c:out value="${ nickName }"/>은 이미 사용 중이므로 다른 아이디를 입력해주세요.<br/>
 
 <%
-}//end cath
+}//end catch
+response.sendRedirect("mypage.jsp");
 %>
- --%>
 
-<jsp:forward page="profile.jsp"/>
-  
 
 </html>

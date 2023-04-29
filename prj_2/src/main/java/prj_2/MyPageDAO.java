@@ -147,12 +147,13 @@ public class MyPageDAO {
 				.append("	select i.prod_img_num, l.user_id, l.checked_date, i.prod_img,p.prod_name, p.prod_num,p.price, row_number() over(order by i.prod_img) img ")
 				.append("	FROM INTEREST_LIST l join product p on p.prod_num=l.prod_num ")
 				.append("	join product_img i on l.prod_num=i.prod_num ")
-				.append("	where l.user_id='abcd1') where img=1 and user_id=? ")
+				.append("	where l.user_id=?) where img=1 and user_id=? ")
 				.append("	order by checked_date desc");
 				
 				pstmt=con.prepareStatement(selectInterest.toString());
 			//5. 바인드 변수 값 설정
 			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
 			//6. 쿼리문 수행 후 결과 얻기
 				rs=pstmt.executeQuery();
 				

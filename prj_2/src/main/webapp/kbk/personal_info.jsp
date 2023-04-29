@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,14 +26,19 @@
 <div class="wrap">
 
 <div class="header">
-	<c:import url="http://localhost/prj_2/lmh/header.jsp"/>
 </div><!-- header-->
    
    
 <div id="container">
+<%
+if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+	}
+%>
 <div id="div"><h2>개인정보 수정</h2></div>
 <div id="msg">회원님의 개인정보가 수정되었습니다.</div>
-<div><a href="http://211.63.89.134/html_prj/project/mypage.jsp"><input type="button" value="확인" id="btn"></a></div><br>
+<div><a href="http://localhost/prj_2/kbk/mypage.jsp"><input type="button" value="확인" id="btn"></a></div><br>
 
 </div><!-- container -->
      

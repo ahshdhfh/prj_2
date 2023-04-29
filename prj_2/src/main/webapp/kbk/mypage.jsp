@@ -7,6 +7,7 @@
     session="true"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,26 +77,24 @@ li {
 </style>
 <script type="text/javascript">
 <%
-/* 
-if(lsVO!=null){
-	 */
-LoginSessionVO lpVO=(LoginSessionVO)session.getAttribute("loginData");
-String sessionId=lpVO.getUserId();
+if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+}
+
+	String sessionId=lsVO.getUserId();
+	
 	 UserDAO uDAO=new UserDAO();
 	 
-	//String sessionId="abcd1";
 	ModifyProfileVO mpVO=uDAO.setProfile(sessionId);
 	String img=mpVO.getUserImg();
 	String nickname=mpVO.getNickName();
 	String intro=mpVO.getPersonalIntro();
+	
+	
 	if(intro==null){
-		intro="소개말을 입력해주세요";
+		intro="안녕하세요";
 	}
-	/* 
-}else{
-	response.sendRedirect("http://localhost/prj_2/lmh/login.jsp");
-}//end else
- */
 %>
 </script>
 </head>
@@ -105,7 +104,6 @@ String sessionId=lpVO.getUserId();
 <div class="wrap">
 
 <div class="header">
-<%@ include file="../lmh/header.jsp" %> 
 </div><!-- header-->
    
 	<div id="container">

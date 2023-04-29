@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -138,6 +139,17 @@ function checkNull() {
 	
 	obj.submit();
 }//checknull
+	<% 
+	
+	if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+	}
+
+
+	String sessionId=lsVO.getUserId();
+	
+	%>
 </script>
 </head>
 <body>
@@ -145,8 +157,6 @@ function checkNull() {
 <div class="wrap">
 
 <div class="header">
-<%@ include file="../lmh/header.jsp" %> 
-	<% String id=lsVO.getUserId(); %>
 </div><!-- header-->
   
 <div id="container">  
@@ -155,7 +165,7 @@ function checkNull() {
 	<div class="loginTitle">비밀번호 확인</div>
 	<form name="frm" action="http://localhost/prj_2/kbk/edit_info_password_process.jsp" method="post">
     <div class="input_login">
-    <input type="text" class="text_input_login"  value="<%= id %>" id="login_id" readonly> 
+    <input type="text" class="text_input_login"  value="<%= sessionId %>" id="login_id" readonly> 
     </div>
      
     <div class="input_password">

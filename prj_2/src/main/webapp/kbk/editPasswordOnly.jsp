@@ -5,7 +5,7 @@
 <%@page import="prj_2.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
-    <%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+<%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,20 +89,6 @@ function checkNull() {
 	obj.submit();
 	
 }//checknull
-function validateSearchInput() {
-    var searchInput = document.querySelector('.search');
-    if (searchInput.value.trim() === '') {
-        alert('검색어를 입력하세요.');
-        searchInput.focus();
-        return false;
-    } else {
-        var mainProdSearchDAO = new MainProdSearchDAO();
-        mainProdSearchDAO.selectProd(searchInput.value, function(result) {
-            location.href = 'http://localhost/prj_2/lmh/buy.jsp?search=' + encodeURIComponent(searchInput.value);
-        });
-        return false;
-    }
-}
 
 </script>
 </head>
@@ -113,18 +99,26 @@ function validateSearchInput() {
 <body>
 <div class="wrap">
 
+
 <div class="header">
-<%@ include file="../lmh/header.jsp" %> 
-	<% String userId=lsVO.getUserId(); %>
-  </div><!-- header-->
-   
-   
+</div><!-- header-->
+<%
+String userId=null;
+
+%>
+ <% if ( lsVO == null  ){ 
+	 userId=request.getParameter("userId");
+ }else{
+	 userId=lsVO.getUserId();
+ }
+%> 
+ 
 <div id="container">
 <div id="div0"><h2>비밀번호 수정</h2></div>
 <form name="frm" action="editPassword_process.jsp" method="post">
 <div id="divId"> 
 	<font id="font1">아이디</font><br>
-	<input type="text" id="inputBox_id" name="userId" placeholder="아이디" value ="<%=userId %>"readonly>
+	<input type="text" id="inputBox_id" name="userId" placeholder="아이디" value ="<%= userId %>"readonly>
 </div>
 <div id="divPass"> 
 	<font id="font1">비밀번호</font><br>
@@ -146,48 +140,9 @@ function validateSearchInput() {
 
 </div><!-- container -->
      
-      <div class="footer">
-      <hr class="hr_footer">
-      
-      <div class="footer_text">
-        대표 김용현, 황도연 | 사업자번호 375-87-00088<br>
-        직업정보제공사업 신고번호 2016-서울서초-0051<br>
-        주소 서울특별시 구로구 디지털로 30길 28, 609호 (당근서비스)<br>
-        전화 1544-9796 | 고객문의 cs@daangnservice.com<br>
-       </div>
-       
-      <div class="inquiry1">
-        <a href="#void"  class="a_footer">제휴문의</a>
-       </div> 
-       
-        <div class="inquiry2">
-        <a href="#void"  class="a_footer">광고문의</a>
-       </div> 
-       
-       <div class="inquiry3">
-        <a href="#void"  class="a_footer">PR문의</a>
-       </div> 
-       
-        <div class="inquiry4">
-        <a href="#void"  class="a_footer">IR문의</a>
-       </div> 
-   
-       <div class="inquiry5">
-        <a href="#void"  class="a_footer">이용약관</a>
-       </div> 
-       
-       <div class="inquiry6">
-        <a href="#void"  class="a_footer">개인정보처리방침</a>
-       </div> 
-       
-       <div class="inquiry7">
-        <a href="#void"  class="a_footer">이용자보호</a>
-       </div> 
-       
-       <div class="inquiry8">
-        <a href="#void"  class="a_footer">비전과계획</a>
-       </div>
-   </div><!-- footer-->
+<div class="footer">
+	<c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
+</div><!-- footer-->
 
 </div>
 </body>

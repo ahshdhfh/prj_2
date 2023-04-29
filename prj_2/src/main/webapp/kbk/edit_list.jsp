@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%@ include file="../ldk/login_chk.jsp" %>  --%>
+    <%@ include file="../lmh/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,11 +24,20 @@ a{color: #000000;}
 <div class="wrap">
 
 <div class="header">
-<%@ include file="../lmh/header.jsp" %>  
 </div><!-- header-->
    
    
 	<div id="container">
+	<% 
+	if (lsVO == null) {
+	  response.sendRedirect("../lmh/login.jsp");
+	  return;
+	}
+
+	String sessionId=lsVO.getUserId();
+	
+	%>
+	
 	<div id="info">
 	<h2>내 계정</h2>
 	
