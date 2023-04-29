@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
 <style type="text/css">
 
-#container{position: relative; width: 1200px; min-height: 500px;}
+#container{position: relative; width: 1200px; min-height: 800px;}
 table {
     width: 60%;
     border-collapse: collapse;
@@ -78,18 +78,19 @@ MyCommentVO mcVO=new MyCommentVO();
 	</tr>
 	<tr class="bcolor">
 	<td width="100px">댓글번호</td>
-	<td>댓글 내용</td>
+	<td colspan="2">댓글 내용</td>
 	</tr>
 		
 		
 <%
 for( MyCommentVO mcVO1 : comment) {
-	if(mcVO1.getComment_Num()!=0){
+	if(mcVO1.getComment_Num()!=0&&mcVO1.getProd_Comments()!=null){
 	%>	
 	
 	<tr> 
 	<td> <%= mcVO1.getComment_Num() %></td>
 	<td> <%= mcVO1.getProd_Comments() %></td>
+	<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= mcVO1.getProd_Num()%>">댓글확인</a> </td>
 	</tr>
 <%
 	}//end if
@@ -103,7 +104,7 @@ for( MyCommentVO mcVO1 : comment) {
 	</tr>
 	<tr class="bcolor">
 		<td width="100px">대댓글번호</td>
-		<td>대댓글 내용</td>
+		<td colspan="2">대댓글 내용</td>
 	</tr>
 		<% 
 	for( MyCommentVO mcVO1 : comment) {
@@ -112,6 +113,7 @@ for( MyCommentVO mcVO1 : comment) {
 		<tr>
 			<td><%= mcVO1.getReply_Num() %></td>
 			<td><%= mcVO1.getReply_Comment() %></td>
+			<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= mcVO1.getProd_Num()%>">대댓글확인</a> </td>
 		</tr>
 <%
 		}//end if

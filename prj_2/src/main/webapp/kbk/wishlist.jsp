@@ -20,7 +20,7 @@
 .grid {
     width: 100%;
     display: grid;
-    grid-template-columns: 247px 247px 247px;
+    grid-template-columns: 247px 247px 247px 247px;
 }
 
 .likedItem{padding:0 5px;}
@@ -42,23 +42,25 @@
 
 <script type="text/javascript">
 	$(function() {
-		 $("#heart").hover(function() {
+		 $(".heart_on").hover(function() {
 			//마우스 포인터가 들어갔음
-			$("#heart").css("width","35px");
-			$("#heart").css("height","35px");
+			$(".heart_on").css("width","35px");
+			$(".heart_on").css("height","35px");
 		},
 		function() {
 			//마우스 포인터가 빠져나갔음
-			$("#heart").css("width","30px");
-			$("#heart").css("height","30px");
+			$(".heart_on").css("width","30px");
+			$(".heart_on").css("height","30px");
 		}); 
 		
 	});//ready
 
+	const hhhh = document.getElementsByClassName("heart").value;
+	alert(hhhh);
 	
 	$(function() {
-		$("#heart").click(function() {
-			$("#heart").fadeOut(250).fadeIn(200);
+		$(".heart_on").click(function() {
+			$(".heart_on").fadeOut(250).fadeIn(200);
 			var src=$(this).attr('src');
 			
 			if(src=='http://localhost/prj_2/images/heart_on.svg'){
@@ -91,10 +93,11 @@
 		  return;
 		} 
 		
+		
 	MyPageDAO mpDAO=new MyPageDAO();
 	String sessionId=lsVO.getUserId();
 	InterestListVO ilVO=new InterestListVO();
-	List<InterestListVO> interest=mpDAO.selectInterest("abcd15");
+	List<InterestListVO> interest=mpDAO.selectInterest(sessionId);
 	%>   
    
 <div id="container">
@@ -104,12 +107,13 @@
 	<div>
 	<form action="wishlist_process.jsp" id="frm" method="post">
 		<div class="grid"><%
+		int i=0;
 	for( InterestListVO iVO : interest) {
 	%>	
 	
 	<div class="likedItem">
 				<div class="itemBox">
-				<a href="http://localhost/prj_2/cis/product_info.jsp?prod_num=<%= iVO.getProdNum()%>">
+				<a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= iVO.getProdNum()%>">
 				<input type="hidden" value="<%= iVO.getProdNum()%>" name="pNum" id="pNum"/>
 				<img src="<%= iVO.getProdImg() %>" class="ThumbNail" id="prdImg"></a>
 					<div class="ThumbNailType__ItemInfoBox-sc-1invua-7 fDnSDy">
@@ -117,14 +121,20 @@
 						<div class="ThumbNailTitle">&lt;<%= iVO.getProdName() %>&gt; ...</div>
 						<div class="price"><%= iVO.getPrice() %></div>
 						</div>
-					</div><img src="http://localhost/prj_2/images/heart_on.svg" class="heart_on" id="heart" name="heart"/>
+					</div>
+					<input type="hidden" value="<%= i %>" name="num" id="<%= i %>">
+					<img src="http://localhost/prj_2/images/heart_on.svg" class="heart_on" id="<%= i %>" name="heart"/>
+					</input>
 				<input type="hidden" value="" name="pic" id="pic"/>
+				
 					<div class="SellStateImg__Wrapper-sc-15fv3xr-0 fNGdVx"></div>
 				</div>
 			</div>
 		<%
 	}//end for
+	i++;
 		%>
+		</div>
 		</form>
 		</div>
 	</div>
@@ -134,7 +144,6 @@
 	<c:import url="http://localhost/prj_2/lmh/footer.jsp"/>
 </div><!-- footer-->
 
-</div>
 </div>
 </body>
 </html>

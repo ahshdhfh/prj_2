@@ -8,7 +8,6 @@ public class InterestListVO {
 	private int prodNum, price;
 	private Date checkedDate;
 	public InterestListVO() {
-		super();
 	}
 	public InterestListVO(String prodImg, String prodName, int prodNum, int price, Date checkedDate) {
 		this.prodImg = prodImg;

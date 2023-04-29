@@ -1,10 +1,8 @@
+<%@page import="java.sql.SQLException"%>
 <%@page import="prj_2.MyPageDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     %> <%@ include file="../lmh/header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <!-- jQuery CDN 시작 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -25,25 +23,36 @@ if (lsVO == null) {
 
 String sessionId=lsVO.getUserId();
 %>
-</script>
-</head>
 <%
 int prodNum=Integer.parseInt(request.getParameter("pNum"));
 String src=request.getParameter("pic");
  MyPageDAO mpDAO=new MyPageDAO();
  
-if(src=="http://localhost/prj_2/images/heart_on.svg"){
-	mpDAO.deleteInterest(sessionId, prodNum);
-	%>
-	<script type="text/javascript">history.go(-1);</script>
-	<%
+if("http://localhost/prj_2/images/heart_on.svg".equals(src)){
+	System.out.println(prodNum+"/"+sessionId);
+	try{
+		
+		mpDAO.deleteInterest(sessionId, prodNum);
+		System.out.println("a");
+		%>
+		history.back();
+		
+		<%
+	}catch(SQLException e){
+		e.printStackTrace();
+		%>
+		history.back();
+		<%
+	}
 }else{
+	//System.out.println(src);
 	mpDAO.insertInterest(prodNum, sessionId);
-	System.out.println(src);
+	System.out.println("b");
+	
 	%>
-	<script type="text/javascript">history.go(-1);</script>
+	history.go(-1);
 	<%
 }//end else
 %>
 
-</html>
+</script>

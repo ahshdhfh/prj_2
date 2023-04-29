@@ -144,7 +144,7 @@ public class MyPageDAO {
 				StringBuilder selectInterest=new StringBuilder();
 				selectInterest
 				.append("	select prod_img, prod_name, prod_num, price, checked_date from ( ")
-				.append("	select i.prod_img_num, l.user_id, l.checked_date, i.prod_img,p.prod_name, p.prod_num,p.price, row_number() over(order by i.prod_img) img ")
+				.append("	select i.prod_img_num, l.user_id, l.checked_date, i.prod_img,p.prod_name, p.prod_num,p.price, row_number() over(PARTITION BY p.prod_num order by i.prod_img) img ")
 				.append("	FROM INTEREST_LIST l join product p on p.prod_num=l.prod_num ")
 				.append("	join product_img i on l.prod_num=i.prod_num ")
 				.append("	where l.user_id=?) where img=1 and user_id=? ")
@@ -218,11 +218,11 @@ public class MyPageDAO {
 			//2.
 				con=dbCon.getConn();
 			//3. 쿼리문생성객체 얻기
-				String deleteInterest="delete from interest where user_id=? and prod_num=?";
+				String deleteInterest="delete from interest_list where user_id=? and prod_num=?";
 				pstmt=con.prepareStatement(deleteInterest);
 			//4. 바인드변수에 값 설정
 				pstmt.setString(1, userId);
-				pstmt.setInt(1, prodNum);
+				pstmt.setInt(2, prodNum);
 			//5. 쿼리문 수행 후 결과 얻기
 				cnt=pstmt.executeUpdate();
 			}finally {
@@ -248,9 +248,14 @@ public class MyPageDAO {
 			//4. 쿼리문 생성객체 얻기
 				StringBuilder selectComments=new StringBuilder();
 				selectComments
-				.append("	select pc.comment_num, pc.prod_comments, user_id, rc.reply_num, rc.reply_comment ")
-				.append("	from prod_comment pc full outer join reply_comment rc using(user_id) ")				
-				.append("	where user_id=? ");				
+				.append("	SELECT COMMENT_NUM,prod_comments,reply_num,reply_comment,write_date,user_id,prod_num ")
+				.append("	FROM ( SELECT COMMENT_NUM, PROD_COMMENTS, 0 AS REPLY_NUM, '' AS REPLY_COMMENT, WRITE_DATE, USER_ID, PROD_NUM ")				
+				.append("	FROM PROD_COMMENT UNION ALL ")				
+				.append("	SELECT COMMENT_NUM, '', REPLY_NUM, REPLY_COMMENT, WRITE_DATE, USER_ID,( ")				
+				.append("	SELECT PROD_NUM FROM PROD_COMMENT ")				
+				.append("	WHERE COMMENT_NUM = REPLY_COMMENT.COMMENT_NUM) AS PROD_NUM  FROM REPLY_COMMENT ) ")				
+				.append("	where user_id=? ")				
+				.append("	ORDER BY COMMENT_NUM,prod_comments ");				
 				pstmt=con.prepareStatement(selectComments.toString());
 			//5. 바인드 변수 값 설정
 			pstmt.setString(1, userId);
@@ -259,7 +264,7 @@ public class MyPageDAO {
 				
 				while(rs.next()) {
 					comment
-					.add(new MyCommentVO(rs.getInt("comment_Num"),rs.getInt("reply_Num"),rs.getString("prod_Comments"),rs.getString("reply_Comment")));
+					.add(new MyCommentVO(rs.getInt("comment_Num"),rs.getInt("reply_Num"),rs.getInt("prod_Num"),rs.getString("prod_Comments"),rs.getString("reply_Comment")));
 				}//end while
 			}finally {
 				//7. 연결 끊기
