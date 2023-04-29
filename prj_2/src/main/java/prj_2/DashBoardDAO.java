@@ -241,8 +241,8 @@ public class DashBoardDAO {
 			selectCommSql
 					.append(" select distinct TRANSACTION_DATE,COUNT(*) OVER(PARTITION BY TRANSACTION_DATE,PRODUCT_STATUS) AS count, PRODUCT_STATUS 	")
 					.append(" from (	SELECT TO_CHAR(TRANSACTION_DATE,'YYYY-MM-DD') AS TRANSACTION_DATE, PROD_NUM, PRODUCT_STATUS							")
-					.append("				FROM PRODUCT_STATUS																																						")
-					.append("				WHERE PRODUCT_STATUS = '판매완료' AND TRANSACTION_DATE >= SYSDATE - 7  ) 																																	");																																		;
+					.append("				FROM PRODUCT_STATUS																																		")
+					.append("				WHERE PRODUCT_STATUS = '판매완료' AND TRANSACTION_DATE >= SYSDATE - 7  ) 														");																																		;
 
 			pstmt = con.prepareStatement(selectCommSql.toString());
 

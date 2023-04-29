@@ -106,9 +106,9 @@ function jquery(search) {
 			tbody+="<tr><td>"+
 						jsonObj.prodNum+"</td><td>"+
 						jsonObj.categoryName+"</td><td>"+
-						jsonObj.prodName+"</td><td>"+
+						"<a href='http://localhost/prj_2/cis/product_info.jsp?prodNum="+jsonObj.prodNum+"'>"+jsonObj.prodName+"</td><td></a>"+
 						jsonObj.userId+"</td><td>"+
-						jsonObj.inputDate+"</td></tr>";																
+						jsonObj.inputDate+"</td></tr>";	
 			} );//each
 								
 			if( cnt ==0 ){
@@ -161,7 +161,7 @@ function jquery(search) {
 			</form>
 			</div>		
 			
-				<div id=table_div>
+				<div id=table_div style="overflow: auto; height: 500px" >
 				<table class="table_comm" cellspacing="0" id="table">
 				<thead>
 				<tr class="table_header">

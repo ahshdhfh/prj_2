@@ -160,7 +160,7 @@ function jquery(search) {
 			</form>
 			</div>
 			
-				<div id=table_div>
+				<div id=table_div style="overflow: auto; height: 500px">
 				<table class="table_comm" cellspacing="0" id="table">
 				<thead>
 				<tr class="table_header">
