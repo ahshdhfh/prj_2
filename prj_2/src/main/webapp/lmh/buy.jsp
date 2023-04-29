@@ -17,7 +17,7 @@
 <style type="text/css">
 
  .area_buy_bike{
-height: 2000px;  
+height: 2200px;  
 width: 1200px;
 position: relative; 
 } 

@@ -427,12 +427,13 @@ LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");%>
 
 $(function(){
 	
-	/* 들어왔을때 관심상품이였는지 확인 */
+<%-- 	/* 들어왔을때 관심상품이였는지 확인 */
  	<% if(lpVO==null) {%>alert("로그인해주세요");<% }else{%>	
-		$("#userIdre").val("<%=lpVO.getUserId()%>");
-  		$("#prodNumre").val("<%=request.getParameter("prodNum")%>");
-  		$("#replyfrm").submit();
-	<%}%>  
+		$("#userIdinter").val("<%=lpVO.getUserId()%>");
+  		$("#prodNuminter").val("<%=request.getParameter("prodNum")%>");
+  		$("#checkinter").val("1");
+  		$("#interfrm").submit();
+	<%}%>   --%>
 	
 	
 		/* 대댓글 */
@@ -627,7 +628,7 @@ function replyInput(num,commNum) {
 <%
 if(lsVO!=null){
 	
-if(lsVO.getUserId()==pdVO.getuserId()){//로그인한 사람과 상품올린사람의 아이디가 일치할때 수정하기버튼 나옴
+if(lsVO.getUserId().equals(pdVO.getuserId())){//로그인한 사람과 상품올린사람의 아이디가 일치할때 수정하기버튼 나옴
 %>	
 	<input type="button" 
 			value="상품 정보 수정하기"
@@ -795,7 +796,7 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 
 <c:if test="${i.count <= 6}">
 <div class="card-photo${i.index+1}"onclick="location.href='http://localhost/prj_2/cis/product_info.jsp'">
-     <a href="http://localhost/prj_2/cis/product_info.jsp?${MainProdVO.prodNum}"><img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"></a> 
+     <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=${MainProdVO.prodNum}"><img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"></a> 
 </div>
    <div class="card-desc${i.index+1}">
        <span class="card-title">${MainProdVO.prodName}</span>   

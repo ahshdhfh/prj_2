@@ -50,8 +50,8 @@
 	}else if(check==3){
 	String interflag=spDAO.selectBookmarkPrd(pcVO);
 	%>
-	history.back();
-	<%-- location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag="+<%=interflag%>;  --%>
+	 history.back(); 
+	<%--  location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag="+<%=interflag%>;  --%>
 	<%
 	}
 
