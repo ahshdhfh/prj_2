@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>강남콩마켓 비밀번호 확인</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 
 #login_id{

@@ -14,7 +14,7 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 
-<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/kbk/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 
 #container{position: relative; height:500px}

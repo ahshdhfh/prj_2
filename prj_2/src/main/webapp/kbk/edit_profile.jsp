@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>프로필 변경</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 #container{position: relative; width: 1300px; height: 800px;}
 .h1{margin: 0 auto; margin-top:100px; width:180px;}
@@ -106,7 +106,7 @@ if(intro==null){
 <form name="frm" id="frm" action="edit_profile_process.jsp" method="post" enctype="multipart/form-data">
 	<div class="h1"><h1>프로필 수정</h1></div>
 	<div class="pic">
-		<img src="C:/Users/user/git/prj_2/prj_2/src/main/webapp/kbk/upload/<%= img %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" id="profileImg" class="profile_img">
+		<img src="<%= img %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" id="profileImg" class="profile_img">
 		 <input id="profileInput"
              type="file"
              name="userImgFile"

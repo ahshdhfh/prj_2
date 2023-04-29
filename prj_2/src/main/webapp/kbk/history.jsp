@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>구매내역</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 
 #container{position: relative; width: 1200px; height: 500px; margin: 0px auto;}
@@ -51,15 +51,14 @@ table {
 <div>
 <% MyPageDAO mpDAO=new MyPageDAO(); %>
 <% 
- if (lsVO == null) {
+if (lsVO == null) {
 	  response.sendRedirect("../lmh/login.jsp");
 	  return;
-	} 
+	}
 
 	String sessionId=lsVO.getUserId();
-List<PurchaseListVO> purchase=mpDAO.selectPurchase(sessionId); 
-System.out.println(purchase);
-%>
+
+List<PurchaseListVO> purchase=mpDAO.selectPurchase(sessionId); %>
 <table>
 	<tr>
 	<th colspan="2"><h2>구매 내역</h2></th>
@@ -71,7 +70,6 @@ System.out.println(purchase);
 	<td>상품명</td>
 	<td>판매자</td>
 	<td>거래날짜</td>
-	<td>상품상세</td>
 	</tr>
 	<%
 	for( PurchaseListVO pVO : purchase ) {
@@ -82,7 +80,6 @@ System.out.println(purchase);
 				<td><%= pVO.getProdName() %></td>
 				<td><%= pVO.getSellerId() %></td>
 				<td><%= pVO.getTransactionDate() %></td>
-				<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= pVO.getProdNum()%>"  style="color: #333">상품상세</a> </td>
 			</tr>
 	<%
 		}else{

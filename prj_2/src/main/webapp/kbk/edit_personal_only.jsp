@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <title>개인정보 수정</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 #container{  height: 1100px;position: relative; }
 #footer{  height: 300px;}

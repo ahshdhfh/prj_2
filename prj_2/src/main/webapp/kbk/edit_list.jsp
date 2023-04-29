@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 #container{height: 600px; margin-top: 100px;position: relative;}
 #info{text-align: center}

@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <title>상품목록</title>
 
-<link rel="stylesheet" type="text/css" href="http://211.63.89.134/html_prj/project/main.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/main.css">
 <style type="text/css">
 
 #container{position: relative; width: 1200px; min-height: 500px; margin: 0px auto;}
