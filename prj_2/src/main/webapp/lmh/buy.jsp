@@ -16,12 +16,17 @@
 <link rel="stylesheet" type="text/css" href="http://localhost/prj_2/lmh/buy.css">
 <style type="text/css">
 
+
  .area_buy_bike{
-height: 2200px;  
+min-height: 1500px;  
 width: 1200px;
-position: relative; 
+position: relative;
+overflow-y: scroll;
 } 
 
+ .area_buy_bike::-webkit-scrollbar{
+ display: none;
+ }
 
 
 </style>
@@ -123,7 +128,7 @@ function callProdList() {
       <%@ include file="header.jsp" %>
   </div><!--header  -->
   
-     
+   
      <div class="area_buy_bike"> 
        <form id="categoryFrm"  action="http://localhost/prj_2/lmh/buy.jsp" method="get">
     
@@ -159,6 +164,7 @@ function callProdList() {
     </div><!--div_select_category  -->
 </form><!-- categoryFrm -->
     
+    
 
 <table class="popular_sale_table" id="popular_sale_table">
   <tr>
@@ -167,14 +173,13 @@ function callProdList() {
 
 
 </div><!-- area_buy_bike -->
-
-
-
    <div class="footer">
       <c:import url="http://localhost/prj_2/lmh/footer.jsp" />
    </div><!-- footer-->
-   
-   
+
+
+
+
 </div><!-- wrap -->
 
 </body>
