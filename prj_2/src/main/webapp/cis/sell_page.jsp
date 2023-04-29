@@ -432,7 +432,7 @@ if(piVO!=null){
 
 <!-- 취소/작성완료 버튼 -->
 <div class="button-check">
-<input type="button"id="cancel-button"value="취소"onclick="location.href='http://localhost/prj_2/lmh/main_login.jsp'">
+<input type="button"id="cancel-button"value="취소"onclick="javascript:history.back();">
 <input type="button"id="complete_button"value="작성완료">
 <!-- onclick="location.href='http://localhost/prj_2/cis/product_info_login.jsp'" -->
 </div>
