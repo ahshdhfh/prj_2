@@ -38,17 +38,20 @@
 	if(check==2){
 	spDAO.insertBookmarkPrd(pcVO);
 	%>
-	 location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag=heart_on.svg"; 
+		history.back();
+	<%--  location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag=heart_on.svg";  --%>
 	<%	
 	}else if(check==1){
 	spDAO.deleteBookmarkPrd(pcVO);
 	%>
-	 location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag=heart_off.png"; 
+	history.back();
+	<%--  location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag=heart_off.png";  --%>
 	<%
 	}else if(check==3){
 	String interflag=spDAO.selectBookmarkPrd(pcVO);
 	%>
-	 location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag="+<%=interflag%>; 
+	history.back();
+	<%-- location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag="+<%=interflag%>;  --%>
 	<%
 	}
 
