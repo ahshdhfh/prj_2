@@ -132,14 +132,13 @@ public class RegisterCommentDAO {
 			StringBuilder insertComm=new StringBuilder();
 			insertComm
 			.append("insert into REPLY_COMMENT(REPLY_NUM, REPLY_COMMENT, WRITE_DATE, COMMENT_NUM, USER_ID ) ")
-			.append("values(?,?,sysdate,?,?)"			);
+			.append("values(GANGNAMKONG.REPLY_NUM_SEQ.NEXTVAL,?,sysdate,?,?)		");
 			
 			pstmt=con.prepareStatement(insertComm.toString());
 			//5. 바인드 변수 값 설정
-			pstmt.setInt(1,rcVO.getRepNum());
-			pstmt.setString(2,rcVO.getReplyCom());
-			pstmt.setInt(3,rcVO.getcommNum());
-			pstmt.setString(4,rcVO.getUserId());
+			pstmt.setString(1,rcVO.getReplyCom());
+			pstmt.setInt(2,rcVO.getcommNum());
+			pstmt.setString(3,rcVO.getUserId());
 			
 			pstmt.executeQuery();
 			//6. 쿼리문 수행 후 결과 얻기

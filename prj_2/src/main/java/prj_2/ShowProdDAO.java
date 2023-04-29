@@ -121,9 +121,9 @@ public class ShowProdDAO {
 	 * select해오기
 	 * @return
 	 */
-	public Boolean selectBookmarkPrd(ProdConditionVO pcVO ) throws SQLException {
+	public String selectBookmarkPrd(ProdConditionVO pcVO ) throws SQLException {
 	    
-		boolean interChk = false;
+		String interChk = "heart_off.png";
 		
 		Connection con = null;
 	    PreparedStatement pstmt = null;
@@ -144,8 +144,8 @@ public class ShowProdDAO {
 	        rs=pstmt.executeQuery(selectBookmark);
 
 			
-			 while(rs.next()) {
-				 interChk=true;
+			 if(rs.next()) {
+				 interChk="heart_on.svg";
 			 }
 			 
 			 
@@ -172,10 +172,10 @@ public class ShowProdDAO {
 			con = dbCon.getConn();
 			
 			// 이미 북마크한 상품인지 확인
-			String insertBookmark = "INSERT INTO INTEREST_LIST(USER_ID, PROD_NUM) VALUES (?, ?)";
+			String insertBookmark = "INSERT INTO INTEREST_LIST(CHECKED_DATE,PROD_NUM,USER_ID) VALUES (sysdate,?,?)";
 			pstmt = con.prepareStatement(insertBookmark.toString());
-			pstmt.setString(1, pcVO.getUserId());
-			pstmt.setInt(2, pcVO.getProdNum());
+			pstmt.setInt(1, pcVO.getProdNum());
+			pstmt.setString(2, pcVO.getUserId());
 			pstmt.executeQuery();
 
 
@@ -183,6 +183,7 @@ public class ShowProdDAO {
 			dbCon.dbClose(null,pstmt, con);
 		}
 	}
+	
 	/**
 	 * 북마크 삭제하기 메소드
 	 * delete하기

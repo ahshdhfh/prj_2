@@ -30,12 +30,11 @@
 }
 
 /* 북마크 & 쉐어버튼 */
-#bookmark {
+.bookmark {
 	position:relative;
 	float:right;
 	width:42px;
 	height:41px;
-	background-image: url('http://localhost/prj_2/images/free-icon-love-7476962.png'); /* 하트  */
 	border:none;
 	background-color:white;
 }
@@ -182,7 +181,7 @@ padding:15px 20px;
 }
 
 .responseText{
-	width:650px;
+	width:600px;
 	height:100px;
 	border:none;
 	background-color: #e0e0e0;
@@ -425,13 +424,35 @@ padding:15px 20px;
 <script>
 <%// 세션에서 값 가져오기
 LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");%>
+
 $(function(){
+	
+	/* 들어왔을때 관심상품이였는지 확인 */
+ 	<% if(lpVO==null) {%>alert("로그인해주세요");<% }else{%>	
+		$("#userIdre").val("<%=lpVO.getUserId()%>");
+  		$("#prodNumre").val("<%=request.getParameter("prodNum")%>");
+  		$("#replyfrm").submit();
+	<%}%>  
+	
+	
+		/* 대댓글 */
+	  $('.replyevent').on('click', '#replycomInsert', function() {
+ 		  <% if(lpVO==null) {%>alert("입력권한이 없습니다.");<% }else{%>	
+		  		$("#userIdre").val("<%=lpVO.getUserId()%>");
+		  		$("#prodNumre").val("<%=request.getParameter("prodNum")%>");
+		  		$("#replyfrm").submit();
+			 		  		
+		  	<%}%>  
+		});
+	  
+	
 	  $(".dropdown-toggle").click(function(){
 	    $(".dropdown-menu").toggle();
 	  });
 	  
+	  /* 댓글  */
 	  $("#commentInsert").click(function() {
-		  <% if(lpVO==null) {%>alert("입력권한이 없습니다.");<% }else{%>	
+		  <% if(lpVO==null) {%>alert("로그인해주세요");<% }else{%>	
 		  		$("#userId").val("<%=lpVO.getUserId()%>");
 		  		$("#prodNum").val("<%=request.getParameter("prodNum")%>");
 		  		$("#comfrm").submit();
@@ -439,28 +460,38 @@ $(function(){
 		  	<%}%> 
 	  });
 	  
+	    
 	  
+	  		/*관심목록 추가기능  */
 			$("#heart").click(function() {
+				<% if(lpVO==null) {%>alert("로그인해주세요");<% }else{%>	
 				$("#heart").fadeOut(250).fadeIn(200);
 				var src=$(this).attr('src');
 				
+				/*delete */
 				if(src=='http://localhost/prj_2/images/heart_on.svg'){
-					$(this).attr('src','http://localhost/prj_2/images/heart_off.png');
-					<%-- <%
-					mpDAO.deleteInterest(userId, prodNum);
-					%> --%>
+					 $(this).attr('src','http://localhost/prj_2/images/heart_off.png'); 
+			  		$("#userIdinter").val("<%=lpVO.getUserId()%>");
+			  		$("#prodNuminter").val("<%=request.getParameter("prodNum")%>");
+			  		$("#checkinter").val("1");
+			  		$("#interfrm").submit();
 				}
+				/*insert  */
 				if(src=='http://localhost/prj_2/images/heart_off.png'){
-					$(this).attr('src','http://localhost/prj_2/images/heart_on.svg');
-					<%-- <%
-					mpDAO.insertInterest(prodNum, userId);
-					%> --%>
+				 $(this).attr('src','http://localhost/prj_2/images/heart_on.svg'); 
+			  		$("#userIdinter").val("<%=lpVO.getUserId()%>");
+			  		$("#prodNuminter").val("<%=request.getParameter("prodNum")%>");
+			  		$("#checkinter").val("2");
+			  		$("#interfrm").submit();
+					
 				}//end else
+				<%}%> 
 			});//click
 	  
 });
 
-function replyInput(num) {
+
+function replyInput(num,commNum) {
 	var tbody="";
 	var tbody2="";
 	var temp="#replyevent"+num+":last";
@@ -469,12 +500,16 @@ function replyInput(num) {
 	var temp3="#plusqna"+num;
 	
 	tbody="<tr><td>"+
-	"<div><form class='comment_form'><img src='' id='comment_profile_img'/>"+
-	"<input type='text' id='comment_id' placeholder='판매자 명'/>"+
-	"<textarea placeholder='댓글을 입력하세요' class='comment_content'></textarea>"+
-	"<input type='button'  value='문의하기' class='comment_submit'/>"+
+	"<div><form class='comment_form' name='replyfrm' id='replyfrm' method='post' action='reply_insert_process.jsp' >"+
+	"<img src='' id='comment_profile_img'/><input type='text' id='comment_id' placeholder='판매자 명'/>"+
+	"<textarea placeholder='댓글을 입력하세요' class='comment_content' name='replycomminput'></textarea>"+
+	"<input type='hidden' name='userIdre' id='userIdre' >"+
+	"<input type='hidden' name='prodNumre' id='prodNumre'>"+
+	"<input type='hidden' name='commNumre' id='commNumre' value='"+commNum+"'>"+
+	"<input type='button' value='답변하기' class='comment_submit' id='replycomInsert' />"+
 	"</form></div></td></tr>";
-
+	
+	
 	$(temp).append( tbody );
 	
 	tbody2="<hr class='qna_line'>";
@@ -491,8 +526,6 @@ function replyInput(num) {
     }//end if
     
 }
-
-
 
 //댓글 페이지
 </script>
@@ -554,13 +587,14 @@ function replyInput(num) {
 
 
 <div id="prod-info">
-<input 
-		type="button" 
-		id="bookmark" 
-		onclick=" "
-		 />
-		
-		<!-- 북마크 버튼의 온오프, 체크확인 기능 -->			
+ <form name="interfrm" id="interfrm" method="post" action="interest_list_process.jsp">
+<img src="http://localhost/prj_2/images/heart_off.png" class="bookmark" id="heart">
+<input type="hidden" name="userIdinter" id="userIdinter" >
+<input type="hidden" name="prodNuminter" id="prodNuminter" >	
+<input type="hidden" name="checkinter" id="checkinter" >	
+<input type="hidden" name="sellerId" id="sellerId" value="<%=pdVO.getuserId()%>" >	
+</form> 
+			
 <div id="prod-title" ><%=pdVO.getProdName() %></div>
 <hr style="width:450px">
 <div id="prod-price"><fmt:formatNumber pattern="#,###,###" value='<%=pdVO.getPrice()%>' />원</div>
@@ -640,11 +674,15 @@ if(lsVO.getUserId()==pdVO.getuserId()){//로그인한 사람과 상품올린사�
 <!-- form을 table로 가져와야 되는 구조...
 다시 작성 필요. -->
 <%  RegisterCommentDAO rcDAO = new RegisterCommentDAO();
-List<SetCommVO> list= rcDAO.setCommList(7); 
+try{
+int pr=Integer.parseInt(request.getParameter("prodNum"));
+List<SetCommVO> list= rcDAO.setCommList(pr); 
+pageContext.setAttribute("commList", list);
+}catch(NumberFormatException e){
+}
 /* for(SetCommVO str : list){
 	System.out.println(str.getProdComment()); 
 } */
-pageContext.setAttribute("commList", list);
 %>
 <hr class="qna_line">
 <br>
@@ -669,12 +707,13 @@ pageContext.setAttribute("commList", list);
 	</tr>
 	<tr>
 	<td rowspan="2">
-		<input type="button" value="답글" onclick="replyInput(${i.index})" />
+		<input type="button" value="답글" onclick="replyInput(${i.index},${scVO.commNum})" />
 	</td>
 	</tr>
 	</table >
 	<hr class="qna_line">
-	<table id="replyevent${i.index}" name="replyevent">
+	<table id="replyevent${i.index}" name="replyevent" class="replyevent">
+	<!--버튼클릭하면 여기에 생성됨  -->
 	</table>
 	<div id="plusqna${i.index}">
 	</div>
@@ -682,7 +721,7 @@ pageContext.setAttribute("commList", list);
 	<c:if test="${ !empty scVO.replyComment}">
 	<table>
 	<tr>
-	<td>	<textarea class="responseText" placeholder="문의글" readonly="readonly">&ensp;&ensp;&ensp;${scVO.replyComment}</textarea></td>
+	<td><img src="http://localhost/prj_2/cis/replyicon.PNG" style="width: 20px;"><textarea class="responseText" placeholder="문의글" readonly="readonly" style="margin-left: 50px;">${scVO.replyComment}</textarea></td>
 	<td style="vertical-align: top; " >
 	<div class="comment-tag" style="margin-left: 60px">
 	<input type="text" class="user_id" value="${scVO.userId}"><br>
@@ -691,13 +730,12 @@ pageContext.setAttribute("commList", list);
 	</td>
 	</tr>
 	<tr>
-	<td rowspan="2">
-		<input type="button" value="답글" onclick="replyInput(${i.index})" />
+	<td rowspan="2">	
 	</td>
 	</tr>
 	</table>
 	<hr class="qna_line">
-	<table id="replyevent${i.index}" name="replyevent">
+	<table id="replyevent${i.index}" name="replyevent" >
 	</table>
 	<div id="plusqna${i.index}">
 	</div>
