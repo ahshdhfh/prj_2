@@ -497,11 +497,11 @@ public class UserDAO {
 			StringBuilder updatePass = new StringBuilder();
 			updatePass 
 			.append("	update users	")
-			.append("	set	 email=?		")
-			.append("	 	 addr=?		")
-			.append("		 detailaddr=?		")
-			.append("	 	 tel=?		")
-			.append("		 acti_area_num=?		")
+			.append("	set	 email=?,		")
+			.append("	 	 addr=?,		")
+			.append("		 detailed_addr=?,		")
+			.append("	 	 tel=?,		")
+			.append("		 acti_area_num=?,		")
 			.append("		 zipcode=?		")
 			.append("	where user_id=? 	");
 			

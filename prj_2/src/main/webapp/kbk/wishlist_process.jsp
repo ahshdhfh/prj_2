@@ -29,11 +29,9 @@ String src=request.getParameter("pic");
  MyPageDAO mpDAO=new MyPageDAO();
  
 if("http://localhost/prj_2/images/heart_on.svg".equals(src)){
-	System.out.println(prodNum+"/"+sessionId);
 	try{
 		
 		mpDAO.deleteInterest(sessionId, prodNum);
-		System.out.println("a");
 		%>
 		history.back();
 		
@@ -47,7 +45,6 @@ if("http://localhost/prj_2/images/heart_on.svg".equals(src)){
 }else{
 	//System.out.println(src);
 	mpDAO.insertInterest(prodNum, sessionId);
-	System.out.println("b");
 	
 	%>
 	history.go(-1);

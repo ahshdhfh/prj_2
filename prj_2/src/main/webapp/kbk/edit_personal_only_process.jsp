@@ -21,7 +21,7 @@ if(<%= request.getMethod() %>=="GET"){
 }//end if 
 
 
-</script>
+
 <%
 if (lsVO == null) {
 	  response.sendRedirect("../lmh/login.jsp");
@@ -53,8 +53,13 @@ int actAreaNum=Integer.parseInt(request.getParameter("actLocalNum"));
 	miVO.setEmail( de.encryption(email) );
 	
 	uDAO.updateInfo(miVO, sessionId);
+	%>
+	alert("성공적으로 변경하셨습니다.");
+	location.href="mypage.jsp";
+	<% 
 }catch(SQLException se){
 	se.printStackTrace();
 } 
 	response.sendRedirect("mypage.jsp");
 %>
+</script>

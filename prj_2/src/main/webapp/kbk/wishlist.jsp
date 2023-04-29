@@ -56,7 +56,6 @@
 	});//ready
 
 	const hhhh = document.getElementsByClassName("heart").value;
-	alert(hhhh);
 	
 	$(function() {
 		$(".heart_on").click(function() {

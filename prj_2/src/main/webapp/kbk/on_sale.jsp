@@ -87,7 +87,7 @@ List<OnSaleListVO> onSale=mpDAO.selectOnSale(sessionId);
 				<td><%=  slVO.getProdNum() %></td>
 				<td><%= slVO.getProdName() %></td>
 				<td><%= slVO.getInputDate() %></td>
-				<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= slVO.getProdNum()%>">상품 확인</a> </td>
+				<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= slVO.getProdNum()%>" style="color:#333">상품 확인</a> </td>
 			</tr>
 	<%
 		}else{
