@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../lmh/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +43,7 @@ table {
 <div class="wrap">
 
 <div class="header">
+<%@ include file="../lmh/header.jsp" %>
 </div><!-- header-->
    
    

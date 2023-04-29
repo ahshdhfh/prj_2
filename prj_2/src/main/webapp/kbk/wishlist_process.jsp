@@ -33,7 +33,6 @@ String src=request.getParameter("pic");
  MyPageDAO mpDAO=new MyPageDAO();
  
 if(src=="http://localhost/prj_2/images/heart_on.svg"){
-	System.out.println(src);
 	mpDAO.deleteInterest(sessionId, prodNum);
 	%>
 	<script type="text/javascript">history.go(-1);</script>

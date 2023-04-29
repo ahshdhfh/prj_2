@@ -37,14 +37,15 @@ public class InsertProdDAO {
 			
 			String selectProdNum="	select prod_num from product where prod_name=?";
 			
-			System.out.println("뿅 1");
 			insertPrdImg
 			.append("	insert into PRODUCT_IMG(PROD_IMG_NUM, PROD_NUM, PROD_IMG) " )
 			.append("	values(GANGNAMKONG.SEQ_PRODUCT_IMG.NEXTVAL, ? , ?	)");
 			
 			pstmt=con.prepareStatement(insertPrdInfo.toString());
 
-
+			String insertProdStatus="insert into product_status values(sysdate,?,'판매중')";
+			
+			
 			//5. 바인드 변수 값 설정
 			pstmt.setString(1, piVO.getProdName());
 			pstmt.setString(2, piVO.getShare());
@@ -62,10 +63,13 @@ public class InsertProdDAO {
 			pstmt=con.prepareStatement(selectProdNum);
 			pstmt.setString(1, piVO.getProdName());
 			
-			rs=pstmt.executeQuery();
+			rs=pstmt.executeQuery();//상품번호 가져오기
+			
 			if(rs.next()) {
-				piVO.setProdNum(rs.getInt("prod_num"));
+				piVO.setProdNum(rs.getInt("prod_num"));//상품번호 셋
 			}
+			pstmt.close();
+			rs.close();
 			
 			
 			for(int i=0;i<piVO.getprodImg().length;i++ ) {
@@ -75,10 +79,14 @@ public class InsertProdDAO {
 				pstmt.executeQuery();
 				pstmt.close();
 			}//end for
+				
+			pstmt=con.prepareStatement(insertProdStatus);//상품 상태 테이블에 인서트
 			
+			pstmt.setInt(1, piVO.getProdNum());
+			pstmt.executeQuery();
 			
-		}finally {
-			dbCon.dbClose(null, pstmt, con);
+			}finally {
+			dbCon.dbClose(rs, pstmt, con);
 		//7. 연결 끊기
 		}//end finally
 	}//insertProdInfo
@@ -146,8 +154,8 @@ public class InsertProdDAO {
 			//6. 쿼리문 수행 후 결과 얻기			
 			for(int i=0;i<piVO.getprodImg().length;i++ ) {
 				pstmt=con.prepareStatement(insertPrdImg.toString());
-				pstmt.setString(1, piVO.getprodImg()[i]);
-				pstmt.setInt(2,  piVO.getProdNum());
+				pstmt.setInt(1, piVO.getProdNum());
+				pstmt.setString(2,  piVO.getprodImg()[i]);
 				pstmt.executeQuery();
 				pstmt.close();
 			}//end for

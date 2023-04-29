@@ -7,7 +7,7 @@
     session="true"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../lmh/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +76,18 @@ li {
   a{color: #000000;}
 </style>
 <script type="text/javascript">
-<%
+
+</script>
+</head>
+
+
+<body>
+<div class="wrap">
+
+<div class="header">
+<%@ include file="../lmh/header.jsp" %>
+</div><!-- header-->
+ <%
 if (lsVO == null) {
 	  response.sendRedirect("../lmh/login.jsp");
 	  return;
@@ -95,17 +106,7 @@ if (lsVO == null) {
 	if(intro==null){
 		intro="안녕하세요";
 	}
-%>
-</script>
-</head>
-
-
-<body>
-<div class="wrap">
-
-<div class="header">
-</div><!-- header-->
-   
+%>  
 	<div id="container">
 
 	<div id="infoLeft">

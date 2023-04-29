@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ include file="../lmh/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,7 +139,17 @@ function checkNull() {
 	
 	obj.submit();
 }//checknull
-	<% 
+
+</script>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="header">
+    <%@ include file="../lmh/header.jsp" %>
+</div><!-- header-->
+  	<% 
 	
 	if (lsVO == null) {
 	  response.sendRedirect("../lmh/login.jsp");
@@ -150,15 +160,6 @@ function checkNull() {
 	String sessionId=lsVO.getUserId();
 	
 	%>
-</script>
-</head>
-<body>
-
-<div class="wrap">
-
-<div class="header">
-</div><!-- header-->
-  
 <div id="container">  
 	<div class="area_login">
 	
