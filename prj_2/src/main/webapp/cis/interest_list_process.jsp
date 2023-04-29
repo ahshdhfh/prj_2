@@ -28,9 +28,6 @@
 	String userId=request.getParameter("userIdinter");
 	int prodNum=Integer.parseInt(request.getParameter("prodNuminter"));   
 	int check=Integer.parseInt(request.getParameter("checkinter"));   
-	System.out.println(userId);
-	System.out.println(prodNum);
-	System.out.println(check);
 	ShowProdDAO spDAO=new ShowProdDAO();
 	ProdConditionVO pcVO=new ProdConditionVO();
 	pcVO.setProdNum(prodNum);
@@ -48,10 +45,12 @@
 	<%--  location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag=heart_off.png";  --%>
 	<%
 	}else if(check==3){
+	System.out.println(pcVO.toString());
 	String interflag=spDAO.selectBookmarkPrd(pcVO);
+	System.out.println(interflag);
 	%>
-	 history.back(); 
-	<%--  location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>+"&interflag="+<%=interflag%>;  --%>
+	/*  history.back();  */
+	 location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%=prodNum%>&interflag=<%=interflag%>";  
 	<%
 	}
 

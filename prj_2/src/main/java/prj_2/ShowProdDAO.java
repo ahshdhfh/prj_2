@@ -141,7 +141,7 @@ public class ShowProdDAO {
 	        pstmt.setString(1, pcVO.getUserId());
 	        pstmt.setInt(2, pcVO.getProdNum());
 	        
-	        rs=pstmt.executeQuery(selectBookmark);
+	        rs=pstmt.executeQuery();
 
 			
 			 if(rs.next()) {
@@ -152,7 +152,7 @@ public class ShowProdDAO {
 	    }catch(SQLException se){
 	    	se.printStackTrace();
 	    } finally {
-	        dbCon.dbClose(rs,pstmt, con);
+	        dbCon.dbClose(rs,pstmt,con);
 	    }
 		return interChk;
 	}

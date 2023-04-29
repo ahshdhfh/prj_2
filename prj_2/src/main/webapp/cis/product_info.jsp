@@ -427,15 +427,20 @@ LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");%>
 
 $(function(){
 	
-<%-- 	/* 들어왔을때 관심상품이였는지 확인 */
+	<%if(request.getParameter("interflag")==null){%>
+ 	/* 들어왔을때 관심상품이였는지 확인 */
  	<% if(lpVO==null) {%>alert("로그인해주세요");<% }else{%>	
 		$("#userIdinter").val("<%=lpVO.getUserId()%>");
   		$("#prodNuminter").val("<%=request.getParameter("prodNum")%>");
-  		$("#checkinter").val("1");
+  		$("#checkinter").val("3");
   		$("#interfrm").submit();
-	<%}%>   --%>
-	
-	
+	<%}%>   
+	<%}%>
+		
+	<%if(request.getParameter("interflag")!=null){%>
+	 	$("#heart").attr('src','http://localhost/prj_2/images/<%=request.getParameter("interflag")%>'); 
+	<%}%>
+	 	
 		/* 대댓글 */
 	  $('.replyevent').on('click', '#replycomInsert', function() {
  		  <% if(lpVO==null) {%>alert("입력권한이 없습니다.");<% }else{%>	
@@ -766,8 +771,8 @@ pageContext.setAttribute("commList", list);
 
 	<div>
 	<form class="comment_form" name="comfrm" id="comfrm" method="post" action="comm_insert_process.jsp">
-		<img src="" id="comment_profile_img"/>
-    	<input type="text" id="comment_id" placeholder="구매자 명"/>
+		<img src="" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" id="comment_profile_img"/>
+    	<input type="text" id="comment_id" placeholder="판매자명" readonly="readonly"/>
    		<textarea placeholder="댓글을 입력하세요" class="comment_content" id="comminput" name="comminput" ></textarea>
    		<input type="hidden" name="userId" id="userId" >
    		<input type="hidden" name="prodNum" id="prodNum" >
