@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class MyPageDAO {
-	  public List<PurchaseListVO> selectPurchase(String sellerId)throws SQLException{
+	  public List<PurchaseListVO> selectPurchase(String sessionId)throws SQLException{
 	  List<PurchaseListVO> purchase=new ArrayList<PurchaseListVO>();
 		
 		DbConnection dbCon=DbConnection.getInstance();
@@ -26,13 +26,13 @@ public class MyPageDAO {
 			selectOnSale
 			.append("	select l.prod_num, p.prod_name, l.SELLER_ID, s.transaction_date")
 			.append("	from purchase_list l, product_status s, product p")
-			.append("	where p.prod_num=s.prod_num and s.prod_num=l.prod_num and s.product_status='판매완료' and l.user_id=?")
+			.append("	where p.prod_num=s.prod_num and s.prod_num=l.prod_num and s.product_status='판매완료' and l.user_id=? ")
 			.append("	order by transaction_date desc");
 			
 			pstmt=con.prepareStatement(selectOnSale.toString());
 			
 		//5. 바인드 변수 값 설정
-		pstmt.setString(1, sellerId);
+		pstmt.setString(1, sessionId);
 		//6. 쿼리문 수행 후 결과 얻기
 			rs=pstmt.executeQuery();
 			

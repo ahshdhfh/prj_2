@@ -90,7 +90,7 @@ for( MyCommentVO mcVO1 : comment) {
 	<tr> 
 	<td> <%= mcVO1.getComment_Num() %></td>
 	<td> <%= mcVO1.getProd_Comments() %></td>
-	<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= mcVO1.getProd_Num()%>">댓글확인</a> </td>
+	<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= mcVO1.getProd_Num()%>"  style="color: #333">댓글확인</a> </td>
 	</tr>
 <%
 	}//end if

@@ -70,13 +70,14 @@ List<OnSaleListVO> onSale=mpDAO.selectOnSale(sessionId);
 %>
 <table>
 	<tr>
-	<th colspan="2"><h2>상품목록</h2></th>
+	<th colspan="3"><h2>상품목록</h2></th>
 	<th><h2></h2></th>
 	</tr>
 	<tr class="bcolor">
 	<td width="100px">상품번호</td>
 	<td>상품명</td>
 	<td>업로드 날짜</td>
+	<td>상품확인</td>
 	</tr>
 <%
 	for(OnSaleListVO slVO : onSale ) {
@@ -86,6 +87,7 @@ List<OnSaleListVO> onSale=mpDAO.selectOnSale(sessionId);
 				<td><%=  slVO.getProdNum() %></td>
 				<td><%= slVO.getProdName() %></td>
 				<td><%= slVO.getInputDate() %></td>
+				<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= slVO.getProdNum()%>">상품 확인</a> </td>
 			</tr>
 	<%
 		}else{

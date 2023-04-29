@@ -73,6 +73,7 @@ List<SoldVO> sold=mpDAO.selectSold(sessionId);
 	<td>상품명</td>
 	<td>구매자</td>
 	<td>거래날짜</td>
+	<td>상품상세</td>
 	</tr>
 <%
 	for( SoldVO sVO : sold  ) {
@@ -83,6 +84,7 @@ List<SoldVO> sold=mpDAO.selectSold(sessionId);
 				<td><%= sVO.getProd_Name() %></td>
 				<td><%= sVO.getPurchaser_Id() %></td>
 				<td><%= sVO.getTransaction_Date() %></td>
+				<td> <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= sVO.getProd_Num()%>" style="color: #333">상품상세</a> </td>
 			</tr>
 	<%
 		}else{

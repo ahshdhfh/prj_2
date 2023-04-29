@@ -122,9 +122,8 @@
 						<div class="price"><%= iVO.getPrice() %></div>
 						</div>
 					</div>
-					<input type="hidden" value="<%= i %>" name="num" id="<%= i %>">
+					<input type="hidden">
 					<img src="http://localhost/prj_2/images/heart_on.svg" class="heart_on" id="<%= i %>" name="heart"/>
-					</input>
 				<input type="hidden" value="" name="pic" id="pic"/>
 				
 					<div class="SellStateImg__Wrapper-sc-15fv3xr-0 fNGdVx"></div>
