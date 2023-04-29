@@ -637,11 +637,11 @@ public class UserDAO {
 			//4. 쿼리문 생성객체 얻기
 			StringBuilder deleteUser= new StringBuilder();
 			deleteUser 
-			.append("	update users	")
-			.append("	set nickname=?")
-			.append("		user_img=?")
-			.append("		personal_intro=?")
-			.append("	where user_id=? ");
+			.append("	update users			")
+			.append("	set nickname=?,			")
+			.append("		user_img=?,			")
+			.append("		personal_intro=?	")
+			.append("	where user_id=? 		");
 			
 			pstmt=con.prepareStatement(deleteUser.toString());
 			

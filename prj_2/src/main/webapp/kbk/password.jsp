@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../lmh/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,15 +26,13 @@
 <div class="wrap">
 
 <div class="header">
+<%@ include file="../lmh/header.jsp" %>
 </div><!-- header-->
    
    
 <div id="container">
 <%
-if (lsVO == null) {
-	  response.sendRedirect("../lmh/login.jsp");
-	  return;
-	}
+
 %>
 
 <div id="div"><h2>비밀번호 수정</h2></div>

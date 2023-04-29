@@ -49,8 +49,8 @@ MultipartRequest mr =
 String nickname=mr.getParameter("nickName");
 String intro=mr.getParameter("personalIntro");
 //<input type="file"은 parameter로 넘어오지않는다.
-String originalName = mr.getOriginalFileName("userImgFile");
-String newFileName = mr.getFilesystemName("userImgFile");
+String originalName = "http://localhost/prj_2/kbk/upload/" +mr.getOriginalFileName("userImgFile");
+String newFileName = "http://localhost/prj_2/kbk/upload/" +mr.getFilesystemName("userImgFile");
 
 
 //File file =new File(saveDir.getAbsolutePath()+originalName);
@@ -76,9 +76,10 @@ if(uploadFile.length()>fileSize){//업로드 제한에 걸린 파일
 
 <%
 UserDAO uDAO=new UserDAO();
-ModifyProfileVO mpVO=new ModifyProfileVO();
+ModifyProfileVO mpVO=new ModifyProfileVO(nickname,newFileName,intro);
 	String sessionId=lsVO.getUserId();
 try{
+	
 uDAO.updateProfile(mpVO, sessionId);
 }catch(SQLException se){
 	se.printStackTrace();
@@ -87,7 +88,12 @@ uDAO.updateProfile(mpVO, sessionId);
 
 <%
 }//end catch
-response.sendRedirect("mypage.jsp");
+%>
+<script type="text/javascript">
+alert("성공적으로 수정되었습니다. 다시 로그인해 주세요.");
+</script>
+<%
+response.sendRedirect("../lmh/login.jsp");
 %>
 
 

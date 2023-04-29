@@ -93,14 +93,14 @@ if (lsVO == null) {
 	  return;
 }
 
-	String sessionId=lsVO.getUserId();
+ 	String sessionId=lsVO.getUserId();
 	
 	 UserDAO uDAO=new UserDAO();
 	 
 	ModifyProfileVO mpVO=uDAO.setProfile(sessionId);
-	String img=mpVO.getUserImg();
-	String nickname=mpVO.getNickName();
-	String intro=mpVO.getPersonalIntro();
+	String img=lsVO.getUserImg();
+	String nickname=lsVO.getNickName();
+	String intro=lsVO.getPersonalIntro();
 	
 	
 	if(intro==null){
@@ -110,7 +110,7 @@ if (lsVO == null) {
 	<div id="container">
 
 	<div id="infoLeft">
-		<div><img src="C:/Users/user/git/prj_2/prj_2/src/main/webapp/kbk/upload/<%= img %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" class="profile_img"> </div>
+		<div><img src="<%= lsVO.getUserImg() %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" class="profile_img"> </div>
 		<div class="nickname"><%= nickname %>님 </div>
 		<div class="myinfo"><%= intro %></div>
 		<div class="profileEdit"><a href="http://localhost/prj_2/kbk/edit_profile.jsp">프로필수정</a></div>
