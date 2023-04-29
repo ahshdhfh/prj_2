@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ include file="../lmh/header.jsp" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +43,16 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- jQuery CDN 끝 -->
+
+
+</head>
+
+
+<body>
+<div class="wrap">
+
+<div class="header">
+<%@ include file="../lmh/header.jsp" %>
 <% 
 if (lsVO == null) {
 	  response.sendRedirect("../lmh/login.jsp");
@@ -183,14 +193,6 @@ function checkNull() {
 	
 }//checknull
 </script>
-
-</head>
-
-
-<body>
-<div class="wrap">
-
-<div class="header">
 </div><!-- header-->
    
 <div id="container">
