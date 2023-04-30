@@ -632,7 +632,7 @@ function replyInput(num,commNum) {
 <input type="hidden" name="sellerId" id="sellerId" value="<%=pdVO.getuserId()%>" >	
 </form> 
 			
-<div id="prod-title" ><%=pdVO.getProdName() %></div>
+<div id="prod-title" ><%=pdVO.getProdName() %> <span style="font-size: 15px; color: #600F94; font-weight: bold"><%= pdVO.getPrice()==0?"\'나눔상품\'":""%></span> </div>
 <hr style="width:450px">
 <div id="prod-price"><fmt:formatNumber pattern="#,###,###" value='<%=pdVO.getPrice()%>' />원</div>
 <hr style="width:450px">
