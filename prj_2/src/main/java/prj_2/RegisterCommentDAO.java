@@ -231,35 +231,53 @@ public class RegisterCommentDAO {
 	    try {
 	        con = dbCon.getConn();
 
-	        // OnSaleListVO 테이블 업데이트
+	        // 구매목록 테이블 업데이트
+	        if(!pcVO.getSellerId().equals("없음")) {
 	        StringBuilder updateOnSaleList = new StringBuilder();
 	        updateOnSaleList
 	        .append("insert into PURCHASE_LIST(PROD_NUM,SELLER_ID, USER_ID) values(?,?,?)");
 	        pstmt = con.prepareStatement(updateOnSaleList.toString());
-			pstmt.setInt(1,pcVO.getProdNum());
-			pstmt.setString(2,pcVO.getSellerId());
-			pstmt.setString(3,pcVO.getUserId());
-	        pstmt.executeQuery();
+			pstmt.setInt(1,pcVO.getProdNum()); //상품번호
+			pstmt.setString(2,pcVO.getSellerId()); //산사람
+			pstmt.setString(3,pcVO.getUserId()); //파는사람
+	        pstmt.executeQuery();	        
+	        pstmt.close();
+	        }
+	        
+	        // 판매목록 테이블 업데이트
+	        if(!pcVO.getSellerId().equals("없음")) {
+		        StringBuilder updateSoldList = new StringBuilder();
+		        updateSoldList
+		        .append("insert into SALES_LIST(PROD_NUM,PURCHASER_ID, USER_ID) values(?,?,?)");
+		        pstmt = con.prepareStatement(updateSoldList.toString());
+				pstmt.setInt(1,pcVO.getProdNum()); //상품번호
+				pstmt.setString(2,pcVO.getUserId()); //판매자 아이디
+				pstmt.setString(3,pcVO.getSellerId()); //구매한 아이디
+				pstmt.executeQuery();
+				pstmt.close();	        	
+	        }
 
-	        // SoldVO 테이블 업데이트
-	        StringBuilder updateSoldList = new StringBuilder();
-	        updateSoldList
-	        .append("insert into SALES_LIST(PROD_NUM,SELLER_ID, USER_ID) values(?,?,?)");
-	        pstmt = con.prepareStatement(updateSoldList.toString());
-			pstmt.setInt(1,pcVO.getProdNum());
-			pstmt.setString(2,pcVO.getSellerId());
-			pstmt.setString(3,pcVO.getUserId());
-			pstmt.executeQuery();
-
+			
 	        // interestListVO 테이블 업데이트
 	        StringBuilder updateInterestList = new StringBuilder();
-	        pstmt = con.prepareStatement(updateInterestList.toString());
 	        updateInterestList
 	        .append("delete from INTEREST_LIST where PROD_NUM=?");
-	        pstmt.setInt(1, pcVO.getProdNum());
-	        
+	        pstmt = con.prepareStatement(updateInterestList.toString());
+	        pstmt.setInt(1, pcVO.getProdNum());        
 	        pstmt.executeQuery();
-
+	        pstmt.close();
+	        
+	        // 상품상태 테이블 업데이트
+	        StringBuilder prodStatus = new StringBuilder();
+	        prodStatus
+	        .append("	update PRODUCT_STATUS				")
+	        .append("	set PRODUCT_STATUS='판매완료'	 	")
+	        .append("	where PROD_NUM=?						");
+	        pstmt = con.prepareStatement(prodStatus.toString());
+	        pstmt.setInt(1, pcVO.getProdNum());        
+	        pstmt.executeQuery();
+	        pstmt.close();
+	        
 	    } finally {
 	        dbCon.dbClose(null,pstmt, con);
 	    }

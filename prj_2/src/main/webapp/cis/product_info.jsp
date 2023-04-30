@@ -415,6 +415,7 @@ padding:15px 20px;
 <!-- Boot strap 끗  -->
 
 </head>
+
 <body>
 	<div class="wrap">
 
@@ -422,14 +423,51 @@ padding:15px 20px;
        <%@ include file="../lmh/header.jsp" %>     
   </div>
 <script>
-<%// 세션에서 값 가져오기
-LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");%>
 
+<%// 세션에서 값 가져오기
+LoginSessionVO lpVO = (LoginSessionVO)session.getAttribute("loginData");
+String userId=null;
+String userImg=null;
+String userNickName=null;
+	try{
+	userId=lpVO.getUserId();
+	userImg=lpVO.getUserImg();
+	userNickName=lpVO.getNickName();
+	}catch(NullPointerException ne){
+		 userId="guest";
+		userImg="http://localhost/prj_2/kbk/upload/profile.png";
+		userNickName="guest";
+	}
+	
+	
+%>
+<%
+String prodNum=request.getParameter("prodNum");
+ShowProdDAO spDAO=new ShowProdDAO();
+
+	try{
+	ProductDetailVO pdVO=spDAO.showProdInfo(Integer.parseInt(prodNum));
+	pageContext.setAttribute("prodimgs", pdVO.getProdImg());
+
+%>
 $(function(){
+	
+	$("#prodSelectContion").change(function() {
+		var ch=$("#prodSelectContion option:selected").val();
+		  <% if(lpVO!=null) { %>	
+		  if(ch=='거래완료'){			  
+	  		$("#userIdAdoption").val("<%=lpVO.getUserId()%>");
+	  		$("#prodNumAdoption").val("<%=request.getParameter("prodNum")%>");
+	  		$("#sellerIdAdoption").val('없음');
+	  		$("#adoptfrm").submit();	 		  		
+		  }
+	  	<%}%>
+	});
+	
 	
 	<%if(request.getParameter("interflag")==null){%>
  	/* 들어왔을때 관심상품이였는지 확인 */
- 	<% if(lpVO==null) {%>alert("로그인해주세요");<% }else{%>	
+ 	<% if(lpVO==null) {%><% }else{%>	
 		$("#userIdinter").val("<%=lpVO.getUserId()%>");
   		$("#prodNuminter").val("<%=request.getParameter("prodNum")%>");
   		$("#checkinter").val("3");
@@ -496,6 +534,17 @@ $(function(){
 	  
 });
 
+function adoptionSelect(seller){
+	/* 채택버튼 누르면 채택하기  */
+			
+		  <% if(lpVO!=null) { %>	
+	  		$("#userIdAdoption").val("<%=lpVO.getUserId()%>");
+	  		$("#prodNumAdoption").val("<%=request.getParameter("prodNum")%>");
+	  		$("#sellerIdAdoption").val(seller);
+	  		$("#adoptfrm").submit();	 		  		
+	  	<%}%>
+}
+
 
 function replyInput(num,commNum) {
 	var tbody="";
@@ -507,8 +556,8 @@ function replyInput(num,commNum) {
 	
 	tbody="<tr><td>"+
 	"<div><form class='comment_form' name='replyfrm' id='replyfrm' method='post' action='reply_insert_process.jsp' >"+
-	"<img src='' id='comment_profile_img'/><input type='text' id='comment_id' placeholder='판매자 명'/>"+
-	"<textarea placeholder='댓글을 입력하세요' class='comment_content' name='replycomminput'></textarea>"+
+	"<img src='<%=userImg%>' id='comment_profile_img'/><input type='text' id='comment_id' placeholder='<%=userId%>' readonly='readonly'/>"+
+	"<textarea placeholder='답글을 입력하세요' class='comment_content' name='replycomminput'></textarea>"+
 	"<input type='hidden' name='userIdre' id='userIdre' >"+
 	"<input type='hidden' name='prodNumre' id='prodNumre'>"+
 	"<input type='hidden' name='commNumre' id='commNumre' value='"+commNum+"'>"+
@@ -536,23 +585,6 @@ function replyInput(num,commNum) {
 //댓글 페이지
 </script>
 
-
-
-  
-<%
-	String prodNum=request.getParameter("prodNum");
-	ShowProdDAO spDAO=new ShowProdDAO();
-
-	
-		ProductDetailVO pdVO=spDAO.showProdInfo(Integer.parseInt(prodNum));
-		//ProductDetailVO pdVO=spDAO.showProdInfo(42);
-	
-	
-	pageContext.setAttribute("prodimgs", pdVO.getProdImg());
-%>
-
-
-	
 		<!-- 상품 상세 페이지 내용부분 -->
 		<br/>
 		<br/>
@@ -620,13 +652,13 @@ function replyInput(num,commNum) {
 	<hr style="width:450px">
 	<table id="product_info_table" >
 	<tr>
-		<td class="prod-info-dt">관심</td><td  class="prod-info-dd"><%=pdVO.getInterestCnt()%></td>
+		<td class="prod-info-dt">관심</td><td  class="prod-info-dd"><%=pdVO.getInterestCnt()%>개</td>
 	</tr>
 	<tr>
-		<td class="prod-info-dt" >문의글</td><td  class="prod-info-dd"><%=pdVO.getCommCnt()%></td>
+		<td class="prod-info-dt" >문의글</td><td  class="prod-info-dd"><%=pdVO.getCommCnt()%>개</td>
 	</tr>
 	<tr>
-		<td class="prod-info-dt" >조회수</td><td  class="prod-info-dd"><%=pdVO.getViewCnt()%></td>
+		<td class="prod-info-dt" >조회수</td><td  class="prod-info-dd"><%=pdVO.getViewCnt()%>회</td>
 	</tr>
 </table>
 <hr style="width:450px">
@@ -666,10 +698,21 @@ if(lsVO.getUserId().equals(pdVO.getuserId())){//로그인한 사람과 상품올
 <div>
 <div id="comment-tile-saletag">
 <b style="font-size:20pt">판매자코멘트</b>
-          <select class="prod-sale-tag" name="판매중">
+
+
+<%
+if(lsVO!=null){
+	
+if(lsVO.getUserId().equals(pdVO.getuserId())){//로그인한 사람과 상품올린사람의 아이디가 일치할때 판매중/거래완료 바꾸는 기능이 나옴
+%>
+          <select class="prod-sale-tag" name="prodSelectContion" id="prodSelectContion">
              <option value="판매중">판매중</option>
              <option value="거래완료">거래완료</option>
          </select>
+<%}
+}
+%>
+     
 </div>
 <hr>
 <textarea id="user_comment"style="font-size:16pt" readonly="readonly"><%=pdVO.getdetailTxt()%></textarea>
@@ -677,8 +720,7 @@ if(lsVO.getUserId().equals(pdVO.getuserId())){//로그인한 사람과 상품올
 <br />
 
 <!-- 문의글칸 -->
-<!-- form을 table로 가져와야 되는 구조...
-다시 작성 필요. -->
+<!-- form을 table로 가져와야 되는 구조... -->
 <%  RegisterCommentDAO rcDAO = new RegisterCommentDAO();
 try{
 int pr=Integer.parseInt(request.getParameter("prodNum"));
@@ -712,8 +754,24 @@ pageContext.setAttribute("commList", list);
 	</td>
 	</tr>
 	<tr>
-	<td rowspan="2">
-		<input type="button" value="답글" onclick="replyInput(${i.index},${scVO.commNum})" />
+	<td rowspan="2" >
+		<input type="button" value="답글" onclick="replyInput(${i.index},${scVO.commNum})"  style="float: left"/>
+	<%
+if(lsVO!=null){
+	
+if(lsVO.getUserId().equals(pdVO.getuserId())){//로그인한 사람과 상품올린사람의 아이디가 일치할때 채택버튼 생성
+%>
+
+		<form name="adoptfrm" id="adoptfrm" method="post" action="adoption_process.jsp">
+		<input type="hidden" name="userIdAdoption" id="userIdAdoption" >
+   		<input type="hidden" name="prodNumAdoption" id="prodNumAdoption" >
+   		<input type="hidden" name="sellerIdAdoption" id="sellerIdAdoption" >
+		<input type="button" value="채택"  id="adoption" name="adoption" onclick="adoptionSelect('${scVO.userId}')" />
+		</form>
+
+<%}	
+}
+%>		
 	</td>
 	</tr>
 	</table >
@@ -771,8 +829,8 @@ pageContext.setAttribute("commList", list);
 
 	<div>
 	<form class="comment_form" name="comfrm" id="comfrm" method="post" action="comm_insert_process.jsp">
-		<img src="" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" id="comment_profile_img"/>
-    	<input type="text" id="comment_id" placeholder="판매자명" readonly="readonly"/>
+		<img src="<%=userImg %>" onerror="this.onerror=null; this.src='http://localhost/prj_2/kbk/upload/profile.png';" id="comment_profile_img"/>
+    	<input type="text" id="comment_id" placeholder="<%=userId %>" readonly="readonly"/>
    		<textarea placeholder="댓글을 입력하세요" class="comment_content" id="comminput" name="comminput" ></textarea>
    		<input type="hidden" name="userId" id="userId" >
    		<input type="hidden" name="prodNum" id="prodNum" >
@@ -804,10 +862,11 @@ pageContext.setAttribute("prodPopular", MainProdlist);
      <a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=${MainProdVO.prodNum}"><img src="${MainProdVO.prodImg}" class="photo" width="100%" height="100%"></a> 
 </div>
    <div class="card-desc${i.index+1}">
-       <span class="card-title">${MainProdVO.prodName}</span>   
-       <div class="card-price ">${MainProdVO.price}</div>
+       <span class="card-title"><strong>${MainProdVO.prodName}</strong></span>
+       <br>   
+       <div class="card-price "><fmt:formatNumber pattern="#,###,###" value="${MainProdVO.price}" />원</div>
        <div class="card-region-name"> ${MainProdVO.areaName}</div>
-       <div class="card-counts"><span>${MainProdVO.viewCnt}</span></div>
+       <div class="card-counts"><span>조회${MainProdVO.viewCnt}</span></div>
 </div>
 
 </c:if>
@@ -827,3 +886,6 @@ pageContext.setAttribute("prodPopular", MainProdlist);
 <!-- footer-->
 </body>
 </html>
+<%		}catch(NumberFormatException ne){
+			response.sendRedirect("http://localhost/prj_2/lmh/main.jsp");
+		}%>
