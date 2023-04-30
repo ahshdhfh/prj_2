@@ -238,8 +238,8 @@ public class RegisterCommentDAO {
 	        .append("insert into PURCHASE_LIST(PROD_NUM,SELLER_ID, USER_ID) values(?,?,?)");
 	        pstmt = con.prepareStatement(updateOnSaleList.toString());
 			pstmt.setInt(1,pcVO.getProdNum()); //상품번호
-			pstmt.setString(2,pcVO.getSellerId()); //산사람
-			pstmt.setString(3,pcVO.getUserId()); //파는사람
+			pstmt.setString(2,pcVO.getUserId()); //파는사람
+			pstmt.setString(3,pcVO.getSellerId()); //산사람
 	        pstmt.executeQuery();	        
 	        pstmt.close();
 	        }
@@ -251,8 +251,8 @@ public class RegisterCommentDAO {
 		        .append("insert into SALES_LIST(PROD_NUM,PURCHASER_ID, USER_ID) values(?,?,?)");
 		        pstmt = con.prepareStatement(updateSoldList.toString());
 				pstmt.setInt(1,pcVO.getProdNum()); //상품번호
-				pstmt.setString(2,pcVO.getUserId()); //판매자 아이디
-				pstmt.setString(3,pcVO.getSellerId()); //구매한 아이디
+				pstmt.setString(2,pcVO.getSellerId()); //구매한 아이디
+				pstmt.setString(3,pcVO.getUserId()); //판매자 아이디
 				pstmt.executeQuery();
 				pstmt.close();	        	
 	        }
