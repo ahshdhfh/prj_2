@@ -34,8 +34,8 @@ public class ManageMentProdDAO {
 		// 쿼리문 생성객체 얻기
 			StringBuilder selectProdSql=new StringBuilder();
 			selectProdSql
-			.append(" select PROD_NAME, PROD_NUM, INPUT_DATE, PRICE, CATEGORY_NAME, USER_ID 	")
-			.append(" from 	PROD_CATEGORY pc, PRODUCT pd														")
+			.append(" select PROD_NAME, PROD_NUM, INPUT_DATE, PRICE, CATEGORY_NAME, USER_ID 			")
+			.append(" from 	PROD_CATEGORY pc, PRODUCT pd																")
 			.append(" where	 pc.CATEGORY_NUM=pd.CATEGORY_NUM and PROD_NAME like '%'||?||'%'			");
 			
 			pstmt=con.prepareStatement(selectProdSql.toString());		

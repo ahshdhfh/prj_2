@@ -30,8 +30,8 @@ public class ShowProdDAO {
 			StringBuilder showPrdImg = new StringBuilder();
 
 			showPrdInfo
-					.append("	select prod_name,input_date,view_cnt,interest_cnt,AREA_NAME,price,USER_IMG,detail_txt,	")
-					.append("	place_transaction, CATEGORY_NAME, u.USER_ID,PERSONAL_INTRO,		")
+					.append("	select prod_name,input_date,view_cnt,(select count(*) from INTEREST_LIST il where il.prod_num=p.prod_num) as interest_cnt,	")
+					.append("	AREA_NAME,price,USER_IMG,detail_txt,place_transaction, CATEGORY_NAME, u.USER_ID,PERSONAL_INTRO,		")
 					.append("						(	select count(*)													")
 					.append("							from prod_comment pc											")
 					.append("							where p.prod_num=pc.prod_num) as comm_cnt	")
@@ -85,6 +85,7 @@ public class ShowProdDAO {
 		return list;
 	}// showProdInfo
 	
+	
 	public void viewUpdate(int prodNum) throws SQLException  {
 		
 		Connection con = null;
@@ -114,6 +115,37 @@ public class ShowProdDAO {
 		} // end finally
 
 	}//viewUpdate
+	
+	
+	public void minusViewUpdate(int prodNum) throws SQLException  {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		DbConnection dbCon = DbConnection.getInstance();
+		try {
+			// 1. JNDI 사용객체 생성
+			// 2. DateSource를 얻어주기
+			// 3. Connection 얻기
+			con = dbCon.getConn();
+			// 4. 쿼리문 생성객체 얻기
+			StringBuilder showPrdInfo = new StringBuilder();
+
+			showPrdInfo
+			.append("	update PRODUCT							")
+			.append("	set VIEW_CNT=VIEW_CNT-1			")
+			.append("	where prod_num=?						");
+			
+					pstmt=con.prepareStatement(showPrdInfo.toString());
+					pstmt.setInt(1, prodNum);
+					pstmt.executeQuery();
+				
+		} finally {
+			dbCon.dbClose(null, pstmt, con);
+			// 7. 연결 끊기
+		} // end finally
+
+	}//minusViewUpdate
 	
 	
 	/**

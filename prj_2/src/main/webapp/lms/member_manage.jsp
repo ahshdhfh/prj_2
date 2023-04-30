@@ -111,7 +111,7 @@ function jquery(search) {
 			} );//each
 								
 			if( cnt ==0 ){
-				tbody="<tr><td colspan='4'>회원이 없습니다.</td><tr>"
+				tbody="<tr><td colspan='4'>해당하는 회원이 없습니다.</td><tr>"
 			}//end if
 			
 			$("#table:last").append( tbody );
@@ -166,7 +166,7 @@ function jquery(search) {
 				<tr class="table_header">
 				<td width="80">아이디</td><td width="80">닉네임</td><td width="400">주소</td><td width="120">가입일</td>
 				</tr>
-				</thead>	
+				</thead>
 				</table>
 				</div>
 			</div>

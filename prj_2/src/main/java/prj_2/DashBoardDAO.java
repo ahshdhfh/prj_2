@@ -239,10 +239,13 @@ public class DashBoardDAO {
 				// 쿼리문 생성객체 얻기
 			StringBuilder selectCommSql = new StringBuilder();
 			selectCommSql
-					.append(" select distinct TRANSACTION_DATE,COUNT(*) OVER(PARTITION BY TRANSACTION_DATE,PRODUCT_STATUS) AS count, PRODUCT_STATUS 	")
-					.append(" from (	SELECT TO_CHAR(TRANSACTION_DATE,'YYYY-MM-DD') AS TRANSACTION_DATE, PROD_NUM, PRODUCT_STATUS							")
-					.append("				FROM PRODUCT_STATUS																																		")
-					.append("				WHERE PRODUCT_STATUS = '판매완료' AND TRANSACTION_DATE >= SYSDATE - 7  ) 														");																																		;
+					.append(" 	SELECT TRUNC(dates.DATE_COL), COUNT(PRODUCT_STATUS.PROD_NUM) as count							")
+					.append("	FROM ( SELECT TRUNC(SYSDATE - level) AS DATE_COL FROM dual CONNECT BY level <= 7) dates	")
+					.append("	LEFT JOIN PRODUCT_STATUS																								")
+					.append("	ON TRUNC(PRODUCT_STATUS.TRANSACTION_DATE) = TRUNC(dates.DATE_COL)							")	
+					.append("	AND PRODUCT_STATUS.PRODUCT_STATUS = '판매완료' 															")					
+					.append("	GROUP BY TRUNC(dates.DATE_COL)																						")						
+					.append("	ORDER BY TRUNC(dates.DATE_COL) DESC																				");							
 
 			pstmt = con.prepareStatement(selectCommSql.toString());
 

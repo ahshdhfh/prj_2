@@ -137,6 +137,7 @@
  	CategoryCntVO cVO=dDAO.categoryCnt();
  	Integer[] result=dDAO.tradingStatus();
  	Integer[] dongCnt=dDAO.dongCnt();
+ 	
 	%>
 <script type="text/javascript">
 (function( $ ) {
@@ -278,12 +279,12 @@ function drawBasic() {
 
        var data = google.visualization.arrayToDataTable([
          ['6일전', '거래현황', { role: 'style' }],
-         ['6일전',20, '#9B59B6 '],            // RGB value
-         ['5일전',30, '#9B59B6 '],            // English color name
-         ['4일전',40, '#9B59B6 '],
-         ['3일전',50, '#9B59B6 '],
-         ['2일전',60, '#9B59B6 '],
-         ['1일전',70, '#9B59B6 ']
+         ['6일전',<%=result[0]%>, '#9B59B6 '],            // RGB value
+         ['5일전',<%=result[1]%>, '#9B59B6 '],            // English color name
+         ['4일전',<%=result[2]%>, '#9B59B6 '],
+         ['3일전',<%=result[3]%>, '#9B59B6 '],
+         ['2일전',<%=result[4]%>, '#9B59B6 '],
+         ['1일전',<%=result[5]%>, '#9B59B6 ']
 
       ]);
 

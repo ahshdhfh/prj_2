@@ -36,7 +36,7 @@ public class ManageMentCommDAO {
 			selectCommSql
 			.append(" select COMMENT_NUM, USER_ID, PROD_COMMENTS, WRITE_DATE, PROD_NUM ")
 			.append(" from 	PROD_COMMENT 																				   ")
-			.append(" where	 USER_ID like '%'||?||'%'																		   ");
+			.append(" where	 USER_ID like '%'||?																		   ");
 			
 			pstmt=con.prepareStatement(selectCommSql.toString());		
 			//바인드 변수 값 설정

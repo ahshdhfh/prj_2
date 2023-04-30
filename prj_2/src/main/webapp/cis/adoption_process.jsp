@@ -29,9 +29,6 @@
 	int prodNum=Integer.parseInt(request.getParameter("prodNumAdoption"));  
 	
 	if(!userId.equals(sellerId)){
-	System.out.println(userId);
-	System.out.println(sellerId);
-	System.out.println(prodNum);
 	RegisterCommentDAO rDAO=new RegisterCommentDAO();
 	ProdConditionVO pcVO=new ProdConditionVO();
 	pcVO.setProdNum(prodNum);

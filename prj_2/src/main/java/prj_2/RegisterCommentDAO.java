@@ -319,9 +319,9 @@ public class RegisterCommentDAO {
 	        // 상품상태 테이블 업데이트
 	        StringBuilder prodStatus = new StringBuilder();
 	        prodStatus
-	        .append("	update PRODUCT_STATUS				")
-	        .append("	set PRODUCT_STATUS='판매완료'	 	")
-	        .append("	where PROD_NUM=?						");
+	        .append("	update PRODUCT_STATUS														")
+	        .append("	set PRODUCT_STATUS='판매완료', TRANSACTION_DATE=sysdate	 	")
+	        .append("	where PROD_NUM=?																");
 	        pstmt = con.prepareStatement(prodStatus.toString());
 	        pstmt.setInt(1, pcVO.getProdNum());        
 	        pstmt.executeQuery();

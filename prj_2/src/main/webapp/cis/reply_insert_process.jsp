@@ -28,13 +28,9 @@
 	String userId=request.getParameter("userIdre");
 	int prodNum=Integer.parseInt(request.getParameter("prodNumre"));   
 	int commNum=Integer.parseInt(request.getParameter("commNumre"));   
-	System.out.println("댓글을 입력한사람 :"+userId);
-	System.out.println("commNum :"+commNum);
-	System.out.println("prodNum :"+prodNum);
 	RegisterCommentDAO rDAO=new RegisterCommentDAO();
 	
 	if(rDAO.checkReply(userId, prodNum, commNum)){
-		System.out.println("동작확인");
 	ReplyCommVO rVO= new ReplyCommVO();
 	rVO.setcommNum(commNum);
 	rVO.setUserId(userId);

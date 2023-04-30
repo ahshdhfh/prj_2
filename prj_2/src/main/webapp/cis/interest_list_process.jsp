@@ -32,6 +32,7 @@
 	ProdConditionVO pcVO=new ProdConditionVO();
 	pcVO.setProdNum(prodNum);
 	pcVO.setUserId(userId);
+	spDAO.minusViewUpdate(prodNum);
 	if(check==2){
 	spDAO.insertBookmarkPrd(pcVO);
 	%>
@@ -45,7 +46,6 @@
 	}else if(check==3){
 	String interflag=spDAO.selectBookmarkPrd(pcVO);
 	%>
-	/*  history.back();  */
 	 location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%=prodNum%>&interflag=<%=interflag%>";  
 	<%
 	}

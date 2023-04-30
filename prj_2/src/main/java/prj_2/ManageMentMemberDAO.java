@@ -37,7 +37,7 @@ public class ManageMentMemberDAO {
 			selectUserSql
 			.append(" select user_id, nickname, addr, detailed_addr, create_date, AREA_NAME 	")
 			.append(" from users us, ACTIVITY_AREA aa															")
-			.append(" where	 aa.ACTI_AREA_NUM=us.ACTI_AREA_NUM and user_id like '%'||?||'%' 	   	");
+			.append(" where	 aa.ACTI_AREA_NUM=us.ACTI_AREA_NUM and user_id like '%'||? 	   	");
 			
 			pstmt=con.prepareStatement(selectUserSql.toString());		
 			//바인드 변수 값 설정
