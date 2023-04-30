@@ -24,10 +24,12 @@ if (lsVO == null) {
 String sessionId=lsVO.getUserId();
 %>
 <%
-int prodNum=Integer.parseInt(request.getParameter("pNum"));
 String src=request.getParameter("pic");
+int index= Integer.parseInt(request.getParameter("index"));
+
+String[] prodNums=request.getParameterValues("pNum");
+int prodNum=Integer.parseInt(prodNums[index]) ;
  MyPageDAO mpDAO=new MyPageDAO();
- 
 if("http://localhost/prj_2/images/heart_on.svg".equals(src)){
 	try{
 		

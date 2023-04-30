@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +41,7 @@
 <!-- jQuery CDN 끝 -->
 
 <script type="text/javascript">
+	const hhhh = document.getElementsByClassName("heart").value;
 	$(function() {
 		 $(".heart_on").hover(function() {
 			//마우스 포인터가 들어갔음
@@ -53,15 +54,15 @@
 			$(".heart_on").css("height","30px");
 		}); 
 		
-	});//ready
 
-	const hhhh = document.getElementsByClassName("heart").value;
 	
-	$(function() {
 		$(".heart_on").click(function() {
 			$(".heart_on").fadeOut(250).fadeIn(200);
 			var src=$(this).attr('src');
 			
+			var elementId = $(this).attr('id');
+			 $("#index").val(elementId);
+			 
 			if(src=='http://localhost/prj_2/images/heart_on.svg'){
 		   $("#pic").val(src);
 		   $("#frm").submit();
@@ -70,7 +71,10 @@
 			if(src=='http://localhost/prj_2/images/heart_off.png'){
 				$(this).attr('src','http://localhost/prj_2/images/heart_on.svg');
 				 $("#pic").val(src);
-				   $("#frm").submit();
+				 
+				 
+				
+				 $(this).submit();
 			}//end else
 		});//click
 		
@@ -108,17 +112,19 @@
 		<div class="grid"><%
 		int i=0;
 	for( InterestListVO iVO : interest) {
+		
 	%>	
 	
 	<div class="likedItem">
 				<div class="itemBox">
 				<a href="http://localhost/prj_2/cis/product_info.jsp?prodNum=<%= iVO.getProdNum()%>">
 				<input type="hidden" value="<%= iVO.getProdNum()%>" name="pNum" id="pNum"/>
+				<input type="hidden" value="<%= i %>" name="index" id="index" />
 				<img src="<%= iVO.getProdImg() %>" class="ThumbNail" id="prdImg"></a>
 					<div class="ThumbNailType__ItemInfoBox-sc-1invua-7 fDnSDy">
 						<div><!-- info -->
 						<div class="ThumbNailTitle">&lt;<%= iVO.getProdName() %>&gt; ...</div>
-						<div class="price"><%= iVO.getPrice() %></div>
+						<div class="price"><fmt:formatNumber pattern="#,###,###" value='<%=iVO.getPrice()%>' />원</div>
 						</div>
 					</div>
 					<input type="hidden">
@@ -129,8 +135,9 @@
 				</div>
 			</div>
 		<%
+	
+		i++;
 	}//end for
-	i++;
 		%>
 		</div>
 		</form>
