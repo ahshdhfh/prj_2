@@ -249,8 +249,20 @@ $(function(){
 		
 		alert("성공적으로 등록되었습니다!");
 		location.href="../lmh/main.jsp";
+	});//click#")
+	
+	$("#share-check").change(function() {
+		if(this.checked) {
+			$("#input_price").val("0");
+			$("#share-check").val("나눔");
+		}else {
+			$("#input_price").val("");
+			$("#share-check").val("나눔안함");
+		}
+		
 	});//click
-});//ready
+	
+});//ry
 
 
 
@@ -382,8 +394,7 @@ if(piVO!=null){
 
 <label for="input_price">가격*</label>
 <input type="number" id="input_price" placeholder="숫자만 입력해주세요"   name="price" value="<%=price%>">원
-<input type="checkbox" name="share" id="share-check" 
-	onclick="if(this.checked) document.getElementById('input_price').value='0'; else document.getElementById('input_price').value='';">나눔하기
+<input type="checkbox" name="share" id="share-check">나눔하기
 <!-- 나눔하기 체크 시 가격을 0원으로 띄우는 기능 -->
 <!-- 숫자 이외에 문자열 입력 안되게 하는 것 구현 안됨 -->
 </div>
