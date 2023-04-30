@@ -27,6 +27,7 @@
 	String userId=request.getParameter("userIdAdoption");
 	String sellerId=request.getParameter("sellerIdAdoption");
 	int prodNum=Integer.parseInt(request.getParameter("prodNumAdoption"));  
+	
 	if(!userId.equals(sellerId)){
 	System.out.println(userId);
 	System.out.println(sellerId);
@@ -37,6 +38,10 @@
 	pcVO.setSellerId(sellerId);
 	pcVO.setUserId(userId);
 	rDAO.updateTablePrd(pcVO);
+	}else{
+		%>
+		alert("판매자와 구매자가 같을 수 없습니다.");
+		<%
 	}
 	%>
 	  location.href="http://localhost/prj_2/lmh/main.jsp";  

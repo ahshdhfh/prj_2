@@ -28,15 +28,26 @@
 	String userId=request.getParameter("userIdre");
 	int prodNum=Integer.parseInt(request.getParameter("prodNumre"));   
 	int commNum=Integer.parseInt(request.getParameter("commNumre"));   
+	System.out.println("댓글을 입력한사람 :"+userId);
+	System.out.println("commNum :"+commNum);
+	System.out.println("prodNum :"+prodNum);
 	RegisterCommentDAO rDAO=new RegisterCommentDAO();
+	
+	if(rDAO.checkReply(userId, prodNum, commNum)){
+		System.out.println("동작확인");
 	ReplyCommVO rVO= new ReplyCommVO();
 	rVO.setcommNum(commNum);
 	rVO.setUserId(userId);
-	rVO.setReplyCom(replyCom);
+	rVO.setReplyCom(replyCom);		
+	//rDAO.insertReply(rVO);
+	}else{
+		%>
+		alert("해당 댓글에 답변권한이 없습니다.");
+		<%
+	}
 	
-	rDAO.insertReply(rVO);
 	%>
-	 location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>; 
+	  location.href="http://localhost/prj_2/cis/product_info.jsp?prodNum="+<%=prodNum%>;  
 	<%
 %>
 </script>

@@ -49,6 +49,55 @@ public class RegisterCommentDAO {
 		}//end finally
 	}//insertCom
 	
+	
+	
+	/**
+	 * 해당 유저가 댓글을 달 자격이 되는지 확인
+	 * @param rVO
+	 * @return
+	 * @throws SQLException
+	 */
+	public Boolean checkReply(String userId, int prodNum, int commNum) throws SQLException {
+		
+		Boolean result=false;
+		
+		Connection con = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs=null;
+	    
+	    DbConnection dbCon = DbConnection.getInstance();
+	    try {
+	        con = dbCon.getConn();
+	    //쿼리문 생성객체 작성 필요.
+	        
+	        StringBuilder commList = new StringBuilder();        		     		        
+	        commList
+	        .append("	select COMMENT_NUM, pc.USER_ID, pc.PROD_NUM,p.USER_ID as product_user_id										")
+	        .append("	from PROD_COMMENT pc,PRODUCT p																								")
+	        .append("	where p.PROD_NUM=pc.PROD_NUM and pc.prod_num=? and comment_num=? and (pc.user_id=? or p.user_id=?)					");
+
+	        
+	        pstmt=con.prepareStatement(commList.toString());
+	        pstmt.setInt(1, prodNum);
+	        pstmt.setInt(2, commNum);
+	        pstmt.setString(3, userId);
+	        pstmt.setString(4, userId);
+	        
+	        rs=pstmt.executeQuery();
+
+	        if(rs.next()) {
+	        	result=true;
+	        }//end while
+	         
+	    } finally {
+	        dbCon.dbClose(rs,pstmt, con);
+	    }//end finally	
+		
+		return result;
+	}
+	
+	
+	
 	/**
 	 * 댓글을 수정하는 메소드
 	 */
