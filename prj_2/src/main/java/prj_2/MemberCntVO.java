@@ -2,14 +2,25 @@ package prj_2;
 
 public class MemberCntVO {
 		private int newMember, wthdrMember;
-
+		private String month;
 				
 		public MemberCntVO() {
 		}
 
-		public MemberCntVO(int newMember, int wthdrMember) {
+
+		public MemberCntVO(int newMember, int wthdrMember, String month) {
 			this.newMember = newMember;
 			this.wthdrMember = wthdrMember;
+			this.month = month;
+		}
+
+
+		public String getMonth() {
+			return month;
+		}
+
+		public void setMonth(String month) {
+			this.month = month;
 		}
 
 		public int getNewMember() {
@@ -28,10 +39,13 @@ public class MemberCntVO {
 			this.wthdrMember = wthdrMember;
 		}
 
+
 		@Override
 		public String toString() {
-			return "MemberCntVO [newMember=" + newMember + ", wthdrMember=" + wthdrMember + "]";
-		}	
+			return "MemberCntVO [newMember=" + newMember + ", wthdrMember=" + wthdrMember + ", month=" + month + "]";
+		}
+
+
 		
 		
 }

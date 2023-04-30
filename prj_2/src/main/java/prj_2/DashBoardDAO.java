@@ -251,7 +251,7 @@ public class DashBoardDAO {
 
 			rs = pstmt.executeQuery(); // 쿼리문을 실행하고 CURSOR의 제어권을 받는다.
 
-			if (rs.next()) {
+			while (rs.next()) {
 				result[cnt] = rs.getInt("count");
 				cnt++;
 			}
@@ -346,7 +346,7 @@ public class DashBoardDAO {
 
 			rs = pstmt.executeQuery(); // 쿼리문을 실행하고 CURSOR의 제어권을 받는다.
 
-			if (rs.next()) {
+			while (rs.next()) {
 				result[cnt] = rs.getInt("count");
 				cnt++;
 			}
@@ -380,20 +380,28 @@ public class DashBoardDAO {
 		// 쿼리문 생성객체 얻기
 			StringBuilder selectCommSql=new StringBuilder();
 			selectCommSql
-			.append(" select 	TO_CHAR(CREATE_DATE,'yyyy-mm') as month, 								")
-			.append(" 				count(TO_CHAR(CREATE_DATE,'yyyy-mm')) as CREATE_DATE ,  		")
-			.append(" 				count(TO_CHAR(DELETE_DATE,'yyyy-mm')) as DELETE_DATE  			")
-			.append(" FROM 	USERS 		 			  																	")
-			.append(" where		group by TO_CHAR(CREATE_DATE,'yyyy-mm')	 							");
+			.append(" SELECT TO_CHAR(months.month, 'yyyy-mm') AS month,								")
+			.append("        NVL(COUNT(TO_CHAR(CREATE_DATE, 'yyyy-mm')), 0) AS CREATE_DATE,		")
+			.append("       NVL(COUNT(TO_CHAR(DELETE_DATE, 'yyyy-mm')), 0) AS DELETE_DATE		")
+			.append(" FROM (		")
+			.append("     SELECT ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -LEVEL + 1) AS month		")
+			.append("     FROM DUAL	 			  																")
+			.append("     CONNECT BY LEVEL <= MONTHS_BETWEEN(TRUNC(SYSDATE, 'MM'), TO_DATE('20230101', 'YYYYMMDD')) + 1 			")
+			.append("     ) months	")
+			.append("  LEFT JOIN USERS ON TO_CHAR(CREATE_DATE, 'yyyy-mm') = TO_CHAR(months.month, 'yyyy-mm')		")
+			.append("  GROUP BY TO_CHAR(months.month, 'yyyy-mm')		")
+			.append("  ORDER BY TO_CHAR(months.month, 'yyyy-mm')	");
 			
 			pstmt=con.prepareStatement(selectCommSql.toString());		
 			
 			rs=pstmt.executeQuery(); //쿼리문을 실행하고 CURSOR의 제어권을 받는다.
-			
-			if(rs.next()) {
+			int cnt=1;
+			while(rs.next()) {
 				int crMember=rs.getInt("CREATE_DATE");
 				int deMember=rs.getInt("DELETE_DATE");
-				result.add(new MemberCntVO(crMember, deMember));
+				String month= cnt+"월";
+				result.add(new MemberCntVO(crMember, deMember,month));
+				cnt++;
 			}
 			
 		}finally {		
@@ -409,8 +417,8 @@ public class DashBoardDAO {
 	 * 월별총회원수
 	 * @return
 	 */
-	public List<Integer> monthTotalCnt() throws SQLException{
-		List<Integer> result=new ArrayList<Integer>();
+	public List<TotalMemberCntVO> monthTotalCnt() throws SQLException{
+		List<TotalMemberCntVO> result=new ArrayList<TotalMemberCntVO>();
 		
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -437,8 +445,13 @@ public class DashBoardDAO {
 			
 			rs=pstmt.executeQuery(); //쿼리문을 실행하고 CURSOR의 제어권을 받는다.
 			
-			if(rs.next()) {
-				result.add(rs.getInt("count"));
+			while(rs.next()) {
+				String month=rs.getString("Month");
+				int count=rs.getInt("count");
+				
+				char lastmonth=month.charAt(month.length() - 1);
+				int monthcnt = Integer.parseInt(String.valueOf(lastmonth));
+				result.add(new TotalMemberCntVO(count, monthcnt));
 			}
 			
 		}finally {		

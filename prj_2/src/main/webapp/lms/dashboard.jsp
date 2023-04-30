@@ -1,3 +1,5 @@
+<%@page import="prj_2.TotalMemberCntVO"%>
+<%@page import="prj_2.MemberCntVO"%>
 <%@page import="prj_2.CategoryCntVO"%>
 <%@page import="java.util.List"%>
 <%@page import="prj_2.DashBoardDAO"%>
@@ -53,74 +55,6 @@
 /* 가로차트 */
 #control { position: relative; top:500px; left:30px; width: 440px; border: 1px solid #333;  }
 
-    .zt-skill-bar {
-        color: #fff;
-        font-size: 11px;
-        line-height: 20px;
-        height: 25px;
-        margin-bottom: 5px;
- 
-        background-color: rgba(0,0,0,0.1);
- 
-        -webkit-border-radius: 2px;
-           -moz-border-radius: 2px;
-            -ms-border-radius: 2px;
-                border-radius: 2px;
- 
-    }
- 
-    .zt-skill-bar * {
-        webkit-transition: all 0.5s ease;
-          -moz-transition: all 0.5s ease;
-           -ms-transition: all 0.5s ease;
-            -o-transition: all 0.5s ease;
-               transition: all 0.5s ease;
-    }
- 
-    .zt-skill-bar div {
-        background-color: #8F27A4;
-        position: relative;
-        padding-left: 25px;
-        width: 0;
- 
-        -webkit-border-radius: 2px;
-           -moz-border-radius: 2px;
-           -ms-border-radius: 2px;
-                border-radius: 2px;
-    }
- 
-    .zt-skill-bar span {
-        display: block;
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        padding: 0 5px 0 10px;
-        background-color: #1a1a1a;
- 
-        -webkit-border-radius: 0 2px 2px 0;
-           -moz-border-radius: 0 2px 2px 0;
-            -ms-border-radius: 0 2px 2px 0;
-                border-radius: 0 2px 2px 0;
-    }
- 
-    .zt-skill-bar span:before {
-        content: "";
-        position: absolute;
-        width: 6px;
-        height: 6px;
-        top: 50%;
-        left: -3px;
-        margin-top: -3px;
-        background-color: #1a1a1a;
- 
-        -webkit-transform: rotate(45deg);
-           -moz-transform: rotate(45deg);
-            -ms-transform: rotate(45deg);
-                transform: rotate(45deg);
-    }
-
-
 #temp1 {width: 440px; height: 250px; position: absolute; top: 200px; left: 520px; border: 1px solid #333; }
 #temp2 {width: 440px; height: 180px; position: absolute; top: 500px; left: 520px; border: 1px solid #333; }
 #temp3 {width: 440px; height: 180px; position: absolute; top: 750px; left: 520px; border: 1px solid #333; }
@@ -137,7 +71,8 @@
  	CategoryCntVO cVO=dDAO.categoryCnt();
  	Integer[] result=dDAO.tradingStatus();
  	Integer[] dongCnt=dDAO.dongCnt();
- 	
+ 	List<MemberCntVO> list=dDAO.newAndWithdrawallCnt();
+ 	List<TotalMemberCntVO> montotal= dDAO.monthTotalCnt();
 	%>
 <script type="text/javascript">
 (function( $ ) {
@@ -202,17 +137,13 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
+	var ndcount=0;
   var data = google.visualization.arrayToDataTable([
     ['Month', '신규회원', '탈퇴회원'],
-    ['1월',  1000,      400],
-    ['2월',  1170,      460],
-    ['3월',  660,       1120],
-    ['4월',  1030,      540],
-    ['5월',  1030,      540],
-    ['6월',  3030,      140],
-    ['7월',  1030,      540]
+	<%for( MemberCntVO mcVO : list) {%>
+    ['<%=mcVO.getMonth()%>',  <%=mcVO.getNewMember()%>,<%=mcVO.getWthdrMember()%>],
+	<%}%>
   ]);
-
   var options = {
     title: '신규&탈퇴 회원',
     curveType: 'function',
@@ -239,23 +170,14 @@ function drawBasic() {
       data.addColumn('number', '총회원수');
 
       data.addRows([
-        [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
-        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
-        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
-        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
-        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
-        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
-        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
-        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
-        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
-        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
-        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
-        [66, 70], [67, 72]
+    	<%for( TotalMemberCntVO tVO : montotal) {%>
+        [<%=tVO.getMonth()%>, <%=tVO.getCount()%>],
+        <%}%>
       ]);
 
       var options = {
         hAxis: {
-          title: 'day'
+          title: 'month'
         },
         vAxis: {
           title: '총회원수'
@@ -309,6 +231,48 @@ function drawBasic() {
     }
 /* 상품거래현황  */   
 </script>
+<script type="text/javascript">
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['City', '동별상품수',{ role: 'style' }],
+        ['개포동', <%=dongCnt[0]%>, '#9B59B6 '],
+        ['논현동', <%=dongCnt[1]%>, '#9B59B6 '],
+        ['대치동',<%=dongCnt[2]%>, '#9B59B6 '],
+        ['도곡동', <%=dongCnt[3]%>, '#9B59B6 '],
+        ['삼성동', <%=dongCnt[4]%>, '#9B59B6 '],
+        ['세곡동', <%=dongCnt[5]%>, '#9B59B6 '],
+        ['수서동', <%=dongCnt[6]%>, '#9B59B6 '],
+        ['신사동', <%=dongCnt[7]%>, '#9B59B6 '],
+        ['압구정동', <%=dongCnt[8]%>, '#9B59B6 '],
+        ['역삼동', <%=dongCnt[9]%>, '#9B59B6 '],
+        ['율현동', <%=dongCnt[10]%>, '#9B59B6 '],
+        ['일원동', <%=dongCnt[11]%>, '#9B59B6 '],
+        ['청담동', <%=dongCnt[12]%>, '#9B59B6 '],
+        ['자곡동', <%=dongCnt[13]%>, '#9B59B6 ']
+      ]);
+
+      var options = {
+        title: '강남구 동별 상품현황',
+        chartArea: {width: '50%'},
+        height:'430',
+        hAxis: {
+          title: 'Total Population',
+          minValue: 0
+        },
+        vAxis: {
+          title: '동'
+        }
+      };
+
+      var chart = new google.visualization.BarChart(document.getElementById('chart_div3'));
+
+      chart.draw(data, options);
+    }
+</script>
 
 </head>
 <body>
@@ -356,28 +320,14 @@ function drawBasic() {
 			<div class="day_info_set" style="background-color:#2C3E50; color: white;">총 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=totalMember %></span></div>
 			<div class="day_info_set" style="background-color:#3498DB; color: white;">신규가입 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=newMemberCnt %></span></div>
 			<div class="day_info_set" style="background-color:#E74C3C; color: white; ">오늘 탈퇴한 회원 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=newAndWithdrawallCnt %></span></div>
-			<div class="day_info_set" style="background-color:#E0E0E0; ">거래완료 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=tradingStatusCnt %></span></div>
+			<div class="day_info_set" style="background-color:#E0E0E0; ">오늘 거래완료 수<br><br><br><span style="font-size: 25px;">&ensp;&ensp;&ensp;<%=tradingStatusCnt %></span></div>
 		</div>
 		
 		<!-- 가로차트  -->
 		<div id="control">
-<div class="zt-span6 last">
-<h3><strong>지역별 상품 수</strong></h3>
-<div class="zt-skill-bar"><div data-width="88" style="">개포동<span><%=dongCnt[0] %></span></div></div>
-<div class="zt-skill-bar"><div data-width="92" style="">논현동<span>92%</span></div></div>
-<div class="zt-skill-bar"><div data-width="20" style="">대치동<span>20%</span></div></div>
-<div class="zt-skill-bar"><div data-width="42" style="">도곡동<span>42%</span></div></div>
-<div class="zt-skill-bar"><div data-width="32" style="">삼성동<span>32%</span></div></div>
-<div class="zt-skill-bar"><div data-width="42" style="">세곡동<span>42%</span></div></div>
-<div class="zt-skill-bar"><div data-width="22" style="">수서동<span>22%</span></div></div>
-<div class="zt-skill-bar"><div data-width="55" style="">신사동<span>55%</span></div></div>
-<div class="zt-skill-bar"><div data-width="82" style="">압구정동<span>82%</span></div></div>
-<div class="zt-skill-bar"><div data-width="82" style="">역삼동<span>82%</span></div></div>
-<div class="zt-skill-bar"><div data-width="82" style="">율현동<span>82%</span></div></div>
-<div class="zt-skill-bar"><div data-width="82" style="">일원동<span>82%</span></div></div>
-<div class="zt-skill-bar"><div data-width="85" style="">자곡동<span>85%</span></div></div>
-<div class="zt-skill-bar"><div data-width="79" style="">청담동<span>79%</span></div></div></div>
-</div>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <div id="chart_div3"></div>
+		</div>
 		<!-- 가로차트  -->
 			
 		<div id="temp1">
