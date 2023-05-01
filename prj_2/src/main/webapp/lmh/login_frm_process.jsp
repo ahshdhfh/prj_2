@@ -34,6 +34,7 @@ if(lVO.getUserId()==null  || "".equals(lVO.getUserId()) || lVO.getUserPassword()
 	if(nickName==null){ //로그인 실패
 		response.sendRedirect("login.jsp?flag=false");
 	}else{ //로그인 성공
+		uDAO.loginDateUpdate(lVO.getUserId());
 		LoginSessionVO lsVO=uDAO.selectLogin(lVO);
 		session.setAttribute("loginData", lsVO);
 		session.setMaxInactiveInterval(60*60*1);

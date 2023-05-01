@@ -237,6 +237,44 @@ public class UserDAO {
 	
 	
 	/**
+	 * 로그인 시 로그인날짜 현재날짜로 변경
+	 * @param userId
+	 * @throws SQLException
+	 */
+	public void loginDateUpdate(String userId) throws SQLException {
+		
+		Connection con =null;
+		PreparedStatement pstmt = null;
+		DbConnection dbCon=DbConnection.getInstance();
+		try {
+			//1. JNDI 사용 객체 생성
+			//2. DataSource 얻기
+			//3. Connection 얻기
+			con=dbCon.getConn();
+		
+			//4. 쿼리문 생성객체 얻기
+			StringBuilder updateLoginDate= new StringBuilder();
+			updateLoginDate 
+			.append("	update USERS							")
+			.append("	set LOGIN_DATE=sysdate			")
+			.append("	where USER_ID=?						");
+			
+			pstmt=con.prepareStatement(updateLoginDate.toString());
+			
+			//5. 바인드변수 값 설정
+			pstmt.setString(1, userId);//1.아이디
+		
+			//6. 쿼리문 수행 후 결과 얻기		
+			pstmt.executeUpdate();	
+			
+		} finally {
+			//7. 연결 끊기
+			dbCon.dbClose(null, pstmt, con);
+		}//end finally		
+		return;		
+	}//loginDateUpdate
+	
+	/**
 	 * 아이디 찾기
 	 * @param findIdVO
 	 * @return 찾은 ID 반환
