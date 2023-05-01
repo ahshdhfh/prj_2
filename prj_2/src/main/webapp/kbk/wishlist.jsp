@@ -58,8 +58,8 @@
 	
 		$(".heart_on").click(function() {
 			$(".heart_on").fadeOut(250).fadeIn(200);
-			var src=$(this).attr('src');
 			
+			var src=$(this).attr('src');
 			var elementId = $(this).attr('id');
 			 $("#index").val(elementId);
 			 
@@ -71,10 +71,7 @@
 			if(src=='http://localhost/prj_2/images/heart_off.png'){
 				$(this).attr('src','http://localhost/prj_2/images/heart_on.svg');
 				 $("#pic").val(src);
-				 
-				 
-				
-				 $(this).submit();
+				 $("#frm").submit();
 			}//end else
 		});//click
 		
