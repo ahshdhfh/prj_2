@@ -20,3 +20,8 @@
 - `java-11-openjdk-11.0.15-1`
 - **IDE** : eclipse
 - **Database** : Oracle DB(19.3.0.0.0)
+
+### 📌 DB구성- ERD
+![강남콩 마켓erd2](https://github.com/ahshdhfh/prj_2/assets/51796947/c52e43d9-a875-4e1b-b204-db2506e8f16a)
+
+
