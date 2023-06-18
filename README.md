@@ -24,4 +24,12 @@
 ### 📌 DB구성- ERD
 ![강남콩 마켓erd2](https://github.com/ahshdhfh/prj_2/assets/51796947/c52e43d9-a875-4e1b-b204-db2506e8f16a)
 
+### 📌 화면 구성
+![2차_1](https://github.com/ahshdhfh/prj_2/assets/51796947/33639732-ea39-4ab0-a448-66e4635c310e)
+![2차_2](https://github.com/ahshdhfh/prj_2/assets/51796947/6a23bdc6-7c45-4b5d-91e7-5d64cfa94a20)
+![2차_3](https://github.com/ahshdhfh/prj_2/assets/51796947/940361c0-7f52-4c69-ab90-c140381db2f1)
+![2차_4](https://github.com/ahshdhfh/prj_2/assets/51796947/85a631ca-9655-4f60-803d-af58465f2e16)
+
+
+
 
